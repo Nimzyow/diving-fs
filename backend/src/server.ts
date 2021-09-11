@@ -1,5 +1,7 @@
 import { ApolloServer, gql } from "apollo-server"
 
+import * as types from "./schema/index"
+
 const books = [
     {
         title: "The Awakening",
