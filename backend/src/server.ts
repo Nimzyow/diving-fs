@@ -2,32 +2,16 @@ import { ApolloServer, gql } from "apollo-server"
 import * as path from "path"
 import * as types from "./schema/index"
 import { makeSchema } from "nexus"
+import { db } from "./db"
+import { PrismaClient } from "@prisma/client"
 
-// const books = [
-//     {
-//         title: "The Awakening",
-//         author: "Kate Chopin",
-//     },
-//     {
-//         title: "City of Glass",
-//         author: "Paul Auster",
-//     },
-// ]
+interface Context {
+    db: PrismaClient
+}
 
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
-// const typeDefs = gql`
-//     type Query {
-//         hello: String
-//     }
-// `
-
-// const resolvers = {
-//     Query: {
-//         hello: () => "world",
-//     },
-// }
+const context = {
+    db,
+}
 
 const schema = makeSchema({
     types,
@@ -37,7 +21,7 @@ const schema = makeSchema({
     },
 })
 
-const server = new ApolloServer({ schema })
+const server = new ApolloServer({ schema, context })
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {
