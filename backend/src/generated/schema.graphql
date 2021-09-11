@@ -9,7 +9,7 @@ type Query {
 
 type User {
   email: String!
+  firstName: String!
   id: String!
-  name: String!
-  random: String
+  lastName: String!
 }
