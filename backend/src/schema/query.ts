@@ -1,29 +1,16 @@
-import { objectType } from "nexus"
+import { extendType } from "nexus"
 
-export const Query = objectType({
-    name: "Query",
+export const Query = extendType({
+    type: "Query",
     definition(t) {
-        t.nonNull.field("hello", {
-            type: "String",
-            resolve: () => {
-                return "World"
-            },
-        })
         t.field("user", {
             type: "User",
-            resolve: async (parent, args, context) => {
-                // return { id: "1", firstName: "Nima", lastName: "adsad", email: "n_soufiani@hotmail.com" }
-                try {
-                    const result = await context.prisma.user.findUnique({
-                        where: {
-                            id: 1,
-                        },
-                    })
-                    return result
-                } catch (error) {
-                    console.log(error)
-                }
-                return null
+            resolve: (parent, args, context) => {
+                return context.prisma.user.findUnique({
+                    where: {
+                        id: 1,
+                    },
+                })
             },
         })
     },

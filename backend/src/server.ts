@@ -11,9 +11,7 @@ const schema = makeSchema({
         typegen: path.join(__dirname + "/generated/nexus.ts"),
     },
     contextType: {
-        // Path to the module where the context type is exported
         module: path.join(__dirname, "./context.ts"),
-        // Name of the export in that module
         export: "Context",
     },
 })

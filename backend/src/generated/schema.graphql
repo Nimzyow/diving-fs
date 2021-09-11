@@ -3,13 +3,12 @@
 
 
 type Query {
-  hello: String!
   user: User
 }
 
 type User {
   email: String!
   firstName: String!
-  id: ID!
+  id: Int!
   lastName: String!
 }
