@@ -10,6 +10,6 @@ type Query {
 type User {
   email: String!
   firstName: String!
-  id: String!
+  id: ID!
   lastName: String!
 }

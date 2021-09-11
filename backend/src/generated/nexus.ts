@@ -32,7 +32,7 @@ export interface NexusGenObjects {
   User: { // root type
     email: string; // String!
     firstName: string; // String!
-    id: string; // String!
+    id: string; // ID!
     lastName: string; // String!
   }
 }
@@ -55,7 +55,7 @@ export interface NexusGenFieldTypes {
   User: { // field return type
     email: string; // String!
     firstName: string; // String!
-    id: string; // String!
+    id: string; // ID!
     lastName: string; // String!
   }
 }
@@ -68,7 +68,7 @@ export interface NexusGenFieldTypeNames {
   User: { // field return type name
     email: 'String'
     firstName: 'String'
-    id: 'String'
+    id: 'ID'
     lastName: 'String'
   }
 }
