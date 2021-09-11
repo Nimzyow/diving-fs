@@ -33,6 +33,7 @@ export interface NexusGenObjects {
     email: string; // String!
     firstName: string; // String!
     id: number; // Int!
+    isSuperUser: boolean; // Boolean!
     lastName: string; // String!
   }
 }
@@ -55,6 +56,7 @@ export interface NexusGenFieldTypes {
     email: string; // String!
     firstName: string; // String!
     id: number; // Int!
+    isSuperUser: boolean; // Boolean!
     lastName: string; // String!
   }
 }
@@ -67,6 +69,7 @@ export interface NexusGenFieldTypeNames {
     email: 'String'
     firstName: 'String'
     id: 'Int'
+    isSuperUser: 'Boolean'
     lastName: 'String'
   }
 }
