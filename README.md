@@ -1,6 +1,7 @@
 1. create a simple apollo server. basic hello world DONE
-2. create a prisma schema with user type only with only a few fields
-3. generate gql schema with nexus and add context
+2. create a prisma schema with user type only with only a few fields DONE
+3. generate gql schema with nexus and add context done
+4. add auto completion to nexus resolver
 
 NOTES:
 

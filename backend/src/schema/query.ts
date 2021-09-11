@@ -11,8 +11,10 @@ export const Query = objectType({
         })
         t.field("user", {
             type: "User",
-            resolve: (parent, args, context) => {
-                return context.db.user.findFirst()
+            resolve: async (parent, args, context) => {
+                // return { id: "1", firstName: "Nima", lastName: "adsad", email: "n_soufiani@hotmail.com" }
+                const user = await context.prisma.user.findFirst()
+                return user
             },
         })
     },
