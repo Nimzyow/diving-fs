@@ -12,7 +12,7 @@ export const Query = objectType({
         t.field("user", {
             type: "User",
             resolve: (parent, args, context) => {
-                return null
+                return context.db.user.findFirst()
             },
         })
     },
