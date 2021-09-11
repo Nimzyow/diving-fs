@@ -14,7 +14,7 @@ export const Query = objectType({
             resolve: async (parent, args, context) => {
                 // return { id: "1", firstName: "Nima", lastName: "adsad", email: "n_soufiani@hotmail.com" }
                 try {
-                    const result = context.prisma.user.findUnique({
+                    const result = await context.prisma.user.findUnique({
                         where: {
                             id: 1,
                         },
