@@ -4,4 +4,10 @@
 
 type Query {
   hello: String
+  user: User
+}
+
+type User {
+  id: String
+  name: String
 }

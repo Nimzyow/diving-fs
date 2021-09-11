@@ -9,5 +9,11 @@ export const Query = objectType({
                 return "World"
             },
         })
+        t.field("user", {
+            type: "User",
+            resolve: () => {
+                return { id: "1", name: "Nima" }
+            },
+        })
     },
 })
