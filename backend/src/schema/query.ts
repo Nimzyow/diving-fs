@@ -3,7 +3,7 @@ import { objectType } from "nexus"
 export const Query = objectType({
     name: "Query",
     definition(t) {
-        t.field("hello", {
+        t.nonNull.field("hello", {
             type: "String",
             resolve: () => {
                 return "World"
@@ -11,7 +11,7 @@ export const Query = objectType({
         })
         t.field("user", {
             type: "User",
-            resolve: () => {
+            resolve: (parent, args, context) => {
                 return { id: "1", name: "Nima" }
             },
         })

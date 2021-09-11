@@ -30,8 +30,9 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Query: {};
   User: { // root type
-    id?: string | null; // String
-    name?: string | null; // String
+    email: string; // String!
+    id: string; // String!
+    name: string; // String!
   }
 }
 
@@ -47,12 +48,14 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Query: { // field return type
-    hello: string | null; // String
+    hello: string; // String!
     user: NexusGenRootTypes['User'] | null; // User
   }
   User: { // field return type
-    id: string | null; // String
-    name: string | null; // String
+    email: string; // String!
+    id: string; // String!
+    name: string; // String!
+    random: string | null; // String
   }
 }
 
@@ -62,8 +65,10 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   User: { // field return type name
+    email: 'String'
     id: 'String'
     name: 'String'
+    random: 'String'
   }
 }
 
