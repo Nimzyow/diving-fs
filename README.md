@@ -3,7 +3,7 @@
 3. generate gql schema with nexus and add context done
 4. add auto completion to nexus resolver DONE
 5. write a test with nexus
-6. pick up authorization token through context
+6. pick up authorization token through context DONE
 
 NOTES:
 
