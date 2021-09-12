@@ -1,4 +1,5 @@
 import { ApolloServer, gql } from "apollo-server"
+import { nexusPrisma } from "nexus-plugin-prisma"
 import * as path from "path"
 import * as types from "./schema/index"
 import { makeSchema } from "nexus"
@@ -13,6 +14,15 @@ const schema = makeSchema({
     contextType: {
         module: path.join(__dirname, "./context.ts"),
         export: "Context",
+    },
+    plugins: [nexusPrisma()],
+    sourceTypes: {
+        modules: [
+            {
+                module: "@prisma/client",
+                alias: "prisma",
+            },
+        ],
     },
 })
 
