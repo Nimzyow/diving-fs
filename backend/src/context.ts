@@ -13,8 +13,3 @@ export interface Context {
     prisma: PrismaClient
     user: User | null
 }
-
-export const context = {
-    prisma,
-    user: null,
-}

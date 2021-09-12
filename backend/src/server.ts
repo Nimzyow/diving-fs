@@ -3,7 +3,8 @@ import { nexusPrisma } from "nexus-plugin-prisma"
 import * as path from "path"
 import * as types from "./schema/index"
 import { makeSchema } from "nexus"
-import { context } from "./context"
+import { Context } from "./context"
+import prisma from "./db"
 
 const schema = makeSchema({
     types,
@@ -26,7 +27,15 @@ const schema = makeSchema({
     },
 })
 
-const server = new ApolloServer({ schema, context })
+const server = new ApolloServer({
+    schema,
+    context: async ({ req }: { req: { headers: { authorization: string } } }): Promise<Context> => {
+        return {
+            prisma: prisma,
+            user: null,
+        }
+    },
+})
 
 server.listen().then(({ url }) => {
     console.log(`🚀  Server ready at ${url}`)
