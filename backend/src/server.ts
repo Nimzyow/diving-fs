@@ -3,7 +3,7 @@ import { nexusPrisma } from "nexus-plugin-prisma"
 import * as path from "path"
 import * as types from "./schema/index"
 import { makeSchema } from "nexus"
-import { Context } from "./context"
+import { Context, getUser } from "./context"
 import prisma from "./db"
 
 const schema = makeSchema({
@@ -32,7 +32,7 @@ const server = new ApolloServer({
     context: async ({ req }: { req: { headers: { authorization: string } } }): Promise<Context> => {
         return {
             prisma: prisma,
-            user: null,
+            user: getUser(req.headers.authorization),
         }
     },
 })
