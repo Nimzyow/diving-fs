@@ -30,6 +30,7 @@ export const getUser = (token: string): Omit<User, "password"> | null => {
     }
     if (decodeToken.user) {
         const user = decodeToken.user
+        console.log(user)
         // const user = decodeToken.user
         // let findUser
         // try {
@@ -37,8 +38,9 @@ export const getUser = (token: string): Omit<User, "password"> | null => {
         // } catch (error) {
         //     return
         // }
-        delete user.password
-        return user
+        // delete user.password
+        // return user
+        return null
     } else {
         return null
     }
