@@ -6,3 +6,10 @@ export const User = objectType({
         t.model.id(), t.model.firstName(), t.model.lastName(), t.model.email(), t.model.isSuperUser()
     },
 })
+
+export const Token = objectType({
+    name: "Token",
+    definition(t) {
+        t.string("token")
+    },
+})
