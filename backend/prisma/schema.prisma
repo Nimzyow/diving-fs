@@ -16,4 +16,5 @@ model User {
   lastName    String
   email       String    @unique
   isSuperUser Boolean   @default(false)
+  password    String
 }
