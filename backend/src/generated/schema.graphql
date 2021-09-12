@@ -4,6 +4,7 @@
 
 type Query {
   user: User
+  users: [User!]!
 }
 
 type User {
