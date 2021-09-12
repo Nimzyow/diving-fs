@@ -1,4 +1,4 @@
-import { ApolloServer, gql } from "apollo-server"
+import { ApolloServer } from "apollo-server"
 import { nexusPrisma } from "nexus-plugin-prisma"
 import * as path from "path"
 import * as types from "./schema/index"
