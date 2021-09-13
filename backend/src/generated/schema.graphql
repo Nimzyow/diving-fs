@@ -11,6 +11,13 @@ type Query {
   users: [User!]!
 }
 
+enum Role {
+  ADMIN
+  STAFF
+  SUPER_USER
+  USER
+}
+
 type Token {
   token: String
 }
@@ -21,4 +28,5 @@ type User {
   id: String!
   isSuperUser: Boolean!
   lastName: String!
+  role: Role!
 }

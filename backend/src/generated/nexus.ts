@@ -22,6 +22,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  Role: "ADMIN" | "STAFF" | "SUPER_USER" | "USER"
 }
 
 export interface NexusGenScalars {
@@ -44,6 +45,7 @@ export interface NexusGenObjects {
     id: string; // String!
     isSuperUser: boolean; // Boolean!
     lastName: string; // String!
+    role: NexusGenEnums['Role']; // Role!
   }
 }
 
@@ -55,7 +57,7 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
@@ -74,6 +76,7 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     isSuperUser: boolean; // Boolean!
     lastName: string; // String!
+    role: NexusGenEnums['Role']; // Role!
   }
 }
 
@@ -94,6 +97,7 @@ export interface NexusGenFieldTypeNames {
     id: 'String'
     isSuperUser: 'Boolean'
     lastName: 'String'
+    role: 'Role'
   }
 }
 
@@ -118,7 +122,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 
