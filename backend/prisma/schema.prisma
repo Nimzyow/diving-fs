@@ -11,10 +11,18 @@ generator client {
 }
 
 model User {
-  id          String       @id @default(cuid())
+  id          String    @id @default(cuid())
   firstName   String
   lastName    String
   email       String    @unique
   isSuperUser Boolean   @default(false)
   password    String
+  role        Role      @default(USER)
+}
+
+enum Role {
+  USER
+  STAFF
+  ADMIN
+  SUPER_USER
 }
