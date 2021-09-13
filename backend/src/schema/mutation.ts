@@ -14,6 +14,7 @@ export const Mutation = extendType({
                 password: stringArg(),
             },
             resolve: async (parent, args, context) => {
+                const errors: { code: string; message: string }[] = []
                 const { email, lastName, firstName, password } = args
 
                 if (email && lastName && firstName && password) {
@@ -43,10 +44,14 @@ export const Mutation = extendType({
 
                         return {
                             token: jwt.sign(payload, process.env.JWTSECRET || "", { expiresIn: 360000 }),
+                            errors: [],
                         }
                     } catch (error) {
-                        console.log(error)
-                        return null
+                        errors.push({
+                            code: "INVALID_INPUTS",
+                            message: "Please enter valid inputs",
+                        })
+                        return { token: null, errors }
                     }
                 }
 
@@ -61,13 +66,18 @@ export const Mutation = extendType({
                     passwordConfirm: stringArg(),
                 },
                 resolve: async (parent, args, context) => {
+                    const errors: { code: string; message: string }[] = []
                     const { email, password, passwordConfirm } = args
                     if (password && passwordConfirm && password === passwordConfirm) {
                         if (email) {
                             try {
                                 const user = await context.prisma.user.findUnique({ where: { email } })
                                 if (!user) {
-                                    return null
+                                    errors.push({
+                                        code: "INVALID_CREDENTIALS",
+                                        message: "Please check your email and password",
+                                    })
+                                    return { token: null, errors }
                                 }
                                 const match = await bcrypt.compare(password, user.password)
                                 if (match) {
@@ -81,18 +91,36 @@ export const Mutation = extendType({
                                         token: jwt.sign(payload, process.env.JWTSECRET || "", {
                                             expiresIn: 360000,
                                         }),
+                                        errors: [],
                                     }
                                 } else {
-                                    return null
+                                    errors.push({
+                                        code: "INVALID_CREDENTIALS",
+                                        message: "Please check your email and password",
+                                    })
+                                    return { token: null, errors }
                                 }
                             } catch (error) {
-                                return null
+                                errors.push({
+                                    code: "GENERAL_ERROR",
+                                    message:
+                                        "Something went wrong, please refresh the page and try again",
+                                })
+                                return { token: null, errors }
                             }
                         } else {
-                            return null
+                            errors.push({
+                                code: "INVALID_CREDENTIALS",
+                                message: "Please check your email and password",
+                            })
+                            return { token: null, errors }
                         }
                     } else {
-                        return null
+                        errors.push({
+                            code: "INVALID_INPUTS",
+                            message: "Please check for password and password confirm mismatch",
+                        })
+                        return { token: null, errors }
                     }
                 },
             })

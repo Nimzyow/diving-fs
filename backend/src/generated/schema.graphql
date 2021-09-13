@@ -2,6 +2,11 @@
 ### Do not make changes to this file directly
 
 
+type Error {
+  code: String!
+  message: String!
+}
+
 type Mutation {
   createUser(email: String, firstName: String, lastName: String, password: String): Token
   login(email: String, password: String, passwordConfirm: String): Token
@@ -20,6 +25,7 @@ enum Role {
 }
 
 type Token {
+  errors: [Error!]!
   token: String
 }
 

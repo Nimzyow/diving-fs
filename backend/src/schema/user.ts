@@ -15,7 +15,10 @@ export const User = objectType({
 export const Token = objectType({
     name: "Token",
     definition(t) {
-        t.string("token")
+        t.string("token"),
+            t.nonNull.list.nonNull.field("errors", {
+                type: "Error",
+            })
     },
 })
 
