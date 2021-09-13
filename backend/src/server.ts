@@ -32,7 +32,7 @@ const server = new ApolloServer({
     context: async ({ req }: { req: { headers: { authorization: string } } }): Promise<Context> => {
         return {
             prisma: prisma,
-            user: getUser(req.headers.authorization),
+            user: await getUser(req.headers.authorization, prisma),
         }
     },
 })
