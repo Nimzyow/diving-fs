@@ -31,7 +31,7 @@ export const getUser = async (token: string, prisma: PrismaClient): Promise<User
         const userId = decodeToken.user.id
         const user = await prisma.user.findUnique({
             where: {
-                id: Number(userId),
+                id: userId,
             },
         })
 

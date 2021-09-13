@@ -18,7 +18,7 @@ type Token {
 type User {
   email: String!
   firstName: String!
-  id: Int!
+  id: String!
   isSuperUser: Boolean!
   lastName: String!
 }

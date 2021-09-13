@@ -8,7 +8,7 @@ export const Query = extendType({
             resolve: (parent, args, context) => {
                 return context.prisma.user.findUnique({
                     where: {
-                        id: 1,
+                        id: "1",
                     },
                 })
             },
