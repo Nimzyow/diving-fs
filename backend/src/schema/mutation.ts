@@ -52,6 +52,49 @@ export const Mutation = extendType({
 
                 return null
             },
-        })
+        }),
+            t.field("login", {
+                type: "Token",
+                args: {
+                    email: stringArg(),
+                    password: stringArg(),
+                    passwordConfirm: stringArg(),
+                },
+                resolve: async (parent, args, context) => {
+                    const { email, password, passwordConfirm } = args
+                    if (password && passwordConfirm && password === passwordConfirm) {
+                        if (email) {
+                            try {
+                                const user = await context.prisma.user.findUnique({ where: { email } })
+                                if (!user) {
+                                    return null
+                                }
+                                const match = await bcrypt.compare(password, user.password)
+                                if (match) {
+                                    const payload = {
+                                        user: {
+                                            id: user.id,
+                                        },
+                                    }
+
+                                    return {
+                                        token: jwt.sign(payload, process.env.JWTSECRET || "", {
+                                            expiresIn: 360000,
+                                        }),
+                                    }
+                                } else {
+                                    return null
+                                }
+                            } catch (error) {
+                                return null
+                            }
+                        } else {
+                            return null
+                        }
+                    } else {
+                        return null
+                    }
+                },
+            })
     },
 })

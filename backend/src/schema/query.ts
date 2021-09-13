@@ -1,14 +1,18 @@
-import { extendType } from "nexus"
+import { extendType, stringArg } from "nexus"
+import bcrypt from "bcryptjs"
 
 export const Query = extendType({
     type: "Query",
     definition(t) {
-        t.field("user", {
+        t.field("me", {
             type: "User",
             resolve: (parent, args, context) => {
+                if (!context.user) {
+                    return null
+                }
                 return context.prisma.user.findUnique({
                     where: {
-                        id: "1",
+                        id: context.user.id,
                     },
                 })
             },
