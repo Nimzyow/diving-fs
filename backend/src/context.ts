@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
-import { Object } from "ts-toolbelt"
 import jwt from "jsonwebtoken"
+import { Object } from "ts-toolbelt"
 
 interface User {
     id: string
@@ -8,7 +8,6 @@ interface User {
     lastName: string
     email: string
     isSuperUser: boolean
-    password: string
 }
 
 export interface Context {
@@ -16,31 +15,36 @@ export interface Context {
     user: Omit<User, "password"> | null
 }
 
-export const getUser = (token: string): Omit<User, "password"> | null => {
+export const getUser = async (token: string, prisma: PrismaClient): Promise<User | null> => {
     interface TokenInterface {
-        user: Object.Optional<User, "password"> | undefined | null
+        user: Pick<User, "id"> | undefined | null
     }
 
     let decodeToken: TokenInterface
 
     try {
-        decodeToken = jwt.verify(token, process.env.JWTSECRET ?? "") as TokenInterface
+        decodeToken = jwt.verify(token, process.env.JWTSECRET || "") as TokenInterface
     } catch (error) {
         return null
     }
     if (decodeToken.user) {
-        const user = decodeToken.user
-        console.log(user)
-        // const user = decodeToken.user
-        // let findUser
-        // try {
-        //     findUser = await User.findById(user._id)
-        // } catch (error) {
-        //     return
-        // }
-        // delete user.password
-        // return user
-        return null
+        const userId = decodeToken.user.id
+        const user = await prisma.user.findUnique({
+            where: {
+                id: Number(userId),
+            },
+        })
+
+        if (!user) {
+            return null
+        }
+        return {
+            id: String(user.id),
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            isSuperUser: user.isSuperUser,
+        }
     } else {
         return null
     }
