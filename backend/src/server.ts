@@ -27,7 +27,7 @@ const schema = makeSchema({
     },
 })
 
-const server = new ApolloServer({
+export const server = new ApolloServer({
     schema,
     context: async ({ req }: { req: { headers: { authorization: string } } }): Promise<Context> => {
         return {
