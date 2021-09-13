@@ -14,10 +14,6 @@ export const Mutation = extendType({
                 password: stringArg(),
             },
             resolve: async (parent, args, context) => {
-                // 1) user needs to send inputs: firstName, lastName, email, password
-                // 2) encrypt the password
-                // 3) create the user in the db
-                // 4) if successful, return token
                 const { email, lastName, firstName, password } = args
 
                 if (email && lastName && firstName && password) {
