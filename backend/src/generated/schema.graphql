@@ -18,7 +18,7 @@ type Error {
 
 type Mutation {
   createUser(email: String, firstName: String, lastName: String, password: String): Token
-  login(email: String, password: String, passwordConfirm: String): Token
+  login(email: String, password: String, passwordConfirm: String): Token!
 }
 
 type Query {

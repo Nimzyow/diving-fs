@@ -54,11 +54,14 @@ export const Mutation = extendType({
                         return { token: null, errors }
                     }
                 }
-
-                return null
+                errors.push({
+                    code: "INVALID_INPUTS",
+                    message: "Please enter valid inputs",
+                })
+                return { token: null, errors }
             },
         }),
-            t.field("login", {
+            t.nonNull.field("login", {
                 type: "Token",
                 args: {
                     email: stringArg(),
@@ -68,45 +71,45 @@ export const Mutation = extendType({
                 resolve: async (parent, args, context) => {
                     const errors: { code: string; message: string }[] = []
                     const { email, password, passwordConfirm } = args
-                    if (password && passwordConfirm && password === passwordConfirm) {
-                        if (email) {
-                            try {
-                                const user = await context.prisma.user.findUnique({ where: { email } })
-                                if (!user) {
-                                    errors.push({
-                                        code: "INVALID_CREDENTIALS",
-                                        message: "Please check your email and password",
-                                    })
-                                    return { token: null, errors }
-                                }
-                                const match = await bcrypt.compare(password, user.password)
-                                if (match) {
-                                    const payload = {
-                                        user: {
-                                            id: user.id,
-                                        },
-                                    }
 
-                                    return {
-                                        token: jwt.sign(payload, process.env.JWTSECRET || "", {
-                                            expiresIn: 360000,
-                                        }),
-                                        errors: [],
-                                    }
-                                } else {
-                                    errors.push({
-                                        code: "INVALID_CREDENTIALS",
-                                        message: "Please check your email and password",
-                                    })
-                                    return { token: null, errors }
-                                }
-                            } catch (error) {
-                                errors.push({
-                                    code: "GENERAL_ERROR",
-                                    message:
-                                        "Something went wrong, please refresh the page and try again",
-                                })
-                                return { token: null, errors }
+                    if (!password || !passwordConfirm || !email) {
+                        errors.push({
+                            code: "INVALID_INPUTS",
+                            message: "Please check for appropriate inputs",
+                        })
+                        return { token: null, errors }
+                    }
+
+                    if (password !== passwordConfirm) {
+                        errors.push({
+                            code: "INVALID_INPUTS",
+                            message: "Please check for password and password confirm mismatch",
+                        })
+                        return { token: null, errors }
+                    }
+
+                    try {
+                        const user = await context.prisma.user.findUnique({ where: { email } })
+                        if (!user) {
+                            errors.push({
+                                code: "INVALID_CREDENTIALS",
+                                message: "Please check your email and password",
+                            })
+                            return { token: null, errors }
+                        }
+                        const match = await bcrypt.compare(password, user.password)
+                        if (match) {
+                            const payload = {
+                                user: {
+                                    id: user.id,
+                                },
+                            }
+
+                            return {
+                                token: jwt.sign(payload, process.env.JWTSECRET || "", {
+                                    expiresIn: 360000,
+                                }),
+                                errors: [],
                             }
                         } else {
                             errors.push({
@@ -115,10 +118,10 @@ export const Mutation = extendType({
                             })
                             return { token: null, errors }
                         }
-                    } else {
+                    } catch (error) {
                         errors.push({
-                            code: "INVALID_INPUTS",
-                            message: "Please check for password and password confirm mismatch",
+                            code: "GENERAL_ERROR",
+                            message: "Something went wrong, please refresh the page and try again",
                         })
                         return { token: null, errors }
                     }

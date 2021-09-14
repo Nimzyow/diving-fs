@@ -87,7 +87,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createUser: NexusGenRootTypes['Token'] | null; // Token
-    login: NexusGenRootTypes['Token'] | null; // Token
+    login: NexusGenRootTypes['Token']; // Token!
   }
   Query: { // field return type
     me: NexusGenRootTypes['User'] | null; // User

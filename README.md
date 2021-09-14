@@ -4,7 +4,7 @@
 4. add auto completion to nexus resolver DONE
 5. write a test with nexus DONE
 6. pick up authorization token through context DONE
-7. Establish 1-1 relationship between user and profile
+7. Establish 1-1 relationship between user and Address
 
     NOTES:
 
