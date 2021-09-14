@@ -47,6 +47,7 @@ export const Mutation = extendType({
                             errors: [],
                         }
                     } catch (error) {
+                        console.log(error)
                         errors.push({
                             code: "INVALID_INPUTS",
                             message: "Please enter valid inputs",

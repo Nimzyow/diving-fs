@@ -6,7 +6,7 @@ import { makeSchema } from "nexus"
 import { Context, getUser } from "./context"
 import prisma from "./db"
 
-const schema = makeSchema({
+export const schema = makeSchema({
     types,
     outputs: {
         schema: path.join(__dirname, "/generated/schema.graphql"),
