@@ -8,7 +8,19 @@ export const User = objectType({
             t.model.lastName(),
             t.model.email(),
             t.model.isSuperUser(),
-            t.model.role()
+            t.model.role(),
+            t.field("address", {
+                type: "Address",
+                resolve: async (parent, args, context) => {
+                    return await context.prisma.user
+                        .findUnique({
+                            where: {
+                                id: parent.id,
+                            },
+                        })
+                        .address()
+                },
+            })
     },
 })
 

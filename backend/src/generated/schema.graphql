@@ -2,6 +2,15 @@
 ### Do not make changes to this file directly
 
 
+type Address {
+  country: String!
+  county: String
+  id: String!
+  line1: String!
+  line2: String
+  postcode: String!
+}
+
 type Error {
   code: String!
   message: String!
@@ -30,6 +39,7 @@ type Token {
 }
 
 type User {
+  address: Address
   email: String!
   firstName: String!
   id: String!

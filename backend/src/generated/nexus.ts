@@ -34,6 +34,14 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Address: { // root type
+    country: string; // String!
+    county?: string | null; // String
+    id: string; // String!
+    line1: string; // String!
+    line2?: string | null; // String
+    postcode: string; // String!
+  }
   Error: { // root type
     code: string; // String!
     message: string; // String!
@@ -65,6 +73,14 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  Address: { // field return type
+    country: string; // String!
+    county: string | null; // String
+    id: string; // String!
+    line1: string; // String!
+    line2: string | null; // String
+    postcode: string; // String!
+  }
   Error: { // field return type
     code: string; // String!
     message: string; // String!
@@ -82,6 +98,7 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
   }
   User: { // field return type
+    address: NexusGenRootTypes['Address'] | null; // Address
     email: string; // String!
     firstName: string; // String!
     id: string; // String!
@@ -92,6 +109,14 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  Address: { // field return type name
+    country: 'String'
+    county: 'String'
+    id: 'String'
+    line1: 'String'
+    line2: 'String'
+    postcode: 'String'
+  }
   Error: { // field return type name
     code: 'String'
     message: 'String'
@@ -109,6 +134,7 @@ export interface NexusGenFieldTypeNames {
     token: 'String'
   }
   User: { // field return type name
+    address: 'Address'
     email: 'String'
     firstName: 'String'
     id: 'String'

@@ -18,6 +18,18 @@ model User {
   isSuperUser Boolean   @default(false)
   password    String
   role        Role      @default(USER)
+  address     Address?
+}
+
+model Address {
+  id          String    @id @default(cuid())
+  line1       String
+  line2       String?
+  county      String?
+  postcode    String
+  country     String    @default("GB")
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?
 }
 
 enum Role {
