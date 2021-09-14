@@ -20,7 +20,6 @@ it("ensures that a user can be created", async () => {
       }
     }
   `)
-    console.log(createUserResult)
     // Snapshot that create user
     expect(createUserResult).toMatchInlineSnapshot(`
       Object {
