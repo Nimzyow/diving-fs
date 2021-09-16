@@ -5,6 +5,7 @@ import * as types from "./schema/index"
 import { makeSchema } from "nexus"
 import { Context, getUser } from "./context"
 import prisma from "./db"
+import { GraphQLDateTime } from "graphql-iso-date"
 
 export const schema = makeSchema({
     types,
@@ -16,7 +17,7 @@ export const schema = makeSchema({
         module: path.join(__dirname, "./context.ts"),
         export: "Context",
     },
-    plugins: [nexusPrisma()],
+    plugins: [nexusPrisma({ scalars: { DateTime: GraphQLDateTime } })],
     sourceTypes: {
         modules: [
             {

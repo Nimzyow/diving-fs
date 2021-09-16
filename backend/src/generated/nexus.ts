@@ -31,34 +31,47 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
   Address: { // root type
     country: string; // String!
     county?: string | null; // String
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     line1: string; // String!
     line2?: string | null; // String
     postcode: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Error: { // root type
     code: string; // String!
     message: string; // String!
   }
   Mutation: {};
+  Note: { // root type
+    body: string; // String!
+    createdAt?: string | null; // String
+    id: string; // String!
+    title: string; // String!
+    updatedAt?: string | null; // String
+    userId?: string | null; // String
+  }
   Query: {};
   Token: { // root type
     errors: NexusGenRootTypes['Error'][]; // [Error!]!
     token?: string | null; // String
   }
   User: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     firstName: string; // String!
     id: string; // String!
     isSuperUser: boolean; // Boolean!
     lastName: string; // String!
     role: NexusGenEnums['Role']; // Role!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
 }
 
@@ -76,10 +89,12 @@ export interface NexusGenFieldTypes {
   Address: { // field return type
     country: string; // String!
     county: string | null; // String
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     line1: string; // String!
     line2: string | null; // String
     postcode: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Error: { // field return type
     code: string; // String!
@@ -88,6 +103,14 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createUser: NexusGenRootTypes['Token'] | null; // Token
     login: NexusGenRootTypes['Token']; // Token!
+  }
+  Note: { // field return type
+    body: string; // String!
+    createdAt: string | null; // String
+    id: string; // String!
+    title: string; // String!
+    updatedAt: string | null; // String
+    userId: string | null; // String
   }
   Query: { // field return type
     me: NexusGenRootTypes['User'] | null; // User
@@ -99,12 +122,14 @@ export interface NexusGenFieldTypes {
   }
   User: { // field return type
     address: NexusGenRootTypes['Address'] | null; // Address
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     firstName: string; // String!
     id: string; // String!
     isSuperUser: boolean; // Boolean!
     lastName: string; // String!
     role: NexusGenEnums['Role']; // Role!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
 }
 
@@ -112,10 +137,12 @@ export interface NexusGenFieldTypeNames {
   Address: { // field return type name
     country: 'String'
     county: 'String'
+    createdAt: 'DateTime'
     id: 'String'
     line1: 'String'
     line2: 'String'
     postcode: 'String'
+    updatedAt: 'DateTime'
   }
   Error: { // field return type name
     code: 'String'
@@ -124,6 +151,14 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createUser: 'Token'
     login: 'Token'
+  }
+  Note: { // field return type name
+    body: 'String'
+    createdAt: 'String'
+    id: 'String'
+    title: 'String'
+    updatedAt: 'String'
+    userId: 'String'
   }
   Query: { // field return type name
     me: 'User'
@@ -135,12 +170,14 @@ export interface NexusGenFieldTypeNames {
   }
   User: { // field return type name
     address: 'Address'
+    createdAt: 'DateTime'
     email: 'String'
     firstName: 'String'
     id: 'String'
     isSuperUser: 'Boolean'
     lastName: 'String'
     role: 'Role'
+    updatedAt: 'DateTime'
   }
 }
 

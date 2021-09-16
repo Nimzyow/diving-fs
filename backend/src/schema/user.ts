@@ -9,6 +9,8 @@ export const User = objectType({
             t.model.email(),
             t.model.isSuperUser(),
             t.model.role(),
+            t.model.createdAt(),
+            t.model.updatedAt(),
             t.field("address", {
                 type: "Address",
                 resolve: async (parent, args, context) => {

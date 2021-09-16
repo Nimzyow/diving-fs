@@ -5,11 +5,18 @@
 type Address {
   country: String!
   county: String
+  createdAt: DateTime!
   id: String!
   line1: String!
   line2: String
   postcode: String!
+  updatedAt: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
 
 type Error {
   code: String!
@@ -19,6 +26,15 @@ type Error {
 type Mutation {
   createUser(email: String, firstName: String, lastName: String, password: String): Token
   login(email: String, password: String, passwordConfirm: String): Token!
+}
+
+type Note {
+  body: String!
+  createdAt: String
+  id: String!
+  title: String!
+  updatedAt: String
+  userId: String
 }
 
 type Query {
@@ -40,10 +56,12 @@ type Token {
 
 type User {
   address: Address
+  createdAt: DateTime!
   email: String!
   firstName: String!
   id: String!
   isSuperUser: Boolean!
   lastName: String!
   role: Role!
+  updatedAt: DateTime!
 }
