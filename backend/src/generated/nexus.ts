@@ -91,7 +91,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     me: NexusGenRootTypes['User'] | null; // User
-    users: NexusGenRootTypes['User'][]; // [User!]!
+    users: NexusGenRootTypes['User'][] | null; // [User!]
   }
   Token: { // field return type
     errors: NexusGenRootTypes['Error'][]; // [Error!]!

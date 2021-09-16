@@ -17,7 +17,7 @@ export const Query = extendType({
                 })
             },
         }),
-            t.nonNull.list.nonNull.field("users", {
+            t.list.nonNull.field("users", {
                 type: "User",
                 resolve: (parent, args, context) => {
                     return context.prisma.user.findMany()
