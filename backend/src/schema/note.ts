@@ -7,7 +7,7 @@ export const Note = objectType({
             t.model.title(),
             t.model.body(),
             t.model.userId(),
-            t.string("createdAt"),
-            t.string("updatedAt")
+            t.model.createdAt(),
+            t.model.updatedAt()
     },
 })

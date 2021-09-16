@@ -30,10 +30,10 @@ type Mutation {
 
 type Note {
   body: String!
-  createdAt: String
+  createdAt: DateTime!
   id: String!
   title: String!
-  updatedAt: String
+  updatedAt: DateTime!
   userId: String
 }
 

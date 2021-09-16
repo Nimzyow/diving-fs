@@ -52,10 +52,10 @@ export interface NexusGenObjects {
   Mutation: {};
   Note: { // root type
     body: string; // String!
-    createdAt?: string | null; // String
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     title: string; // String!
-    updatedAt?: string | null; // String
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
     userId?: string | null; // String
   }
   Query: {};
@@ -106,10 +106,10 @@ export interface NexusGenFieldTypes {
   }
   Note: { // field return type
     body: string; // String!
-    createdAt: string | null; // String
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     title: string; // String!
-    updatedAt: string | null; // String
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
     userId: string | null; // String
   }
   Query: { // field return type
@@ -154,10 +154,10 @@ export interface NexusGenFieldTypeNames {
   }
   Note: { // field return type name
     body: 'String'
-    createdAt: 'String'
+    createdAt: 'DateTime'
     id: 'String'
     title: 'String'
-    updatedAt: 'String'
+    updatedAt: 'DateTime'
     userId: 'String'
   }
   Query: { // field return type name
