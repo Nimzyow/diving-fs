@@ -1,4 +1,4 @@
-import { extendType, stringArg } from "nexus"
+import { extendType, nonNull, stringArg } from "nexus"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 
@@ -8,10 +8,10 @@ export const Mutation = extendType({
         t.field("createUser", {
             type: "Token",
             args: {
-                firstName: stringArg(),
-                lastName: stringArg(),
-                email: stringArg(),
-                password: stringArg(),
+                firstName: nonNull(stringArg()),
+                lastName: nonNull(stringArg()),
+                email: nonNull(stringArg()),
+                password: nonNull(stringArg()),
             },
             resolve: async (parent, args, context) => {
                 const errors: { code: string; message: string }[] = []
@@ -43,7 +43,9 @@ export const Mutation = extendType({
                         }
 
                         return {
-                            token: jwt.sign(payload, process.env.JWTSECRET || "", { expiresIn: 360000 }),
+                            token: jwt.sign(payload, process.env.JWTSECRET || "", {
+                                expiresIn: 360000,
+                            }),
                             errors: [],
                         }
                     } catch (error) {
@@ -65,14 +67,14 @@ export const Mutation = extendType({
             t.nonNull.field("login", {
                 type: "Token",
                 args: {
-                    email: stringArg(),
-                    password: stringArg(),
-                    passwordConfirm: stringArg(),
+                    email: nonNull(stringArg()),
+                    password: nonNull(stringArg()),
+                    passwordConfirm: nonNull(stringArg()),
                 },
                 resolve: async (parent, args, context) => {
                     const errors: { code: string; message: string }[] = []
                     const { email, password, passwordConfirm } = args
-
+                    console.log(email, password, passwordConfirm)
                     if (!password || !passwordConfirm || !email) {
                         errors.push({
                             code: "INVALID_INPUTS",
@@ -90,7 +92,9 @@ export const Mutation = extendType({
                     }
 
                     try {
-                        const user = await context.prisma.user.findUnique({ where: { email } })
+                        const user = await context.prisma.user.findUnique({
+                            where: { email },
+                        })
                         if (!user) {
                             errors.push({
                                 code: "INVALID_CREDENTIALS",

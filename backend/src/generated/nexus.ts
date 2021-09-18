@@ -184,15 +184,15 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Mutation: {
     createUser: { // args
-      email?: string | null; // String
-      firstName?: string | null; // String
-      lastName?: string | null; // String
-      password?: string | null; // String
+      email: string; // String!
+      firstName: string; // String!
+      lastName: string; // String!
+      password: string; // String!
     }
     login: { // args
-      email?: string | null; // String
-      password?: string | null; // String
-      passwordConfirm?: string | null; // String
+      email: string; // String!
+      password: string; // String!
+      passwordConfirm: string; // String!
     }
   }
 }
