@@ -102,6 +102,7 @@ export const Mutation = extendType({
                             return { token: null, errors }
                         }
                         const match = await bcrypt.compare(password, user.password)
+
                         if (match) {
                             const payload = {
                                 user: {

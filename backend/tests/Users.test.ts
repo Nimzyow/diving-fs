@@ -76,7 +76,7 @@ describe("User", () => {
 
     it("will throw error with no email, firstName, lastName or password", async () => {
         const sign = jest.spyOn(jwt, "sign")
-        sign.mockImplementation(() => () => "signed")
+        sign.mockImplementation(() => "signed")
 
         const server = new ApolloServer({
             schema,
@@ -104,13 +104,11 @@ describe("User", () => {
         })
     })
     it("can log in", async () => {
-        // create user
-        // use login mutation
         const sign = jest.spyOn(jwt, "sign")
-        sign.mockImplementation(() => () => "signed")
+        sign.mockImplementation(() => "signed")
 
         const compare = jest.spyOn(bcrypt, "compare")
-        compare.mockImplementation(() => () => true)
+        compare.mockImplementation(() => true)
 
         const server = new ApolloServer({
             schema,
@@ -118,17 +116,6 @@ describe("User", () => {
                 prisma: prismaMock,
             },
         })
-
-        // const createUser = await prismaMock.user.upsert({
-        //     where: { email: "test@example.com" },
-        //     update: {},
-        //     create: {
-        //         firstName: "Nima",
-        //         lastName: "adasd",
-        //         email: "test@example.com",
-        //         password: "ABCdefgh",
-        //     },
-        // })
 
         const dateNow = new Date()
 
@@ -157,6 +144,54 @@ describe("User", () => {
 
         expect(loginUserResult.data).toEqual({
             login: { token: "signed", errors: [] },
+        })
+    })
+    it("fails login on wrong password", async () => {
+        const sign = jest.spyOn(jwt, "sign")
+        sign.mockImplementation(() => () => "signed")
+
+        const compare = jest.spyOn(bcrypt, "compare")
+        compare.mockImplementation(() => false)
+
+        const server = new ApolloServer({
+            schema,
+            context: {
+                prisma: prismaMock,
+            },
+        })
+
+        const dateNow = new Date()
+
+        const user: User = {
+            id: "1",
+            firstName: "Rich",
+            lastName: "asdsads",
+            email: "adasd@asdas.com",
+            password: "asdasdasdas",
+            isSuperUser: false,
+            role: "USER",
+            createdAt: dateNow,
+            updatedAt: dateNow,
+        }
+
+        prismaMock.user.findUnique.mockResolvedValue(user)
+
+        const loginUserResult = await server.executeOperation({
+            query: LOGIN_USER,
+            variables: {
+                email: "test@example.com",
+                password: "ABCdefgh",
+                passwordConfirm: "ABCdefgh",
+            },
+        })
+
+        expect(loginUserResult.data).toEqual({
+            login: {
+                token: null,
+                errors: [
+                    { code: "INVALID_CREDENTIALS", message: "Please check your email and password" },
+                ],
+            },
         })
     })
 })
