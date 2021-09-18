@@ -74,7 +74,6 @@ export const Mutation = extendType({
                 resolve: async (parent, args, context) => {
                     const errors: { code: string; message: string }[] = []
                     const { email, password, passwordConfirm } = args
-                    console.log(email, password, passwordConfirm)
                     if (!password || !passwordConfirm || !email) {
                         errors.push({
                             code: "INVALID_INPUTS",

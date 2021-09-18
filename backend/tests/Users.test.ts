@@ -125,5 +125,10 @@ describe("User", () => {
         expect(loginUserResult.data).toEqual({
             login: { token: "signed", errors: [] },
         })
+        await prisma.user.delete({
+            where: {
+                id: createUser.id,
+            },
+        })
     })
 })
