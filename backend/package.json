@@ -1,9 +1,9 @@
 {
     "name": "backend",
     "version": "1.0.0",
-    "description": "a node GraphQL backend with Apollo server, prisma (orm) and nexus (code first approach to creating SDL) backend",
+    "description": "A node GraphQL backend with Apollo server, prisma (orm) and nexus (code first approach to creating SDL) backend",
     "author": {
-        "name": "Nima",
+        "name": "Nima Soufiani",
         "email": "nimasoufiani@gmail.com",
         "url": "https://www.linkedin.com/in/nima-soufiani-555a76198/"
     },
