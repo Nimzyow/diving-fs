@@ -38,6 +38,7 @@
         "express": "^4.17.1",
         "graphql": "^15.5.3",
         "graphql-iso-date": "^3.6.1",
+        "jest-mock-extended": "^2.0.2-beta2",
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.21",
         "nexus": "^1.1.0",

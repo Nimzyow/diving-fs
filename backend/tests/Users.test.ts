@@ -2,7 +2,9 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import { ApolloServer, gql } from "apollo-server"
 import { schema } from "../src/server"
-import prisma from "../src/db"
+// import prisma from "../src/db"
+import { prismaMock } from "../singleton"
+import { User } from ".prisma/client"
 
 const LOGIN_USER = gql`
     mutation loginUser($email: String!, $password: String!, $passwordConfirm: String!) {
@@ -36,11 +38,26 @@ describe("User", () => {
         const server = new ApolloServer({
             schema,
             context: {
-                prisma: prisma,
+                prisma: prismaMock,
             },
         })
 
-        // ! define return type and send it as a generic inside request
+        const dateNow = new Date()
+
+        const user: User = {
+            id: "1",
+            firstName: "Rich",
+            lastName: "asdsads",
+            email: "adasd@asdas.com",
+            password: "asdasdasdas",
+            isSuperUser: false,
+            role: "USER",
+            createdAt: dateNow,
+            updatedAt: dateNow,
+        }
+
+        prismaMock.user.upsert.mockResolvedValue(user)
+
         // Create a new user
         const createUserResult = await server.executeOperation({
             query: CREATE_USER,
@@ -64,7 +81,7 @@ describe("User", () => {
         const server = new ApolloServer({
             schema,
             context: {
-                prisma: prisma,
+                prisma: prismaMock,
             },
         })
 
@@ -98,20 +115,36 @@ describe("User", () => {
         const server = new ApolloServer({
             schema,
             context: {
-                prisma: prisma,
+                prisma: prismaMock,
             },
         })
 
-        const createUser = await prisma.user.upsert({
-            where: { email: "test@example.com" },
-            update: {},
-            create: {
-                firstName: "Nima",
-                lastName: "adasd",
-                email: "test@example.com",
-                password: "ABCdefgh",
-            },
-        })
+        // const createUser = await prismaMock.user.upsert({
+        //     where: { email: "test@example.com" },
+        //     update: {},
+        //     create: {
+        //         firstName: "Nima",
+        //         lastName: "adasd",
+        //         email: "test@example.com",
+        //         password: "ABCdefgh",
+        //     },
+        // })
+
+        const dateNow = new Date()
+
+        const user: User = {
+            id: "1",
+            firstName: "Rich",
+            lastName: "asdsads",
+            email: "adasd@asdas.com",
+            password: "asdasdasdas",
+            isSuperUser: false,
+            role: "USER",
+            createdAt: dateNow,
+            updatedAt: dateNow,
+        }
+
+        prismaMock.user.findUnique.mockResolvedValue(user)
 
         const loginUserResult = await server.executeOperation({
             query: LOGIN_USER,
@@ -124,11 +157,6 @@ describe("User", () => {
 
         expect(loginUserResult.data).toEqual({
             login: { token: "signed", errors: [] },
-        })
-        await prisma.user.delete({
-            where: {
-                id: createUser.id,
-            },
         })
     })
 })
