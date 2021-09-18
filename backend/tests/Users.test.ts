@@ -58,7 +58,6 @@ describe("User", () => {
     const sign = jest.spyOn(jwt, "sign");
     sign.mockImplementation(() => () => "signed");
 
-    // ! define return type and send it as a generic inside request
     // Create a new user
     const createUserResult = await server.executeOperation({
       query: CREATE_USER,
