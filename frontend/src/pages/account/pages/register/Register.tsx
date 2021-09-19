@@ -4,7 +4,7 @@ import { useCreateUserMutation } from "../../../../generated/graphql"
 const Register = (): JSX.Element => {
     const [createUserMutation, { data, loading, error, called }] = useCreateUserMutation({
         variables: {
-            email: "asda@asdas.com",
+            email: "asda@asdas1.com",
             firstName: "asdas",
             lastName: "asdasd",
             password: "asdasdsadas",
