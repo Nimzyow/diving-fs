@@ -18,12 +18,12 @@ export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
         }),
         new ApolloLink((operation, forward) => {
             operation.setContext(() => ({
-                uri: `${"/graphql"}?${operation.operationName}`,
+                uri: `http://localhost:4000/`,
             }))
             return forward ? forward(operation) : null
         }),
         createUploadLink({
-            uri: "/graphql",
+            uri: "http://localhost:4000/",
             credentials: "include",
         }) as unknown as ApolloLink,
     ]),
