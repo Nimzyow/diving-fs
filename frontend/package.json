@@ -13,6 +13,7 @@
     "main": "index.js",
     "scripts": {
         "webpack": "webpack",
+        "type-watch": "tsc --watch --noEmit --project './tsconfig.json'",
         "start": "webpack serve --hot",
         "test": "echo \"Error: no test specified\" && exit 1",
         "generator": "graphql-codegen --config codegen.yml"
