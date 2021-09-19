@@ -1,7 +1,7 @@
 import React from "react"
-import { useLoginMutationMutation } from "../../../generated/graphql"
+import { useLoginMutation } from "../../../generated/graphql"
 const Login = () => {
-    const [login, { data, loading, error }] = useLoginMutationMutation()
+    const [login, { data, loading, error }] = useLoginMutation()
 
     const onSubmit = async () => {
         const result = await login({
