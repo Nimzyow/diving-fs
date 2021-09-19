@@ -52,6 +52,7 @@
         "@apollo/client": "^3.4.12",
         "@types/apollo-upload-client": "^14.1.0",
         "@types/react-dom": "^17.0.9",
+        "apollo": "^2.33.6",
         "apollo-upload-client": "^16.0.0",
         "graphql": "^15.5.3",
         "prettier": "^2.4.1",
