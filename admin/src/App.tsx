@@ -1,9 +1,13 @@
 import React from "react"
 
+import { Admin, Resource } from "react-admin"
+import dataProvider from "./utils/dataProvider"
+import users from "./users"
+
 export const App = () => {
     return (
-        <div>
-            <p>Hello mate</p>
-        </div>
+        <Admin dataProvider={dataProvider}>
+            <Resource name="users" {...users} />
+        </Admin>
     )
 }

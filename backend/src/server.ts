@@ -97,7 +97,7 @@ async function startApolloServer() {
     // More required logic for integrating with Express
     await server.start()
     const corsOptions = {
-        origin: "http://localhost:3000",
+        origin: "*",
         credentials: true,
     }
 

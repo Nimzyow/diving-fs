@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs"
 import { ApolloServer, gql } from "apollo-server"
 import { schema } from "../src/server"
 // import prisma from "../src/db"
-import { prismaMock } from "../singleton"
+import { prismaMock } from "./singleton"
 import { User } from ".prisma/client"
 
 const LOGIN_USER = gql`
