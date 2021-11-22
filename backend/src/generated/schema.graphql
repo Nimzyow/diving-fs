@@ -21,6 +21,7 @@ type Error {
 }
 
 type Mutation {
+  createAddress(county: String, line1: String!, line2: String, postcode: String!): Success
   createUser(email: String!, firstName: String!, lastName: String!, password: String!): Token
   login(email: String!, password: String!, passwordConfirm: String!): Token!
 }
@@ -44,6 +45,10 @@ enum Role {
   STAFF
   SUPER_USER
   USER
+}
+
+type Success {
+  success: Boolean!
 }
 
 type Token {

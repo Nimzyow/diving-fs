@@ -131,6 +131,43 @@ export const Mutation = extendType({
                         return { token: null, errors }
                     }
                 },
+            }),
+            t.field("createAddress", {
+                type: "Success",
+                args: {
+                    line1: nonNull(stringArg()),
+                    line2: stringArg(),
+                    county: stringArg(),
+                    postcode: nonNull(stringArg()),
+                },
+                resolve: async (parent, args, context) => {
+                    const { line1, line2, county, postcode } = args
+
+                    const userId = context.user?.id
+                    if (!userId) {
+                        return {
+                            success: false,
+                        }
+                    }
+                    try {
+                        const address = await context.prisma.address.upsert({
+                            where: {},
+                            update: {},
+                            create: {
+                                line1,
+                                line2,
+                                county,
+                                postcode,
+                                userId: userId,
+                            },
+                        })
+                    } catch (error) {
+                        console.log(error)
+                    }
+                    return {
+                        success: true,
+                    }
+                },
             })
     },
 })

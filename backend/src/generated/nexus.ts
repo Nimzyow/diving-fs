@@ -59,6 +59,9 @@ export interface NexusGenObjects {
     userId?: string | null; // String
   }
   Query: {};
+  Success: { // root type
+    success: boolean; // Boolean!
+  }
   Token: { // root type
     errors: NexusGenRootTypes['Error'][]; // [Error!]!
     token?: string | null; // String
@@ -101,6 +104,7 @@ export interface NexusGenFieldTypes {
     message: string; // String!
   }
   Mutation: { // field return type
+    createAddress: NexusGenRootTypes['Success'] | null; // Success
     createUser: NexusGenRootTypes['Token'] | null; // Token
     login: NexusGenRootTypes['Token']; // Token!
   }
@@ -115,6 +119,9 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     me: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][] | null; // [User!]
+  }
+  Success: { // field return type
+    success: boolean; // Boolean!
   }
   Token: { // field return type
     errors: NexusGenRootTypes['Error'][]; // [Error!]!
@@ -149,6 +156,7 @@ export interface NexusGenFieldTypeNames {
     message: 'String'
   }
   Mutation: { // field return type name
+    createAddress: 'Success'
     createUser: 'Token'
     login: 'Token'
   }
@@ -163,6 +171,9 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     me: 'User'
     users: 'User'
+  }
+  Success: { // field return type name
+    success: 'Boolean'
   }
   Token: { // field return type name
     errors: 'Error'
@@ -183,6 +194,12 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createAddress: { // args
+      county?: string | null; // String
+      line1: string; // String!
+      line2?: string | null; // String
+      postcode: string; // String!
+    }
     createUser: { // args
       email: string; // String!
       firstName: string; // String!

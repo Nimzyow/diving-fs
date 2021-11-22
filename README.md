@@ -10,3 +10,13 @@
    NOTES:
 
 It seems that nexus automatically generates the GQL schema and nexus types when you spin up the server. currently with `npx nodemon`
+
+- commands to keep in mind when working with prisma
+
+npx prisma migrate dev -- name A_NAME_FOR_THE_MIGRATION
+
+npx prisma migrate dev --create-only
+
+- To generate your prisma client
+
+npx prisma generate
