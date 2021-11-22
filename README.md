@@ -20,3 +20,7 @@ npx prisma migrate dev --create-only
 - To generate your prisma client
 
 npx prisma generate
+
+- To open prisma studio
+
+npx prisma studio
