@@ -150,8 +150,10 @@ export const Mutation = extendType({
                         }
                     }
                     try {
-                        const address = await context.prisma.address.upsert({
-                            where: {},
+                        await context.prisma.address.upsert({
+                            where: {
+                                userId,
+                            },
                             update: {},
                             create: {
                                 line1,
