@@ -23,12 +23,8 @@ export const Mutation = extendType({
 
                         const hashedPassword = await bcrypt.hash(password, salt)
 
-                        const user = await context.prisma.user.upsert({
-                            where: {
-                                email,
-                            },
-                            update: {},
-                            create: {
+                        const user = await context.prisma.user.create({
+                            data: {
                                 email,
                                 firstName,
                                 lastName,

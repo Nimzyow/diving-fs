@@ -6,6 +6,8 @@ services:
     ports:
       - "4000:4000"
       - "5555:5555"
+    environment:
+      DB_URL: ${DB_URL}
     volumes:
       - ./backend:/app/backend
       - /app/backend/node_modules

@@ -56,6 +56,11 @@ import { makeSchema } from "nexus"
 import { Context, getUser } from "./context"
 import prisma from "./db"
 
+console.log("*********")
+console.log(process.env.DB_URL)
+console.log(process.env.POSTGRES_USER)
+console.log("*********")
+
 export const schema = makeSchema({
     types,
     outputs: {
