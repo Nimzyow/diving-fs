@@ -56,7 +56,7 @@ describe("User", () => {
             updatedAt: dateNow,
         }
 
-        prismaMock.user.upsert.mockResolvedValue(user)
+        prismaMock.user.create.mockResolvedValue(user)
 
         // Create a new user
         const createUserResult = await server.executeOperation({

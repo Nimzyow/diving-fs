@@ -4,7 +4,7 @@ import { DeepMockProxy } from "jest-mock-extended/lib/cjs/Mock"
 
 import prisma from "../src/db"
 
-jest.mock("./src/db", () => ({
+jest.mock("../src/db", () => ({
     __esModule: true,
     default: mockDeep<PrismaClient>(),
 }))
