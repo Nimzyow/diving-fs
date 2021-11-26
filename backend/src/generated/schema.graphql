@@ -21,8 +21,10 @@ type Error {
 }
 
 type Mutation {
+  allUsersForAdminUI(page: String, perPage: String, sortField: String, sortOrder: String): [User]
   createAddress(county: String, line1: String!, line2: String, postcode: String!): Success
   createUser(email: String!, firstName: String!, lastName: String!, password: String!): Token
+  createUserForAdminUI(email: String!, firstName: String!, lastName: String!, password: String!): User
   login(email: String!, password: String!, passwordConfirm: String!): Token!
 }
 

@@ -104,8 +104,10 @@ export interface NexusGenFieldTypes {
     message: string; // String!
   }
   Mutation: { // field return type
+    allUsersForAdminUI: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     createAddress: NexusGenRootTypes['Success'] | null; // Success
     createUser: NexusGenRootTypes['Token'] | null; // Token
+    createUserForAdminUI: NexusGenRootTypes['User'] | null; // User
     login: NexusGenRootTypes['Token']; // Token!
   }
   Note: { // field return type
@@ -156,8 +158,10 @@ export interface NexusGenFieldTypeNames {
     message: 'String'
   }
   Mutation: { // field return type name
+    allUsersForAdminUI: 'User'
     createAddress: 'Success'
     createUser: 'Token'
+    createUserForAdminUI: 'User'
     login: 'Token'
   }
   Note: { // field return type name
@@ -194,6 +198,12 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    allUsersForAdminUI: { // args
+      page?: string | null; // String
+      perPage?: string | null; // String
+      sortField?: string | null; // String
+      sortOrder?: string | null; // String
+    }
     createAddress: { // args
       county?: string | null; // String
       line1: string; // String!
@@ -201,6 +211,12 @@ export interface NexusGenArgTypes {
       postcode: string; // String!
     }
     createUser: { // args
+      email: string; // String!
+      firstName: string; // String!
+      lastName: string; // String!
+      password: string; // String!
+    }
+    createUserForAdminUI: { // args
       email: string; // String!
       firstName: string; // String!
       lastName: string; // String!

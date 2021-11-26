@@ -1,4 +1,4 @@
-import { extendType, nonNull, stringArg } from "nexus"
+import { extendType, nonNull, stringArg, list } from "nexus"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 
@@ -60,74 +60,111 @@ export const Mutation = extendType({
                 return { token: null, errors }
             },
         }),
-            t.nonNull.field("login", {
-                type: "Token",
+            t.field("createUserForAdminUI", {
+                type: "User",
                 args: {
+                    firstName: nonNull(stringArg()),
+                    lastName: nonNull(stringArg()),
                     email: nonNull(stringArg()),
                     password: nonNull(stringArg()),
-                    passwordConfirm: nonNull(stringArg()),
                 },
                 resolve: async (parent, args, context) => {
-                    const errors: { code: string; message: string }[] = []
-                    const { email, password, passwordConfirm } = args
-                    if (!password || !passwordConfirm || !email) {
-                        errors.push({
-                            code: "INVALID_INPUTS",
-                            message: "Please check for appropriate inputs",
-                        })
-                        return { token: null, errors }
+                    const { email, password, firstName, lastName } = args
+                    if (!password || !email) {
+                        return null
                     }
-
-                    if (password !== passwordConfirm) {
-                        errors.push({
-                            code: "INVALID_INPUTS",
-                            message: "Please check for password and password confirm mismatch",
-                        })
-                        return { token: null, errors }
-                    }
-
-                    try {
-                        const user = await context.prisma.user.findUnique({
-                            where: { email },
-                        })
-                        if (!user) {
-                            errors.push({
-                                code: "INVALID_CREDENTIALS",
-                                message: "Please check your email and password",
-                            })
-                            return { token: null, errors }
-                        }
-                        const match = await bcrypt.compare(password, user.password)
-
-                        if (match) {
-                            const payload = {
-                                user: {
-                                    id: user.id,
-                                },
-                            }
-
-                            return {
-                                token: jwt.sign(payload, process.env.JWTSECRET || "", {
-                                    expiresIn: 360000,
-                                }),
-                                errors: [],
-                            }
-                        } else {
-                            errors.push({
-                                code: "INVALID_CREDENTIALS",
-                                message: "Please check your email and password",
-                            })
-                            return { token: null, errors }
-                        }
-                    } catch (error) {
-                        errors.push({
-                            code: "GENERAL_ERROR",
-                            message: "Something went wrong, please refresh the page and try again",
-                        })
-                        return { token: null, errors }
-                    }
+                    const user = await context.prisma.user.create({
+                        data: {
+                            firstName,
+                            lastName,
+                            email,
+                            password,
+                        },
+                    })
+                    return user
                 },
             }),
+            t.field("allUsersForAdminUI", {
+                type: list("User"),
+                args: {
+                    page: stringArg(),
+                    perPage: stringArg(),
+                    sortField: stringArg(),
+                    sortOrder: stringArg(),
+                },
+                resolve: async (parent, args, context) => {
+                    const allUsers = await context.prisma.user.findMany()
+                    return allUsers
+                },
+            })
+        t.nonNull.field("login", {
+            type: "Token",
+            args: {
+                email: nonNull(stringArg()),
+                password: nonNull(stringArg()),
+                passwordConfirm: nonNull(stringArg()),
+            },
+            resolve: async (parent, args, context) => {
+                const errors: { code: string; message: string }[] = []
+                const { email, password, passwordConfirm } = args
+                if (!password || !passwordConfirm || !email) {
+                    errors.push({
+                        code: "INVALID_INPUTS",
+                        message: "Please check for appropriate inputs",
+                    })
+                    return { token: null, errors }
+                }
+
+                if (password !== passwordConfirm) {
+                    errors.push({
+                        code: "INVALID_INPUTS",
+                        message: "Please check for password and password confirm mismatch",
+                    })
+                    return { token: null, errors }
+                }
+
+                try {
+                    const user = await context.prisma.user.findUnique({
+                        where: { email },
+                    })
+                    if (!user) {
+                        errors.push({
+                            code: "INVALID_CREDENTIALS",
+                            message: "Please check your email and password",
+                        })
+                        return { token: null, errors }
+                    }
+                    const match = await bcrypt.compare(password, user.password)
+
+                    if (match) {
+                        const payload = {
+                            user: {
+                                id: user.id,
+                            },
+                        }
+
+                        return {
+                            token: jwt.sign(payload, process.env.JWTSECRET || "", {
+                                expiresIn: 360000,
+                            }),
+                            errors: [],
+                        }
+                    } else {
+                        errors.push({
+                            code: "INVALID_CREDENTIALS",
+                            message: "Please check your email and password",
+                        })
+                        return { token: null, errors }
+                    }
+                } catch (error) {
+                    errors.push({
+                        code: "GENERAL_ERROR",
+                        message: "Something went wrong, please refresh the page and try again",
+                    })
+                    return { token: null, errors }
+                }
+            },
+        }),
             t.field("createAddress", {
                 type: "Success",
                 args: {
