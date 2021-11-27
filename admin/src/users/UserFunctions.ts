@@ -185,7 +185,7 @@ const UserFunctions = {
     const { id } = params;
 
     const mutation = gql`
-      mutation deleteUser($id: String!) {
+      mutation DeleteUserForAdminUI($id: String!) {
         deleteUserForAdminUI(id: $id) {
           id
           firstName
@@ -202,9 +202,12 @@ const UserFunctions = {
     const client = new GraphQLClient(endpoint, { headers: {} });
 
     try {
-      const response = await client.request(mutation, variables);
+      const response = await client.request<
+        { deleteUserForAdminUI: CreateArgs["data"] & { id: string } },
+        { id: string }
+      >(mutation, variables);
 
-      return { data: response.updateUserForAdminUI };
+      return { data: response.deleteUserForAdminUI };
     } catch (error) {
       console.log(error);
     }

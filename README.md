@@ -5,8 +5,8 @@
 5. write a test with nexus DONE
 6. pick up authorization token through context DONE
 7. Establish 1-1 relationship between user and Address DONE
-8. createUserForAdminUI in frontend must include total count.
-9. update user backend and frontend for admin ui
+8. createUserForAdminUI in frontend must include total count. DONE
+9. update user backend and frontend for admin ui DONE
 10. delete user backend and frontend for admin ui
 11. delete many users backend and frontend for admin ui
 12. dockerize admin

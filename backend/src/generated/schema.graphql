@@ -31,6 +31,7 @@ type Mutation {
   createAddress(county: String, line1: String!, line2: String, postcode: String!): Success
   createUser(email: String!, firstName: String!, lastName: String!, password: String!): Token
   createUserForAdminUI(inputs: CreateUserInputs!): User
+  deleteUserForAdminUI(id: String!): User
   login(email: String!, password: String!, passwordConfirm: String!): Token!
   updateUserForAdminUI(id: String!, inputs: UpdateUserInputs!): User
 }

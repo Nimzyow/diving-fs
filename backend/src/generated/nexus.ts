@@ -119,6 +119,7 @@ export interface NexusGenFieldTypes {
     createAddress: NexusGenRootTypes['Success'] | null; // Success
     createUser: NexusGenRootTypes['Token'] | null; // Token
     createUserForAdminUI: NexusGenRootTypes['User'] | null; // User
+    deleteUserForAdminUI: NexusGenRootTypes['User'] | null; // User
     login: NexusGenRootTypes['Token']; // Token!
     updateUserForAdminUI: NexusGenRootTypes['User'] | null; // User
   }
@@ -175,6 +176,7 @@ export interface NexusGenFieldTypeNames {
     createAddress: 'Success'
     createUser: 'Token'
     createUserForAdminUI: 'User'
+    deleteUserForAdminUI: 'User'
     login: 'Token'
     updateUserForAdminUI: 'User'
   }
@@ -228,6 +230,9 @@ export interface NexusGenArgTypes {
     }
     createUserForAdminUI: { // args
       inputs: NexusGenInputs['CreateUserInputs']; // CreateUserInputs!
+    }
+    deleteUserForAdminUI: { // args
+      id: string; // String!
     }
     login: { // args
       email: string; // String!

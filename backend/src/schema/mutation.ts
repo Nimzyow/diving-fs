@@ -131,6 +131,20 @@ export const Mutation = extendType({
                     return user
                 },
             }),
+            t.field("deleteUserForAdminUI", {
+                type: "User",
+                args: {
+                    id: nonNull(stringArg()),
+                },
+                resolve: async (parent, args, context) => {
+                    const user = await context.prisma.user.delete({
+                        where: {
+                            id: args.id,
+                        },
+                    })
+                    return user
+                },
+            }),
             t.nonNull.field("login", {
                 type: "Token",
                 args: {
