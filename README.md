@@ -5,9 +5,14 @@
 5. write a test with nexus DONE
 6. pick up authorization token through context DONE
 7. Establish 1-1 relationship between user and Address DONE
-8. Need to establish test db when test is running so that it does not pollute the dev db
+8. createUserForAdminUI in frontend must include total count.
+9. update user backend and frontend for admin ui
+10. delete user backend and frontend for admin ui
+11. delete many users backend and frontend for admin ui
+12. dockerize admin
+13. dockerize frontend
 
-   NOTES:
+NOTES:
 
 It seems that nexus automatically generates the GQL schema and nexus types when you spin up the server. currently with `npx nodemon`
 

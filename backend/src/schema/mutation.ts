@@ -2,13 +2,23 @@ import { arg, extendType, nonNull, stringArg, inputObjectType } from "nexus"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 
-export const createUserInputs = inputObjectType({
-    name: "createUserInputs",
+export const CreateUserInputs = inputObjectType({
+    name: "CreateUserInputs",
     definition(t) {
         t.nonNull.string("firstName"),
             t.nonNull.string("lastName"),
             t.nonNull.string("email"),
             t.nonNull.string("password")
+    },
+})
+
+export const UpdateUserInputs = inputObjectType({
+    name: "UpdateUserInputs",
+    definition(t) {
+        t.nonNull.string("id"),
+            t.nonNull.string("firstName"),
+            t.nonNull.string("lastName"),
+            t.nonNull.string("email")
     },
 })
 
@@ -75,7 +85,7 @@ export const Mutation = extendType({
                 args: {
                     inputs: nonNull(
                         arg({
-                            type: "createUserInputs",
+                            type: "CreateUserInputs",
                         })
                     ),
                 },
@@ -90,6 +100,32 @@ export const Mutation = extendType({
                             lastName,
                             email,
                             password,
+                        },
+                    })
+                    return user
+                },
+            }),
+            t.field("updateUserForAdminUI", {
+                type: "User",
+                args: {
+                    inputs: nonNull(
+                        arg({
+                            type: "UpdateUserInputs",
+                        })
+                    ),
+                    id: nonNull(stringArg()),
+                },
+                resolve: async (parent, args, context) => {
+                    // const { email, firstName, lastName } = args.inputs
+                    // if (!email) {
+                    //     return null
+                    // }
+                    const user = await context.prisma.user.update({
+                        where: {
+                            id: args.id,
+                        },
+                        data: {
+                            ...args.inputs,
                         },
                     })
                     return user

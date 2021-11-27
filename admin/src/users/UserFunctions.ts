@@ -25,11 +25,11 @@ type GetOneArgs = {
   id: string;
 };
 
-type OptionalCreateUserArgs = Partial<CreateArgs["data"] & { id?: string }>;
+type OptionalCreateUserArgs = Partial<CreateArgs["data"]>;
 
 type Update = {
   id: string;
-  data: OptionalCreateUserArgs;
+  data: OptionalCreateUserArgs & { id: string };
   previousData: OptionalCreateUserArgs;
 };
 
@@ -42,7 +42,7 @@ const UserFunctions = {
     const { data } = params;
 
     const mutation = gql`
-      mutation createUserForAdminUI($inputs: createUserInputs!) {
+      mutation CreateUserForAdminUI($inputs: CreateUserInputs!) {
         createUserForAdminUI(inputs: $inputs) {
           id
           firstName
@@ -98,10 +98,15 @@ const UserFunctions = {
 
     const client = new GraphQLClient(endpoint, { headers: {} });
     try {
-      const response = await client.request(query, variables);
+      const response = await client.request<
+        {
+          allUsersForAdminUI: (CreateArgs & { id: string })[];
+        },
+        typeof variables
+      >(query, variables);
       const toReturn = {
         data: response.allUsersForAdminUI,
-        total: 1,
+        total: response.allUsersForAdminUI.length,
       };
       return toReturn;
     } catch (error) {
@@ -151,11 +156,9 @@ const UserFunctions = {
   },
   update: async (params: Update) => {
     const { id, data } = params;
-    delete data.id;
-
     const mutation = gql`
-      mutation updateUserForAdminUI($id: String!, $data: UpdateUserInput!) {
-        updateUserForAdminUI(id: $id, data: $data) {
+      mutation UpdateUserForAdminUI($id: String!, $inputs: UpdateUserInputs!) {
+        updateUserForAdminUI(id: $id, inputs: $inputs) {
           id
           firstName
           lastName
@@ -166,7 +169,7 @@ const UserFunctions = {
 
     const variables = {
       id: id,
-      data: data,
+      inputs: data,
     };
 
     const client = new GraphQLClient(endpoint, { headers: {} });

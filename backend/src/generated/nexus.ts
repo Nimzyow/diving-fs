@@ -19,11 +19,17 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  createUserInputs: { // input type
+  CreateUserInputs: { // input type
     email: string; // String!
     firstName: string; // String!
     lastName: string; // String!
     password: string; // String!
+  }
+  UpdateUserInputs: { // input type
+    email: string; // String!
+    firstName: string; // String!
+    id: string; // String!
+    lastName: string; // String!
   }
 }
 
@@ -114,6 +120,7 @@ export interface NexusGenFieldTypes {
     createUser: NexusGenRootTypes['Token'] | null; // Token
     createUserForAdminUI: NexusGenRootTypes['User'] | null; // User
     login: NexusGenRootTypes['Token']; // Token!
+    updateUserForAdminUI: NexusGenRootTypes['User'] | null; // User
   }
   Note: { // field return type
     body: string; // String!
@@ -169,6 +176,7 @@ export interface NexusGenFieldTypeNames {
     createUser: 'Token'
     createUserForAdminUI: 'User'
     login: 'Token'
+    updateUserForAdminUI: 'User'
   }
   Note: { // field return type name
     body: 'String'
@@ -219,12 +227,16 @@ export interface NexusGenArgTypes {
       password: string; // String!
     }
     createUserForAdminUI: { // args
-      inputs: NexusGenInputs['createUserInputs']; // createUserInputs!
+      inputs: NexusGenInputs['CreateUserInputs']; // CreateUserInputs!
     }
     login: { // args
       email: string; // String!
       password: string; // String!
       passwordConfirm: string; // String!
+    }
+    updateUserForAdminUI: { // args
+      id: string; // String!
+      inputs: NexusGenInputs['UpdateUserInputs']; // UpdateUserInputs!
     }
   }
   Query: {
