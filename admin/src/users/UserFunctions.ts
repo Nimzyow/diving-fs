@@ -71,10 +71,10 @@ const UserFunctions = {
   getList: async (params: GetListArgs) => {
     const query = gql`
       query allUsersForAdminUI(
-        $page: Int
-        $perPage: Int
-        $sortField: String
-        $sortOrder: String
+        $page: Int!
+        $perPage: Int!
+        $sortField: String!
+        $sortOrder: String!
       ) {
         allUsersForAdminUI(
           page: $page

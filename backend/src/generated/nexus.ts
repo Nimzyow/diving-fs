@@ -246,10 +246,10 @@ export interface NexusGenArgTypes {
   }
   Query: {
     allUsersForAdminUI: { // args
-      page?: number | null; // Int
-      perPage?: number | null; // Int
-      sortField?: string | null; // String
-      sortOrder?: string | null; // String
+      page: number; // Int!
+      perPage: number; // Int!
+      sortField: string; // String!
+      sortOrder: string; // String!
     }
     getUserForAdminUI: { // args
       id: string; // String!

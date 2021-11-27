@@ -26,13 +26,19 @@ export const Query = extendType({
             t.field("allUsersForAdminUI", {
                 type: list("User"),
                 args: {
-                    page: intArg(),
-                    perPage: intArg(),
-                    sortField: stringArg(),
-                    sortOrder: stringArg(),
+                    page: nonNull(intArg()),
+                    perPage: nonNull(intArg()),
+                    sortField: nonNull(stringArg()),
+                    sortOrder: nonNull(stringArg()),
                 },
                 resolve: async (parent, args, context) => {
-                    const allUsers = await context.prisma.user.findMany()
+                    const allUsers = await context.prisma.user.findMany({
+                        skip: args.page - 1,
+                        take: args.perPage - 1,
+                        orderBy: {
+                            [args.sortField]: args.sortOrder.toLowerCase(),
+                        },
+                    })
                     return allUsers
                 },
             }),
