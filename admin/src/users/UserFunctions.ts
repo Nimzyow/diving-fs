@@ -1,7 +1,44 @@
 import { GraphQLClient, gql } from "graphql-request";
 import { endpoint } from "../utils/config";
+
+type CreateArgs = {
+  data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+  };
+};
+
+type GetListArgs = {
+  pagination: {
+    page: number;
+    perPage: number;
+  };
+  sort: {
+    order: string;
+    field: string;
+  };
+};
+
+type GetOneArgs = {
+  id: string;
+};
+
+type OptionalUserArgs = Partial<CreateArgs["data"] & { id?: string }>;
+
+type Update = {
+  id: string;
+  data: OptionalUserArgs;
+  previousData: OptionalUserArgs;
+};
+
+type Delete = {
+  id: string;
+};
+
 const UserFunctions = {
-  create: async (params) => {
+  create: async (params: CreateArgs) => {
     const { data } = params;
 
     const mutation = gql`
@@ -32,7 +69,7 @@ const UserFunctions = {
       console.log(error);
     }
   },
-  getList: async (params) => {
+  getList: async (params: GetListArgs) => {
     const query = gql`
       query allUsersForAdminUI(
         $page: Int
@@ -72,7 +109,7 @@ const UserFunctions = {
       console.log(error);
     }
   },
-  getOne: async (params) => {
+  getOne: async (params: GetOneArgs) => {
     const { id } = params;
 
     const query = gql`
@@ -103,7 +140,7 @@ const UserFunctions = {
       console.log(error);
     }
   },
-  update: async (params) => {
+  update: async (params: Update) => {
     const { id, data } = params;
     delete data.id;
 
@@ -136,7 +173,7 @@ const UserFunctions = {
       console.log(error);
     }
   },
-  delete: async (params) => {
+  delete: async (params: Delete) => {
     const { id } = params;
 
     const mutation = gql`
@@ -168,7 +205,7 @@ const UserFunctions = {
       console.log(error);
     }
   },
-  deleteMany: async (params) => {
+  deleteMany: async (params: { ids: string[] }) => {
     const { ids } = params;
 
     const mutation = gql`
