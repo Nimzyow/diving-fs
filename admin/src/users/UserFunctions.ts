@@ -44,7 +44,7 @@ const UserFunctions = {
     const mutation = gql`
       mutation createUserForAdminUI($data: UserInputForAdmin!) {
         createUserForAdminUI(input: $data) {
-          _id
+          id
           firstName
           lastName
           email
@@ -129,11 +129,21 @@ const UserFunctions = {
 
     const client = new GraphQLClient(endpoint, { headers: {} });
     try {
-      const response = await client.request(query, variables);
+      const response = await client.request<
+        {
+          getUserForAdminUI: {
+            id: string;
+            firstName: string;
+            lastName: string;
+            email: string;
+          };
+        },
+        { id: string }
+      >(query, variables);
 
-      let newId = response.getUserForAdminUI._id;
-      delete response.getUserForAdminUI._id;
-      response.getUserForAdminUI.id = newId;
+      // let newId = response.getUserForAdminUI._id;
+      // delete response.getUserForAdminUI._id;
+      // response.getUserForAdminUI.id = newId;
 
       return { data: response.getUserForAdminUI };
     } catch (error) {
@@ -147,7 +157,7 @@ const UserFunctions = {
     const mutation = gql`
       mutation updateUserForAdminUI($id: String!, $data: UpdateUserInput!) {
         updateUserForAdminUI(id: $id, data: $data) {
-          _id
+          id
           firstName
           lastName
           email
@@ -164,9 +174,9 @@ const UserFunctions = {
     try {
       const response = await client.request(mutation, variables);
 
-      let newId = response.updateUserForAdminUI._id;
-      delete response.updateUserForAdminUI._id;
-      response.updateUserForAdminUI.id = newId;
+      // let newId = response.updateUserForAdminUI._id;
+      // delete response.updateUserForAdminUI._id;
+      // response.updateUserForAdminUI.id = newId;
 
       return { data: response.updateUserForAdminUI };
     } catch (error) {
@@ -179,7 +189,7 @@ const UserFunctions = {
     const mutation = gql`
       mutation deleteUser($id: String!) {
         deleteUserForAdminUI(id: $id) {
-          _id
+          id
           firstName
           lastName
           email
