@@ -20,6 +20,7 @@ model User {
   role        Role      @default(USER)
   address     Address?
   notes       Note[]
+  status      Status    @default(ACTIVE)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now())
 }
@@ -52,4 +53,9 @@ enum Role {
   STAFF
   ADMIN
   SUPER_USER
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
 }

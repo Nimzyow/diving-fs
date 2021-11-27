@@ -145,10 +145,6 @@ const UserFunctions = {
         { id: string }
       >(query, variables);
 
-      // let newId = response.getUserForAdminUI._id;
-      // delete response.getUserForAdminUI._id;
-      // response.getUserForAdminUI.id = newId;
-
       return { data: response.getUserForAdminUI };
     } catch (error) {
       console.log(error);
@@ -216,10 +212,8 @@ const UserFunctions = {
     const { ids } = params;
 
     const mutation = gql`
-      mutation deleteManyUsersForAdminUI($ids: [String]) {
-        deleteManyUsersForAdminUI(ids: $ids) {
-          successful
-        }
+      mutation deleteManyUsersForAdminUI($ids: [String!]!) {
+        deleteManyUsersForAdminUI(ids: $ids)
       }
     `;
 

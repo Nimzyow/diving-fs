@@ -1,4 +1,4 @@
-import { arg, extendType, nonNull, stringArg, inputObjectType } from "nexus"
+import { arg, extendType, nonNull, stringArg, inputObjectType, list } from "nexus"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 
@@ -116,10 +116,6 @@ export const Mutation = extendType({
                     id: nonNull(stringArg()),
                 },
                 resolve: async (parent, args, context) => {
-                    // const { email, firstName, lastName } = args.inputs
-                    // if (!email) {
-                    //     return null
-                    // }
                     const user = await context.prisma.user.update({
                         where: {
                             id: args.id,
@@ -143,6 +139,23 @@ export const Mutation = extendType({
                         },
                     })
                     return user
+                },
+            }),
+            t.field("deleteManyUsersForAdminUI", {
+                type: list("String"),
+                args: {
+                    ids: nonNull(list(nonNull(stringArg()))),
+                },
+                resolve: async (parent, args, context) => {
+                    try {
+                        args.ids.map(async (id) => {
+                            await context.prisma.user.delete({ where: { id } })
+                        })
+                        return args.ids
+                    } catch (error) {
+                        console.log(error)
+                        return null
+                    }
                 },
             }),
             t.nonNull.field("login", {

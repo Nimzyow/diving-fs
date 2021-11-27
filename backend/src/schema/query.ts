@@ -1,5 +1,6 @@
 import { extendType, list, stringArg, intArg, nonNull } from "nexus"
 import bcrypt from "bcryptjs"
+import { prisma } from ".prisma/client"
 
 export const Query = extendType({
     type: "Query",
@@ -20,7 +21,7 @@ export const Query = extendType({
             t.list.nonNull.field("users", {
                 type: "User",
                 resolve: (parent, args, context) => {
-                    return context.prisma.user.findMany()
+                    return context.prisma.user.findMany({})
                 },
             }),
             t.field("allUsersForAdminUI", {
