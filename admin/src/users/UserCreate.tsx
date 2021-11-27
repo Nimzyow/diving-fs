@@ -1,7 +1,7 @@
 import React from "react";
 import { SimpleForm, TextInput, Create } from "react-admin";
 
-const UserCreate = (props) => (
+const UserCreate = (props: unknown) => (
   <Create {...props}>
     <SimpleForm>
       <TextInput source="firstName" />

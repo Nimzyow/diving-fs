@@ -42,7 +42,7 @@ const UserFunctions = {
     const { data } = params;
 
     const mutation = gql`
-      mutation createUserForAdminUI($inputs: createUserForAdminUIInputs!) {
+      mutation createUserForAdminUI($inputs: createUserInputs!) {
         createUserForAdminUI(inputs: $inputs) {
           id
           firstName
