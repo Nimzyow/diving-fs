@@ -115,7 +115,7 @@ const UserFunctions = {
     const query = gql`
       query getUserForAdminUI($id: String!) {
         getUserForAdminUI(id: $id) {
-          _id
+          id
           firstName
           lastName
           email
