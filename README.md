@@ -8,7 +8,7 @@
 8. createUserForAdminUI in frontend must include total count. DONE
 9. update user backend and frontend for admin ui DONE
 10. delete user backend and frontend for admin ui DONE
-11. delete many users backend and frontend for admin ui
+11. delete many users backend and frontend for admin ui DONE
 12. wire up pagination in get all users list DONE
 13. dockerize admin
 14. dockerize frontend

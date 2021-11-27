@@ -48,6 +48,9 @@ const UserFunctions = {
           firstName
           lastName
           email
+          role
+          createdAt
+          updatedAt
         }
       }
     `;
@@ -86,6 +89,9 @@ const UserFunctions = {
           firstName
           lastName
           email
+          role
+          createdAt
+          updatedAt
         }
       }
     `;
@@ -123,6 +129,9 @@ const UserFunctions = {
           firstName
           lastName
           email
+          role
+          createdAt
+          updatedAt
         }
       }
     `;
@@ -159,6 +168,9 @@ const UserFunctions = {
           firstName
           lastName
           email
+          role
+          createdAt
+          updatedAt
         }
       }
     `;
@@ -187,6 +199,7 @@ const UserFunctions = {
           firstName
           lastName
           email
+          role
         }
       }
     `;

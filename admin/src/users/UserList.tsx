@@ -1,5 +1,12 @@
 import React from "react";
-import { List, Datagrid, TextField, EmailField } from "react-admin";
+import {
+  List,
+  Datagrid,
+  TextField,
+  EmailField,
+  Labeled,
+  DateField,
+} from "react-admin";
 
 const UserList = (props: unknown) => (
   <List {...props}>
@@ -7,8 +14,10 @@ const UserList = (props: unknown) => (
       <TextField source="id" />
       <TextField source="firstName" />
       <TextField source="lastName" />
-      {/* <TextField source="role" /> */}
       <EmailField source="email" />
+      <TextField source="role" />
+      <DateField source="createdAt" resource="commands" />
+      <DateField source="updatedAt" resource="commands" />
       {/* <BooleanField source="hidden" /> */}
     </Datagrid>
   </List>
