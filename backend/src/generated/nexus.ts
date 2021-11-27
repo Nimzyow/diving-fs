@@ -19,6 +19,12 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  createUserInputs: { // input type
+    email: string; // String!
+    firstName: string; // String!
+    lastName: string; // String!
+    password: string; // String!
+  }
 }
 
 export interface NexusGenEnums {
@@ -213,10 +219,7 @@ export interface NexusGenArgTypes {
       password: string; // String!
     }
     createUserForAdminUI: { // args
-      email: string; // String!
-      firstName: string; // String!
-      lastName: string; // String!
-      password: string; // String!
+      inputs: NexusGenInputs['createUserInputs']; // createUserInputs!
     }
     login: { // args
       email: string; // String!
@@ -245,7 +248,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = keyof NexusGenEnums;
 

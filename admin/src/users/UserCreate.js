@@ -14,13 +14,13 @@ const UserCreate = (props) => (
       <TextInput source="lastName" />
       <TextInput source="email" />
       <TextInput source="password" />
-      <SelectInput
+      {/* <SelectInput
         source="role"
         choices={[
           { id: "admin", name: "Admin" },
           { id: "user", name: "User" },
         ]}
-      />
+      /> */}
       {/* <BooleanInput source="hidden" /> */}
     </SimpleForm>
   </Create>

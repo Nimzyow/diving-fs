@@ -1,6 +1,16 @@
-import { extendType, nonNull, stringArg } from "nexus"
+import { arg, extendType, nonNull, stringArg, inputObjectType } from "nexus"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
+
+export const createUserInputs = inputObjectType({
+    name: "createUserInputs",
+    definition(t) {
+        t.nonNull.string("firstName"),
+            t.nonNull.string("lastName"),
+            t.nonNull.string("email"),
+            t.nonNull.string("password")
+    },
+})
 
 export const Mutation = extendType({
     type: "Mutation",
@@ -63,13 +73,14 @@ export const Mutation = extendType({
             t.field("createUserForAdminUI", {
                 type: "User",
                 args: {
-                    firstName: nonNull(stringArg()),
-                    lastName: nonNull(stringArg()),
-                    email: nonNull(stringArg()),
-                    password: nonNull(stringArg()),
+                    inputs: nonNull(
+                        arg({
+                            type: "createUserInputs",
+                        })
+                    ),
                 },
                 resolve: async (parent, args, context) => {
-                    const { email, password, firstName, lastName } = args
+                    const { email, password, firstName, lastName } = args.inputs
                     if (!password || !email) {
                         return null
                     }

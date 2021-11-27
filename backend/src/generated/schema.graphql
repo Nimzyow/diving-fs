@@ -23,7 +23,7 @@ type Error {
 type Mutation {
   createAddress(county: String, line1: String!, line2: String, postcode: String!): Success
   createUser(email: String!, firstName: String!, lastName: String!, password: String!): Token
-  createUserForAdminUI(email: String!, firstName: String!, lastName: String!, password: String!): User
+  createUserForAdminUI(inputs: createUserInputs!): User
   login(email: String!, password: String!, passwordConfirm: String!): Token!
 }
 
@@ -69,4 +69,11 @@ type User {
   lastName: String!
   role: Role!
   updatedAt: DateTime!
+}
+
+input createUserInputs {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
 }

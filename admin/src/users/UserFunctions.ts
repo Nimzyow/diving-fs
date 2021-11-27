@@ -25,12 +25,12 @@ type GetOneArgs = {
   id: string;
 };
 
-type OptionalUserArgs = Partial<CreateArgs["data"] & { id?: string }>;
+type OptionalCreateUserArgs = Partial<CreateArgs["data"] & { id?: string }>;
 
 type Update = {
   id: string;
-  data: OptionalUserArgs;
-  previousData: OptionalUserArgs;
+  data: OptionalCreateUserArgs;
+  previousData: OptionalCreateUserArgs;
 };
 
 type Delete = {
@@ -42,8 +42,8 @@ const UserFunctions = {
     const { data } = params;
 
     const mutation = gql`
-      mutation createUserForAdminUI($data: UserInputForAdmin!) {
-        createUserForAdminUI(input: $data) {
+      mutation createUserForAdminUI($inputs: createUserForAdminUIInputs!) {
+        createUserForAdminUI(inputs: $inputs) {
           id
           firstName
           lastName
@@ -53,16 +53,15 @@ const UserFunctions = {
     `;
 
     const variables = {
-      data: data,
+      inputs: data,
     };
 
     const client = new GraphQLClient(endpoint, { headers: {} });
     try {
-      const response = await client.request(mutation, variables);
-
-      // let newId = response.createUserForAdminUI._id
-      // delete response.createUserForAdminUI._id
-      // response.createUserForAdminUI.id = newId
+      const response = await client.request<
+        { createUserForAdminUI: CreateArgs & { id: string } },
+        { inputs: CreateArgs["data"] }
+      >(mutation, variables);
 
       return { data: response.createUserForAdminUI };
     } catch (error) {
@@ -174,10 +173,6 @@ const UserFunctions = {
     try {
       const response = await client.request(mutation, variables);
 
-      // let newId = response.updateUserForAdminUI._id;
-      // delete response.updateUserForAdminUI._id;
-      // response.updateUserForAdminUI.id = newId;
-
       return { data: response.updateUserForAdminUI };
     } catch (error) {
       console.log(error);
@@ -205,10 +200,6 @@ const UserFunctions = {
 
     try {
       const response = await client.request(mutation, variables);
-
-      let newId = response.updateUserForAdminUI._id;
-      delete response.updateUserForAdminUI._id;
-      response.updateUserForAdminUI.id = newId;
 
       return { data: response.updateUserForAdminUI };
     } catch (error) {
