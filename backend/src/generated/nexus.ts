@@ -104,7 +104,6 @@ export interface NexusGenFieldTypes {
     message: string; // String!
   }
   Mutation: { // field return type
-    allUsersForAdminUI: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     createAddress: NexusGenRootTypes['Success'] | null; // Success
     createUser: NexusGenRootTypes['Token'] | null; // Token
     createUserForAdminUI: NexusGenRootTypes['User'] | null; // User
@@ -119,6 +118,7 @@ export interface NexusGenFieldTypes {
     userId: string | null; // String
   }
   Query: { // field return type
+    allUsersForAdminUI: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     me: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][] | null; // [User!]
   }
@@ -158,7 +158,6 @@ export interface NexusGenFieldTypeNames {
     message: 'String'
   }
   Mutation: { // field return type name
-    allUsersForAdminUI: 'User'
     createAddress: 'Success'
     createUser: 'Token'
     createUserForAdminUI: 'User'
@@ -173,6 +172,7 @@ export interface NexusGenFieldTypeNames {
     userId: 'String'
   }
   Query: { // field return type name
+    allUsersForAdminUI: 'User'
     me: 'User'
     users: 'User'
   }
@@ -198,12 +198,6 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    allUsersForAdminUI: { // args
-      page?: string | null; // String
-      perPage?: string | null; // String
-      sortField?: string | null; // String
-      sortOrder?: string | null; // String
-    }
     createAddress: { // args
       county?: string | null; // String
       line1: string; // String!
@@ -226,6 +220,14 @@ export interface NexusGenArgTypes {
       email: string; // String!
       password: string; // String!
       passwordConfirm: string; // String!
+    }
+  }
+  Query: {
+    allUsersForAdminUI: { // args
+      page?: number | null; // Int
+      perPage?: number | null; // Int
+      sortField?: string | null; // String
+      sortOrder?: string | null; // String
     }
   }
 }

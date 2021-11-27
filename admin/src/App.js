@@ -15,9 +15,9 @@ function App() {
 
   return (
     <Admin
-      loginPage={MyLoginPage}
+      // loginPage={MyLoginPage}
       dataProvider={dataProvider}
-      authProvider={authProvider}
+      // authProvider={authProvider}
     >
       <Resource
         name="user"

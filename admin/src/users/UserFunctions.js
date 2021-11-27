@@ -46,13 +46,10 @@ const UserFunctions = {
           sortField: $sortField
           sortOrder: $sortOrder
         ) {
-          _id
+          id
           firstName
           lastName
           email
-        }
-        _allUsersMeta {
-          count
         }
       }
     `;
@@ -60,20 +57,16 @@ const UserFunctions = {
     const variables = {
       ...params.pagination,
       sortOrder: params.sort.order,
-      sortField: params.sort.field === "id" ? "_id" : params.sort.field,
+      sortField: params.sort.field,
     };
 
     const client = new GraphQLClient(endpoint, { headers: {} });
     try {
       const response = await client.request(query, variables);
-
-      const changeId = response.allUsersForAdminUI.map((element, index) => {
-        // let newId = element._id;
-        // delete element._id;
-        // element.id = newId;
-        return element;
-      });
-      const toReturn = { data: changeId, total: response._allUsersMeta.count };
+      const toReturn = {
+        data: response.allUsersForAdminUI,
+        total: 1,
+      };
       return toReturn;
     } catch (error) {
       console.log(error);

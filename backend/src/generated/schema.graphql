@@ -21,7 +21,6 @@ type Error {
 }
 
 type Mutation {
-  allUsersForAdminUI(page: String, perPage: String, sortField: String, sortOrder: String): [User]
   createAddress(county: String, line1: String!, line2: String, postcode: String!): Success
   createUser(email: String!, firstName: String!, lastName: String!, password: String!): Token
   createUserForAdminUI(email: String!, firstName: String!, lastName: String!, password: String!): User
@@ -38,6 +37,7 @@ type Note {
 }
 
 type Query {
+  allUsersForAdminUI(page: Int, perPage: Int, sortField: String, sortOrder: String): [User]
   me: User
   users: [User!]
 }

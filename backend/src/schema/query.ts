@@ -1,4 +1,4 @@
-import { extendType, stringArg } from "nexus"
+import { extendType, list, stringArg, intArg } from "nexus"
 import bcrypt from "bcryptjs"
 
 export const Query = extendType({
@@ -21,6 +21,19 @@ export const Query = extendType({
                 type: "User",
                 resolve: (parent, args, context) => {
                     return context.prisma.user.findMany()
+                },
+            }),
+            t.field("allUsersForAdminUI", {
+                type: list("User"),
+                args: {
+                    page: intArg(),
+                    perPage: intArg(),
+                    sortField: stringArg(),
+                    sortOrder: stringArg(),
+                },
+                resolve: async (parent, args, context) => {
+                    const allUsers = await context.prisma.user.findMany()
+                    return allUsers
                 },
             })
     },
