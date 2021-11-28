@@ -56,6 +56,7 @@ export interface NexusGenObjects {
     line2?: string | null; // String
     postcode: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    userId: string; // String!
   }
   Error: { // root type
     code: string; // String!
@@ -110,6 +111,7 @@ export interface NexusGenFieldTypes {
     line2: string | null; // String
     postcode: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    userId: string; // String!
   }
   Error: { // field return type
     code: string; // String!
@@ -133,8 +135,10 @@ export interface NexusGenFieldTypes {
     userId: string | null; // String
   }
   Query: { // field return type
+    allUsersAddressesForAdminUI: Array<NexusGenRootTypes['Address'] | null> | null; // [Address]
     allUsersForAdminUI: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     allUsersForAdminUICount: number | null; // Int
+    getUserAddressForAdminUI: NexusGenRootTypes['Address'] | null; // Address
     getUserForAdminUI: NexusGenRootTypes['User'] | null; // User
     me: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][] | null; // [User!]
@@ -169,6 +173,7 @@ export interface NexusGenFieldTypeNames {
     line2: 'String'
     postcode: 'String'
     updatedAt: 'DateTime'
+    userId: 'String'
   }
   Error: { // field return type name
     code: 'String'
@@ -192,8 +197,10 @@ export interface NexusGenFieldTypeNames {
     userId: 'String'
   }
   Query: { // field return type name
+    allUsersAddressesForAdminUI: 'Address'
     allUsersForAdminUI: 'User'
     allUsersForAdminUICount: 'Int'
+    getUserAddressForAdminUI: 'Address'
     getUserForAdminUI: 'User'
     me: 'User'
     users: 'User'
@@ -252,11 +259,20 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    allUsersAddressesForAdminUI: { // args
+      page: number; // Int!
+      perPage: number; // Int!
+      sortField: string; // String!
+      sortOrder: string; // String!
+    }
     allUsersForAdminUI: { // args
       page: number; // Int!
       perPage: number; // Int!
       sortField: string; // String!
       sortOrder: string; // String!
+    }
+    getUserAddressForAdminUI: { // args
+      id: string; // String!
     }
     getUserForAdminUI: { // args
       id: string; // String!

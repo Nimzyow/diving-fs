@@ -1,4 +1,5 @@
-import UserFunctions from "../users/UserFunctions"
+import AddressFunctions from "../address/AddressFunctions";
+import UserFunctions from "../users/UserFunctions";
 
 /**
  * 
@@ -18,61 +19,74 @@ const dataProvider = {
  */
 
 const dataProvider = {
-    // create: UserFunctions.create(resource, params),
-    create: async (resource, params) => {
-        switch (resource) {
-            case "user":
-                return UserFunctions.create(params)
+  // create: UserFunctions.create(resource, params),
+  create: async (resource, params) => {
+    switch (resource) {
+      case "user":
+        return UserFunctions.create(params);
 
-            default:
-                break
-        }
-    },
-    getList: async (resource, params) => {
-        switch (resource) {
-            case "user":
-                return UserFunctions.getList(params)
+      default:
+        break;
+    }
+  },
+  getList: async (resource, params) => {
+    switch (resource) {
+      case "user":
+        return UserFunctions.getList(params);
+      case "address":
+        return AddressFunctions.getList(params);
 
-            default:
-                break
-        }
-    },
-    getOne: async (resource, params) => {
-        switch (resource) {
-            case "user":
-                return UserFunctions.getOne(params)
+      default:
+        break;
+    }
+  },
+  getOne: async (resource, params) => {
+    switch (resource) {
+      case "user":
+        return UserFunctions.getOne(params);
 
-            default:
-                break
-        }
-    },
-    update: async (resource, params) => {
-        switch (resource) {
-            case "user":
-                return UserFunctions.update(params)
+      default:
+        break;
+    }
+  },
+  getMany: async (resource, params) => {
+    switch (resource) {
+      case "user":
+        return UserFunctions.getMany(params);
+      case "address":
+        return AddressFunctions.getMany(params);
 
-            default:
-                break
-        }
-    },
-    delete: async (resource, params) => {
-        switch (resource) {
-            case "user":
-                return UserFunctions.delete(params)
+      default:
+        break;
+    }
+  },
+  update: async (resource, params) => {
+    switch (resource) {
+      case "user":
+        return UserFunctions.update(params);
 
-            default:
-                break
-        }
-    },
-    deleteMany: async (resource, params) => {
-        switch (resource) {
-            case "user":
-                return UserFunctions.deleteMany(params)
+      default:
+        break;
+    }
+  },
+  delete: async (resource, params) => {
+    switch (resource) {
+      case "user":
+        return UserFunctions.delete(params);
 
-            default:
-                break
-        }
-    },
-}
+      default:
+        break;
+    }
+  },
+  deleteMany: async (resource, params) => {
+    switch (resource) {
+      case "user":
+        return UserFunctions.deleteMany(params);
 
-export default dataProvider
+      default:
+        break;
+    }
+  },
+};
+
+export default dataProvider;

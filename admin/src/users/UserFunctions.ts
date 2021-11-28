@@ -92,6 +92,9 @@ const UserFunctions = {
           role
           createdAt
           updatedAt
+          address {
+            id
+          }
         }
         allUsersForAdminUICount
       }
@@ -120,6 +123,12 @@ const UserFunctions = {
     } catch (error) {
       console.log(error);
     }
+  },
+  getMany: async (params: any) => {
+    console.log(params);
+    return {
+      data: [{ id: "ckwb7i9ng00004sn1c0ymv8h5", firstName: "Nima" }],
+    };
   },
   getOne: async (params: GetOneArgs) => {
     const { id } = params;

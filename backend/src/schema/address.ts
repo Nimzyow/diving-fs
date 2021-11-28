@@ -9,6 +9,7 @@ export const Address = objectType({
             t.model.county(),
             t.model.postcode(),
             t.model.country(),
+            t.model.userId(),
             t.model.createdAt(),
             t.model.updatedAt()
     },

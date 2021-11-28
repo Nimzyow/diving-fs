@@ -43,6 +43,25 @@ export const Query = extendType({
                     return allUsers
                 },
             }),
+            t.field("allUsersAddressesForAdminUI", {
+                type: list("Address"),
+                args: {
+                    page: nonNull(intArg()),
+                    perPage: nonNull(intArg()),
+                    sortField: nonNull(stringArg()),
+                    sortOrder: nonNull(stringArg()),
+                },
+                resolve: async (parent, args, context) => {
+                    const allAddresses = await context.prisma.address.findMany({
+                        skip: args.page - 1,
+                        take: args.perPage - 1,
+                        orderBy: {
+                            [args.sortField]: args.sortOrder.toLowerCase(),
+                        },
+                    })
+                    return allAddresses
+                },
+            }),
             t.field("allUsersForAdminUICount", {
                 type: "Int",
                 resolve: async (parent, args, context) => {
@@ -63,6 +82,22 @@ export const Query = extendType({
                     },
                 })
                 if (user) return user
+                return null
+            },
+        })
+        t.field("getUserAddressForAdminUI", {
+            type: "Address",
+            args: {
+                id: nonNull(stringArg()),
+            },
+            resolve: async (parent, args, context) => {
+                const { id } = args
+                const address = await context.prisma.address.findUnique({
+                    where: {
+                        id,
+                    },
+                })
+                if (address) return address
                 return null
             },
         })

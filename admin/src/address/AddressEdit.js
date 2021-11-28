@@ -6,8 +6,6 @@ import {
   TextInput,
   SelectInput,
   Labeled,
-  ReferenceField,
-  TextField,
 } from "react-admin";
 
 const PostTitle = ({ record }) => {
@@ -16,23 +14,16 @@ const PostTitle = ({ record }) => {
   );
 };
 
-const UserEdit = (props) => (
+const AddressesEdit = (props) => (
   <Edit title={<PostTitle />} {...props}>
     <SimpleForm>
       <TextInput disabled source="id" />
-      <TextInput source="firstName" />
-      <TextInput source="lastName" />
-      <TextInput source="email" />
-      <SelectInput
-        resource="commands"
-        source="role"
-        choices={[
-          { id: "USER", name: "USER" },
-          { id: "STAFF", name: "STAFF" },
-          { id: "ADMIN", name: "ADMIN" },
-          { id: "SUPER_USER", name: "SUPER_USER" },
-        ]}
-      />
+      <TextInput source="line1" />
+      <TextInput source="line2" />
+      <TextInput source="county" />
+      <TextInput source="postcode" />
+      <TextInput source="country" />
+
       {/* <Labeled source="date" resource="commands"> */}
       {/* </Labeled> */}
       {/* <TextInput source="role" /> */}
@@ -49,4 +40,4 @@ const UserEdit = (props) => (
   </Edit>
 );
 
-export default UserEdit;
+export default AddressesEdit;

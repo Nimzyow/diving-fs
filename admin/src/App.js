@@ -1,12 +1,15 @@
 import { Admin, Resource } from "react-admin";
 import dataProvider from "./utils/DataProvider";
-import authProvider from "./utils/AuthProvider";
+// import authProvider from "./utils/AuthProvider";
 
 import "./App.css";
 import UserList from "./users/UserList";
 import UserEdit from "./users/UserEdit";
 import UserCreate from "./users/UserCreate";
-import MyLoginPage from "./pages/login/Login";
+import AddressList from "./address/AddressList";
+import AddressEdit from "./address/AddressEdit";
+import AddressCreate from "./address/AddressCreate";
+// import MyLoginPage from "./pages/login/Login";
 
 function App() {
   if (!dataProvider) {
@@ -24,6 +27,12 @@ function App() {
         list={UserList}
         edit={UserEdit}
         create={UserCreate}
+      />
+      <Resource
+        name="address"
+        list={AddressList}
+        edit={AddressEdit}
+        create={AddressCreate}
       />
     </Admin>
   );

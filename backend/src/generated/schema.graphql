@@ -11,6 +11,7 @@ type Address {
   line2: String
   postcode: String!
   updatedAt: DateTime!
+  userId: String!
 }
 
 input CreateUserInputs {
@@ -47,8 +48,10 @@ type Note {
 }
 
 type Query {
+  allUsersAddressesForAdminUI(page: Int!, perPage: Int!, sortField: String!, sortOrder: String!): [Address]
   allUsersForAdminUI(page: Int!, perPage: Int!, sortField: String!, sortOrder: String!): [User]
   allUsersForAdminUICount: Int
+  getUserAddressForAdminUI(id: String!): Address
   getUserForAdminUI(id: String!): User
   me: User
   users: [User!]
