@@ -93,6 +93,7 @@ const UserFunctions = {
           createdAt
           updatedAt
         }
+        allUsersForAdminUICount
       }
     `;
 
@@ -107,12 +108,13 @@ const UserFunctions = {
       const response = await client.request<
         {
           allUsersForAdminUI: (CreateArgs & { id: string })[];
+          allUsersForAdminUICount: number;
         },
         typeof variables
       >(query, variables);
       const toReturn = {
         data: response.allUsersForAdminUI,
-        total: response.allUsersForAdminUI.length,
+        total: response.allUsersForAdminUICount,
       };
       return toReturn;
     } catch (error) {

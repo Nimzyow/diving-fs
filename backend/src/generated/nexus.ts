@@ -134,6 +134,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     allUsersForAdminUI: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    allUsersForAdminUICount: number | null; // Int
     getUserForAdminUI: NexusGenRootTypes['User'] | null; // User
     me: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][] | null; // [User!]
@@ -192,6 +193,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     allUsersForAdminUI: 'User'
+    allUsersForAdminUICount: 'Int'
     getUserForAdminUI: 'User'
     me: 'User'
     users: 'User'

@@ -1,6 +1,18 @@
 version: "3.8"
 services:
+  db:
+    image: postgres:14.1
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
   backend:
+    depends_on:
+      - "db"
     image: apollo-server-nexus:latest
     build: ./backend
     ports:
@@ -12,16 +24,20 @@ services:
       - ./backend:/app/backend
       - /app/backend/node_modules
     command: sh -c "npx prisma generate && npm run dev"
-  db:
-    image: postgres:14.1
-    environment:
-      POSTGRES_DB: "${POSTGRES_DB}"
-      POSTGRES_USER: "${POSTGRES_USER}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-    volumes:
-      - db_data:/var/lib/postgresql/data
+  admin:
+    depends_on:
+      - "backend"
+    image: admin:latest
+    build: ./admin
     ports:
-      - 5432:5432
+      - "3000:3000"
+    environment:
+      URL: ${URL}
+    volumes:
+      - ./admin:/app/admin
+      - /app/admin/node_modules
+    command: sh -c "npm start"
 volumes:
   backend:
   db_data:
+  admin:

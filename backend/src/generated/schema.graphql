@@ -48,6 +48,7 @@ type Note {
 
 type Query {
   allUsersForAdminUI(page: Int!, perPage: Int!, sortField: String!, sortOrder: String!): [User]
+  allUsersForAdminUICount: Int
   getUserForAdminUI(id: String!): User
   me: User
   users: [User!]

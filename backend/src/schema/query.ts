@@ -43,21 +43,28 @@ export const Query = extendType({
                     return allUsers
                 },
             }),
-            t.field("getUserForAdminUI", {
-                type: "User",
-                args: {
-                    id: nonNull(stringArg()),
-                },
+            t.field("allUsersForAdminUICount", {
+                type: "Int",
                 resolve: async (parent, args, context) => {
-                    const { id } = args
-                    const user = await context.prisma.user.findUnique({
-                        where: {
-                            id,
-                        },
-                    })
-                    if (user) return user
-                    return null
+                    const userCount = await context.prisma.user.count()
+                    return userCount
                 },
             })
+        t.field("getUserForAdminUI", {
+            type: "User",
+            args: {
+                id: nonNull(stringArg()),
+            },
+            resolve: async (parent, args, context) => {
+                const { id } = args
+                const user = await context.prisma.user.findUnique({
+                    where: {
+                        id,
+                    },
+                })
+                if (user) return user
+                return null
+            },
+        })
     },
 })
