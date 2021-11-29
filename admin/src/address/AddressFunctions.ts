@@ -84,7 +84,7 @@ const AddressFunctions = {
         },
         typeof variables
       >(query, variables);
-      console.log(response.allUsersAddressesForAdminUI);
+
       const toReturn = {
         data: response.allUsersAddressesForAdminUI,
         total: 1,
@@ -128,9 +128,91 @@ const AddressFunctions = {
 
   //   return { data: [{ id: "ckwb7l1rl00154sn1d98qs17r", postcode: "hi" }] };
   // },
-  getOne: async (params: GetOneArgs) => {},
+  getOne: async (params: GetOneArgs) => {
+    const { id } = params;
+    console.log(params);
+    const variables = {
+      id: id,
+    };
+
+    const getUserQuery = gql`
+      query getUserAddressForAdminUI($id: String!) {
+        getUserAddressForAdminUI(id: $id) {
+          id
+          line1
+          line2
+          county
+          postcode
+          country
+          userId
+          createdAt
+          updatedAt
+        }
+      }
+    `;
+
+    const client = new GraphQLClient(endpoint, { headers: {} });
+
+    try {
+      const response = await client.request<
+        {
+          getUserAddressForAdminUI: {
+            id: string;
+            line1: string;
+            line2: string;
+            county: string;
+            postcode: string;
+            country: string;
+            userId: string;
+            createdAt: string;
+            updatedAt: string;
+          };
+        },
+        { id: string }
+      >(getUserQuery, variables);
+      console.log(response);
+      return { data: response.getUserAddressForAdminUI };
+    } catch (error) {
+      console.log(error);
+    }
+  },
   update: async (params: Update) => {},
-  delete: async (params: Delete) => {},
+  delete: async (params: Delete) => {
+    const { id } = params;
+
+    const mutation = gql`
+      mutation DeleteUserAddressForAdminUI($id: String!) {
+        deleteUserAddressForAdminUI(id: $id) {
+          id
+          line1
+          line2
+          county
+          postcode
+          country
+          userId
+          createdAt
+          updatedAt
+        }
+      }
+    `;
+
+    const variables = {
+      id: id,
+    };
+
+    const client = new GraphQLClient(endpoint, { headers: {} });
+
+    try {
+      const response = await client.request<
+        { deleteUserAddressForAdminUI: CreateArgs["data"] & { id: string } },
+        { id: string }
+      >(mutation, variables);
+
+      return { data: response.deleteUserAddressForAdminUI };
+    } catch (error) {
+      console.log(error);
+    }
+  },
   deleteMany: async (params: { id: string[] }) => {},
 };
 

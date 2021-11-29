@@ -44,6 +44,8 @@ const dataProvider = {
     switch (resource) {
       case "user":
         return UserFunctions.getOne(params);
+      case "address":
+        return AddressFunctions.getOne(params);
 
       default:
         break;

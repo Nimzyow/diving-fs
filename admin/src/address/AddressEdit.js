@@ -15,7 +15,7 @@ const PostTitle = ({ record }) => {
 };
 
 const AddressesEdit = (props) => (
-  <Edit title={<PostTitle />} {...props}>
+  <Edit {...props}>
     <SimpleForm>
       <TextInput disabled source="id" />
       <TextInput source="line1" />
@@ -23,7 +23,7 @@ const AddressesEdit = (props) => (
       <TextInput source="county" />
       <TextInput source="postcode" />
       <TextInput source="country" />
-
+      <TextInput source="userId" />
       {/* <Labeled source="date" resource="commands"> */}
       {/* </Labeled> */}
       {/* <TextInput source="role" /> */}

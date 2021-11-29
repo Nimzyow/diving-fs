@@ -141,6 +141,20 @@ export const Mutation = extendType({
                     return user
                 },
             }),
+            t.field("deleteUserAddressForAdminUI", {
+                type: "Address",
+                args: {
+                    id: nonNull(stringArg()),
+                },
+                resolve: async (parent, args, context) => {
+                    const address = await context.prisma.address.delete({
+                        where: {
+                            id: args.id,
+                        },
+                    })
+                    return address
+                },
+            }),
             t.field("deleteManyUsersForAdminUI", {
                 type: list("String"),
                 args: {
@@ -150,6 +164,23 @@ export const Mutation = extendType({
                     try {
                         args.ids.map(async (id) => {
                             await context.prisma.user.delete({ where: { id } })
+                        })
+                        return args.ids
+                    } catch (error) {
+                        console.log(error)
+                        return null
+                    }
+                },
+            }),
+            t.field("deleteManyUserAddressesForAdminUI", {
+                type: list("String"),
+                args: {
+                    ids: nonNull(list(nonNull(stringArg()))),
+                },
+                resolve: async (parent, args, context) => {
+                    try {
+                        args.ids.map(async (id) => {
+                            await context.prisma.address.delete({ where: { id } })
                         })
                         return args.ids
                     } catch (error) {
