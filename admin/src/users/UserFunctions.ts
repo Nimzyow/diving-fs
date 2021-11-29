@@ -37,6 +37,20 @@ type Delete = {
   id: string;
 };
 
+const getUserQuery = gql`
+  query getUserForAdminUI($id: String!) {
+    getUserForAdminUI(id: $id) {
+      id
+      firstName
+      lastName
+      email
+      role
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 const UserFunctions = {
   create: async (params: CreateArgs) => {
     const { data } = params;
@@ -124,28 +138,34 @@ const UserFunctions = {
       console.log(error);
     }
   },
-  getMany: async (params: any) => {
-    console.log(params);
-    return {
-      data: [{ id: "ckwb7i9ng00004sn1c0ymv8h5", firstName: "Nima" }],
+  getMany: async (params: { ids: string[] }) => {
+    const variables = {
+      id: params.ids[0],
     };
+
+    const client = new GraphQLClient(endpoint, { headers: {} });
+    try {
+      const response = await client.request<
+        {
+          getUserForAdminUI: {
+            id: string;
+            firstName: string;
+            lastName: string;
+            email: string;
+          };
+        },
+        { id: string }
+      >(getUserQuery, variables);
+
+      return {
+        data: [response.getUserForAdminUI],
+      };
+    } catch (error) {
+      console.log(error);
+    }
   },
   getOne: async (params: GetOneArgs) => {
     const { id } = params;
-
-    const query = gql`
-      query getUserForAdminUI($id: String!) {
-        getUserForAdminUI(id: $id) {
-          id
-          firstName
-          lastName
-          email
-          role
-          createdAt
-          updatedAt
-        }
-      }
-    `;
 
     const variables = {
       id: id,
@@ -163,7 +183,7 @@ const UserFunctions = {
           };
         },
         { id: string }
-      >(query, variables);
+      >(getUserQuery, variables);
 
       return { data: response.getUserForAdminUI };
     } catch (error) {
