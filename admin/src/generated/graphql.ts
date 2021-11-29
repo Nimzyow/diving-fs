@@ -52,6 +52,7 @@ export type Mutation = {
   deleteUserAddressForAdminUI?: Maybe<Address>;
   deleteUserForAdminUI?: Maybe<User>;
   login: Token;
+  updateUserAddressForAdminUI?: Maybe<Address>;
   updateUserForAdminUI?: Maybe<User>;
 };
 
@@ -101,6 +102,12 @@ export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
   passwordConfirm: Scalars['String'];
+};
+
+
+export type MutationUpdateUserAddressForAdminUiArgs = {
+  id: Scalars['String'];
+  inputs: UpdateUserAddressInputs;
 };
 
 
@@ -174,6 +181,18 @@ export type Token = {
   token?: Maybe<Scalars['String']>;
 };
 
+export type UpdateUserAddressInputs = {
+  country: Scalars['String'];
+  county: Scalars['String'];
+  createdAt: Scalars['String'];
+  id: Scalars['String'];
+  line1: Scalars['String'];
+  line2: Scalars['String'];
+  postcode: Scalars['String'];
+  updatedAt: Scalars['String'];
+  userId: Scalars['String'];
+};
+
 export type UpdateUserInputs = {
   email: Scalars['String'];
   firstName: Scalars['String'];
@@ -210,6 +229,13 @@ export type GetUserAddressForAdminUiQueryVariables = Exact<{
 
 
 export type GetUserAddressForAdminUiQuery = { __typename?: 'Query', getUserAddressForAdminUI?: { __typename?: 'Address', id: string, line1: string, line2?: string | null | undefined, county?: string | null | undefined, postcode: string, country: string, userId: string, createdAt: any, updatedAt: any } | null | undefined };
+
+export type DeleteUserAddressForAdminUiMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteUserAddressForAdminUiMutation = { __typename?: 'Mutation', deleteUserAddressForAdminUI?: { __typename?: 'Address', id: string, line1: string, line2?: string | null | undefined, county?: string | null | undefined, postcode: string, country: string, userId: string, createdAt: any, updatedAt: any } | null | undefined };
 
 export type GetUserForAdminUiQueryVariables = Exact<{
   id: Scalars['String'];
@@ -352,6 +378,47 @@ export function useGetUserAddressForAdminUiLazyQuery(baseOptions?: Apollo.LazyQu
 export type GetUserAddressForAdminUiQueryHookResult = ReturnType<typeof useGetUserAddressForAdminUiQuery>;
 export type GetUserAddressForAdminUiLazyQueryHookResult = ReturnType<typeof useGetUserAddressForAdminUiLazyQuery>;
 export type GetUserAddressForAdminUiQueryResult = Apollo.QueryResult<GetUserAddressForAdminUiQuery, GetUserAddressForAdminUiQueryVariables>;
+export const DeleteUserAddressForAdminUiDocument = gql`
+    mutation DeleteUserAddressForAdminUI($id: String!) {
+  deleteUserAddressForAdminUI(id: $id) {
+    id
+    line1
+    line2
+    county
+    postcode
+    country
+    userId
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type DeleteUserAddressForAdminUiMutationFn = Apollo.MutationFunction<DeleteUserAddressForAdminUiMutation, DeleteUserAddressForAdminUiMutationVariables>;
+
+/**
+ * __useDeleteUserAddressForAdminUiMutation__
+ *
+ * To run a mutation, you first call `useDeleteUserAddressForAdminUiMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUserAddressForAdminUiMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUserAddressForAdminUiMutation, { data, loading, error }] = useDeleteUserAddressForAdminUiMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteUserAddressForAdminUiMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUserAddressForAdminUiMutation, DeleteUserAddressForAdminUiMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUserAddressForAdminUiMutation, DeleteUserAddressForAdminUiMutationVariables>(DeleteUserAddressForAdminUiDocument, options);
+      }
+export type DeleteUserAddressForAdminUiMutationHookResult = ReturnType<typeof useDeleteUserAddressForAdminUiMutation>;
+export type DeleteUserAddressForAdminUiMutationResult = Apollo.MutationResult<DeleteUserAddressForAdminUiMutation>;
+export type DeleteUserAddressForAdminUiMutationOptions = Apollo.BaseMutationOptions<DeleteUserAddressForAdminUiMutation, DeleteUserAddressForAdminUiMutationVariables>;
 export const GetUserForAdminUiDocument = gql`
     query getUserForAdminUI($id: String!) {
   getUserForAdminUI(id: $id) {

@@ -25,6 +25,17 @@ export interface NexusGenInputs {
     lastName: string; // String!
     password: string; // String!
   }
+  UpdateUserAddressInputs: { // input type
+    country: string; // String!
+    county: string; // String!
+    createdAt: string; // String!
+    id: string; // String!
+    line1: string; // String!
+    line2: string; // String!
+    postcode: string; // String!
+    updatedAt: string; // String!
+    userId: string; // String!
+  }
   UpdateUserInputs: { // input type
     email: string; // String!
     firstName: string; // String!
@@ -126,6 +137,7 @@ export interface NexusGenFieldTypes {
     deleteUserAddressForAdminUI: NexusGenRootTypes['Address'] | null; // Address
     deleteUserForAdminUI: NexusGenRootTypes['User'] | null; // User
     login: NexusGenRootTypes['Token']; // Token!
+    updateUserAddressForAdminUI: NexusGenRootTypes['Address'] | null; // Address
     updateUserForAdminUI: NexusGenRootTypes['User'] | null; // User
   }
   Note: { // field return type
@@ -190,6 +202,7 @@ export interface NexusGenFieldTypeNames {
     deleteUserAddressForAdminUI: 'Address'
     deleteUserForAdminUI: 'User'
     login: 'Token'
+    updateUserAddressForAdminUI: 'Address'
     updateUserForAdminUI: 'User'
   }
   Note: { // field return type name
@@ -262,6 +275,10 @@ export interface NexusGenArgTypes {
       email: string; // String!
       password: string; // String!
       passwordConfirm: string; // String!
+    }
+    updateUserAddressForAdminUI: { // args
+      id: string; // String!
+      inputs: NexusGenInputs['UpdateUserAddressInputs']; // UpdateUserAddressInputs!
     }
     updateUserForAdminUI: { // args
       id: string; // String!

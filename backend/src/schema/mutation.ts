@@ -22,6 +22,21 @@ export const UpdateUserInputs = inputObjectType({
     },
 })
 
+export const UpdateUserAddressInputs = inputObjectType({
+    name: "UpdateUserAddressInputs",
+    definition(t) {
+        t.nonNull.string("id"),
+            t.nonNull.string("line1"),
+            t.nonNull.string("line2"),
+            t.nonNull.string("county"),
+            t.nonNull.string("postcode"),
+            t.nonNull.string("country"),
+            t.nonNull.string("userId"),
+            t.nonNull.string("createdAt"),
+            t.nonNull.string("updatedAt")
+    },
+})
+
 export const Mutation = extendType({
     type: "Mutation",
     definition(t) {
@@ -125,6 +140,28 @@ export const Mutation = extendType({
                         },
                     })
                     return user
+                },
+            }),
+            t.field("updateUserAddressForAdminUI", {
+                type: "Address",
+                args: {
+                    inputs: nonNull(
+                        arg({
+                            type: "UpdateUserAddressInputs",
+                        })
+                    ),
+                    id: nonNull(stringArg()),
+                },
+                resolve: async (parent, args, context) => {
+                    const address = await context.prisma.address.update({
+                        where: {
+                            id: args.id,
+                        },
+                        data: {
+                            ...args.inputs,
+                        },
+                    })
+                    return address
                 },
             }),
             t.field("deleteUserForAdminUI", {

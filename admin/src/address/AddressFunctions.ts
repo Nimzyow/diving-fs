@@ -10,8 +10,10 @@ type CreateArgs = {
   data: {
     line1: string;
     line2: string;
+    county: string;
     postcode: string;
     country: string;
+    userId: string;
   };
 };
 
@@ -176,7 +178,42 @@ const AddressFunctions = {
       console.log(error);
     }
   },
-  update: async (params: Update) => {},
+  update: async (params: Update) => {
+    const { id, data } = params;
+
+    const mutation = gql`
+      mutation UpdateUserAddressForAdminUI(
+        $id: String!
+        $inputs: UpdateUserAddressInputs!
+      ) {
+        updateUserAddressForAdminUI(id: $id, inputs: $inputs) {
+          id
+          line1
+          line2
+          county
+          postcode
+          userId
+          country
+          createdAt
+          updatedAt
+        }
+      }
+    `;
+
+    const variables = {
+      id: id,
+      inputs: data,
+    };
+
+    const client = new GraphQLClient(endpoint, { headers: {} });
+    try {
+      const response = await client.request(mutation, variables);
+
+      return { data: response.updateUserAddressForAdminUI };
+    } catch (error) {
+      console.log(error);
+    }
+  },
   delete: async (params: Delete) => {
     const { id } = params;
 

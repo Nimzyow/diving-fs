@@ -37,6 +37,7 @@ type Mutation {
   deleteUserAddressForAdminUI(id: String!): Address
   deleteUserForAdminUI(id: String!): User
   login(email: String!, password: String!, passwordConfirm: String!): Token!
+  updateUserAddressForAdminUI(id: String!, inputs: UpdateUserAddressInputs!): Address
   updateUserForAdminUI(id: String!, inputs: UpdateUserInputs!): User
 }
 
@@ -73,6 +74,18 @@ type Success {
 type Token {
   errors: [Error!]!
   token: String
+}
+
+input UpdateUserAddressInputs {
+  country: String!
+  county: String!
+  createdAt: String!
+  id: String!
+  line1: String!
+  line2: String!
+  postcode: String!
+  updatedAt: String!
+  userId: String!
 }
 
 input UpdateUserInputs {
