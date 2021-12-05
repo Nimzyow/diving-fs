@@ -1,1 +1,1 @@
-export * as useForm from "./useForm"
+export { useForm } from "./useForm"
