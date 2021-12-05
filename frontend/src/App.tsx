@@ -1,13 +1,16 @@
 import React from "react"
-import Login from "./pages/account/pages/login/Login"
-import Register from "./pages/account/pages/register/Register"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import Home from "./pages/home/Home"
+import AccountContainer from "./pages/account/AccountContainer"
 
 export const App = (): JSX.Element => {
     return (
-        <div>
-            <p>Hi there, it's working!!</p>
-            <Login />
-            <Register />
-        </div>
+        <Router>
+            <Switch>
+                <Route path="/">
+                    <AccountContainer />
+                </Route>
+            </Switch>
+        </Router>
     )
 }
