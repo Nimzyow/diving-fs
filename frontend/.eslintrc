@@ -1,0 +1,61 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "react"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/recommended",
+        "plugin:react-hooks/recommended",
+        "prettier"
+    ],
+    "overrides": [
+        {
+            "files": ["*.jsx", "*.js"],
+            "rules": {
+                "@typescript-eslint/explicit-module-boundary-types": "off"
+            }
+        }
+    ],
+    "rules": {
+        "react/jsx-key": "error",
+        "@typescript-eslint/no-non-null-assertion": "error",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "react-hooks/exhaustive-deps": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "semi": ["error", "never"],
+        "import/order": [
+            "error",
+            {
+                "groups": ["builtin", "external", "internal"],
+                "pathGroups": [
+                    {
+                        "pattern": "react",
+                        "group": "external",
+                        "position": "before"
+                    }
+                ],
+                "pathGroupsExcludedImportTypes": ["react"],
+                "newlines-between": "always",
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                }
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": ["frontend/main/src"],
+                "extensions": [".js", ".jsx", ".ts", ".tsx", ".d.ts"]
+            }
+        },
+        "import/ignore": ["node_modules"]
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    }
+}
