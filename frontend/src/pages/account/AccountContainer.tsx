@@ -32,7 +32,7 @@ const AccountContainer = () => {
                 className="p-3"
             >
                 <h2>Log in</h2>
-                <Form>
+                <Form className="mb-3">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control
@@ -62,6 +62,11 @@ const AccountContainer = () => {
                         Submit
                     </Button>
                 </Form>
+                <div className="d-flex justify-content-end w-100 ">
+                    <p className="mb-0" style={{ fontSize: 14 }}>
+                        Not registered? <span className="link-primary">Register here</span>
+                    </p>
+                </div>
             </div>
         </div>
     )

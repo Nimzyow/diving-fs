@@ -3,6 +3,7 @@ import React from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 import AccountContainer from "./pages/account/AccountContainer"
+import { RootStyling, GlobalStyles } from "./styles/RootStyling"
 
 export const App = (): JSX.Element => {
     return (
@@ -12,11 +13,14 @@ export const App = (): JSX.Element => {
             }}
         >
             <Router>
-                <Switch>
-                    <Route path="/">
-                        <AccountContainer />
-                    </Route>
-                </Switch>
+                <GlobalStyles />
+                <RootStyling>
+                    <Switch>
+                        <Route path="/">
+                            <AccountContainer />
+                        </Route>
+                    </Switch>
+                </RootStyling>
             </Router>
         </div>
     )
