@@ -24,20 +24,32 @@ services:
       - ./backend:/app/backend
       - /app/backend/node_modules
     command: sh -c "npx prisma generate && npm run dev"
-  admin:
+  # admin:
+  #   depends_on:
+  #     - "backend"
+  #   image: admin:latest
+  #   build: ./admin
+  #   ports:
+  #     - "3005:3005"
+  #   environment:
+  #     URL: ${URL}
+  #   volumes:
+  #     - ./admin:/app/admin
+  #     - /app/admin/node_modules
+  #   command: sh -c "npm start"
+  frontend:
     depends_on:
       - "backend"
-    image: admin:latest
-    build: ./admin
+    image: frontend:latest
+    build: ./frontend
     ports:
       - "3000:3000"
-    environment:
-      URL: ${URL}
     volumes:
-      - ./admin:/app/admin
-      - /app/admin/node_modules
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
     command: sh -c "npm start"
 volumes:
   backend:
   db_data:
-  admin:
+  # admin:
+  frontend:
