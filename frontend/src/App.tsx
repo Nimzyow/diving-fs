@@ -3,7 +3,6 @@ import React from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 import AccountContainer from "./pages/account/AccountContainer"
-import Home from "./pages/home/Home"
 
 export const App = (): JSX.Element => {
     return (

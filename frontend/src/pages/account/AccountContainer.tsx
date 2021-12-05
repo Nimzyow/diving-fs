@@ -8,14 +8,14 @@ const AccountContainer = () => {
         >
             <div
                 style={{
-                    border: "1px solid black",
+                    border: "2px solid black",
                     minWidth: 300,
                     maxWidth: 300,
                     minHeight: 300,
                     maxHeight: 300,
                 }}
             >
-                <p>Account container</p>
+                <h2>Log in</h2>
             </div>
         </div>
     )
