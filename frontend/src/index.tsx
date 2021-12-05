@@ -1,6 +1,8 @@
-import { ApolloProvider } from "@apollo/client"
 import React from "react"
+
+import { ApolloProvider } from "@apollo/client"
 import ReactDom from "react-dom"
+
 import { App } from "./App"
 import { client } from "./utils/apolloClientSetup"
 

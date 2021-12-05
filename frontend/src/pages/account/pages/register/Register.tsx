@@ -1,4 +1,5 @@
 import React from "react"
+
 import { useCreateUserMutation } from "../../../../generated/graphql"
 
 const Register = (): JSX.Element => {
