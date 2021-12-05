@@ -1,6 +1,29 @@
-import { ApolloClient, InMemoryCache, ApolloLink, NormalizedCacheObject } from "@apollo/client"
+import {
+    ApolloClient,
+    InMemoryCache,
+    ApolloLink,
+    NormalizedCacheObject,
+    createHttpLink,
+} from "@apollo/client"
+import { setContext } from "@apollo/client/link/context"
 import { onError } from "@apollo/client/link/error"
 import { createUploadLink } from "apollo-upload-client"
+
+const httpLink = createHttpLink({
+    uri: "http://localhost:4000/",
+})
+
+const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+    const token = localStorage.getItem("token")
+    // return the headers to the context so httpLink can read them
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `${token}` : "",
+        },
+    }
+})
 
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     link: ApolloLink.from([
@@ -24,8 +47,9 @@ export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
         }),
         createUploadLink({
             uri: "http://localhost:4000/",
-            credentials: "include",
+            // credentials: "include",
         }) as unknown as ApolloLink,
+        authLink.concat(httpLink),
     ]),
     cache: new InMemoryCache(),
 })

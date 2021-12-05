@@ -47,7 +47,7 @@
         "import/resolver": {
             "node": {
                 "paths": ["src"],
-                "extensions": [".ts", ".tsx", ".d.ts"]
+                "extensions": [".ts", ".tsx", ".d.ts", ".js", ".jsx"]
             }
         },
         "import/ignore": ["node_modules"]

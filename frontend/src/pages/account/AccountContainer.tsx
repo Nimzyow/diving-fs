@@ -24,13 +24,13 @@ const AccountContainer = () => {
                 {registered ? <Login /> : <Register />}
                 <div className="d-flex justify-content-end w-100">
                     <p className="mb-0" style={{ fontSize: 14 }}>
-                        Not registered?{" "}
+                        {registered ? "Not" : "Already"} registered?{" "}
                         <span
                             className="link-primary"
                             style={{ cursor: "pointer" }}
                             onClick={() => setRegistered(!registered)}
                         >
-                            {registered ? "Login" : "Register"} here
+                            {registered ? "Register" : "Login"} here
                         </span>
                     </p>
                 </div>

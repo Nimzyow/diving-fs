@@ -2,17 +2,29 @@ import React from "react"
 
 import { Form, Button } from "react-bootstrap"
 
+import { useCreateUserMutation } from "../../../generated/graphql"
 import { useForm } from "../../../hooks/useForm"
 
 export const Register = () => {
+    const [createUser, { data, loading, error }] = useCreateUserMutation()
     const { inputs, onSubmit, onChange } = useForm({
         initialInputs: {
+            firstName: "",
+            lastName: "",
             email: "",
             password: "",
             passwordConfirm: "",
         },
         submit: async () => {
             console.log(inputs)
+            createUser({
+                variables: {
+                    firstName: inputs.firstName,
+                    lastName: inputs.lastName,
+                    email: inputs.email,
+                    password: inputs.password,
+                },
+            })
             return {}
         },
     })
@@ -20,6 +32,28 @@ export const Register = () => {
         <div>
             <h2>Register</h2>
             <Form className="mb-3">
+                <Form.Group className="mb-3" controlId="formBasicFirstName">
+                    <Form.Label>First name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="First name"
+                        value={inputs.firstName}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange({ firstName: event.target.value })
+                        }}
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicLastName">
+                    <Form.Label>Last name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Last name"
+                        value={inputs.lastName}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange({ lastName: event.target.value })
+                        }}
+                    />
+                </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
@@ -45,14 +79,14 @@ export const Register = () => {
                         }}
                     />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3" controlId="formBasicPasswordConfirm">
                     <Form.Label>Password confirm</Form.Label>
                     <Form.Control
-                        type="passwordConfirm"
+                        type="password"
                         placeholder="Password confirmation"
                         value={inputs.passwordConfirm}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            onChange({ password: event.target.value })
+                            onChange({ passwordConfirm: event.target.value })
                         }}
                     />
                 </Form.Group>
