@@ -5,12 +5,18 @@ import AccountContainer from "./pages/account/AccountContainer"
 
 export const App = (): JSX.Element => {
     return (
-        <Router>
-            <Switch>
-                <Route path="/">
-                    <AccountContainer />
-                </Route>
-            </Switch>
-        </Router>
+        <div
+            style={{
+                minWidth: 320,
+            }}
+        >
+            <Router>
+                <Switch>
+                    <Route path="/">
+                        <AccountContainer />
+                    </Route>
+                </Switch>
+            </Router>
+        </div>
     )
 }
