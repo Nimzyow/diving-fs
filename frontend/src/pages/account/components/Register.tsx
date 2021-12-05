@@ -5,7 +5,7 @@ import { Form, Button } from "react-bootstrap"
 import { useForm } from "../../../hooks/useForm"
 
 export const Register = () => {
-    const { inputs, errors, onSubmit, onChange } = useForm({
+    const { inputs, onSubmit, onChange } = useForm({
         initialInputs: {
             email: "",
             password: "",

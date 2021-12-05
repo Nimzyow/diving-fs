@@ -21,7 +21,6 @@ const AccountContainer = () => {
                 }}
                 className="p-3"
             >
-                {" "}
                 {registered ? <Login /> : <Register />}
                 <div className="d-flex justify-content-end w-100">
                     <p className="mb-0" style={{ fontSize: 14 }}>
