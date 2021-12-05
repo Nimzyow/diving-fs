@@ -20,10 +20,8 @@
     "rules": {
         "react/jsx-key": "error",
         "@typescript-eslint/no-non-null-assertion": "error",
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "react-hooks/exhaustive-deps": "off",
         "@typescript-eslint/ban-ts-comment": "off",
-        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-explicit-any": "error",
         "semi": ["error", "never"],
         "import/order": [
             "error",
@@ -48,8 +46,8 @@
     "settings": {
         "import/resolver": {
             "node": {
-                "paths": ["frontend/main/src"],
-                "extensions": [".js", ".jsx", ".ts", ".tsx", ".d.ts"]
+                "paths": ["src"],
+                "extensions": [".ts", ".tsx", ".d.ts"]
             }
         },
         "import/ignore": ["node_modules"]
