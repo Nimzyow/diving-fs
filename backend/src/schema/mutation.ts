@@ -52,47 +52,40 @@ export const Mutation = extendType({
                 const errors: { code: string; message: string }[] = []
                 const { email, lastName, firstName, password } = args
 
-                if (email && lastName && firstName && password) {
-                    try {
-                        const salt = await bcrypt.genSalt(10)
+                try {
+                    const salt = await bcrypt.genSalt(10)
 
-                        const hashedPassword = await bcrypt.hash(password, salt)
+                    const hashedPassword = await bcrypt.hash(password, salt)
 
-                        const user = await context.prisma.user.create({
-                            data: {
-                                email,
-                                firstName,
-                                lastName,
-                                password: hashedPassword,
-                            },
-                        })
+                    const user = await context.prisma.user.create({
+                        data: {
+                            email,
+                            firstName,
+                            lastName,
+                            password: hashedPassword,
+                        },
+                    })
 
-                        const payload = {
-                            user: {
-                                id: user.id,
-                            },
-                        }
-
-                        return {
-                            token: jwt.sign(payload, process.env.JWTSECRET || "", {
-                                expiresIn: 360000,
-                            }),
-                            errors: [],
-                        }
-                    } catch (error) {
-                        console.log(error)
-                        errors.push({
-                            code: "INVALID_INPUTS",
-                            message: "Please enter valid inputs",
-                        })
-                        return { token: null, errors }
+                    const payload = {
+                        user: {
+                            id: user.id,
+                        },
                     }
+
+                    return {
+                        token: jwt.sign(payload, process.env.JWTSECRET || "", {
+                            expiresIn: 360000,
+                        }),
+                        errors: [],
+                    }
+                } catch (error) {
+                    console.log(error)
+                    errors.push({
+                        code: "INVALID_INPUTS",
+                        message: "Please enter valid inputs",
+                    })
+                    return { token: null, errors }
                 }
-                errors.push({
-                    code: "INVALID_INPUTS",
-                    message: "Please enter valid inputs",
-                })
-                return { token: null, errors }
             },
         }),
             t.field("createUserForAdminUI", {

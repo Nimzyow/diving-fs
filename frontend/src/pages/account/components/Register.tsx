@@ -1,31 +1,51 @@
 import React from "react"
 
 import { Form, Button } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 
 import { useCreateUserMutation } from "../../../generated/graphql"
 import { useForm } from "../../../hooks/useForm"
 
 export const Register = () => {
+    const history = useHistory()
     const [createUser, { data, loading, error }] = useCreateUserMutation()
     const { inputs, onSubmit, onChange } = useForm({
         initialInputs: {
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            passwordConfirm: "",
+            firstName: "hello",
+            lastName: "friend",
+            email: "hellofriend1@example.com",
+            password: "ENOshima12?",
+            passwordConfirm: "ENOshima12?",
         },
         submit: async () => {
             console.log(inputs)
-            createUser({
-                variables: {
-                    firstName: inputs.firstName,
-                    lastName: inputs.lastName,
-                    email: inputs.email,
-                    password: inputs.password,
-                },
-            })
+            try {
+                const result = await createUser({
+                    variables: {
+                        firstName: inputs.firstName,
+                        lastName: inputs.lastName,
+                        email: inputs.email,
+                        password: inputs.password,
+                    },
+                })
+                console.log(result)
+                if (result.data?.createUser?.errors && result.data?.createUser?.errors.length > 0) {
+                    return { nonFieldError: "Somthing went wrong" }
+                }
+
+                if (result.data?.createUser?.token) {
+                    localStorage.setItem("token", result.data.createUser.token)
+                } else {
+                    return { nonFieldError: "Token was not found in data" }
+                }
+            } catch (error) {
+                return { nonFieldError: "Something went wrong" }
+            }
             return {}
+        },
+        complete: () => {
+            console.log("Does this thing complete?")
+            history.push("/")
         },
     })
     return (

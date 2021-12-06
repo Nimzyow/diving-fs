@@ -20,6 +20,7 @@ services:
       - "5555:5555"
     environment:
       DB_URL: ${DB_URL}
+      JWTSECRET: ${JWTSECRET}
     volumes:
       - ./backend:/app/backend
       - /app/backend/node_modules
