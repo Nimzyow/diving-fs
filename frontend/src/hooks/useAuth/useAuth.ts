@@ -1,20 +1,11 @@
+import { useMeQuery } from "../../generated/graphql"
+
 export const useAuth = () => {
-    const getUser = () => {
-        // this needs to get the token
-        // getUser with token from backend
-        // if user succesfully returns, return user from function
-        const userToken = localStorage.getItem("token")
-        if (userToken) {
-            return {
-                firstName: "Nima",
-                isEmailVerified: true,
-            }
-        } else {
-            null
-        }
-    }
+    const { data: userData, loading: userLoading, error: userError } = useMeQuery()
 
     return {
-        getUser: getUser(),
+        userData: userData?.me,
+        userError,
+        userLoading,
     }
 }

@@ -10,8 +10,13 @@
 10. delete user backend and frontend for admin ui DONE
 11. delete many users backend and frontend for admin ui DONE
 12. wire up pagination in get all users list DONE
-13. dockerize admin
-14. dockerize frontend
+13. dockerize admin ON HOLd
+14. dockerize frontend DONE
+15. login stores token and redirects to main page
+16. all unrecognised pathnames should show a not recognised url path.
+17. introduce unit testing for frontend
+18. introduce cypress testing for frontend
+19. create backend tests for queries and mutations that you're using for the frontend
 
 NOTES:
 

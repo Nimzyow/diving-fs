@@ -10,12 +10,12 @@ type Props = {
 }
 
 const PrivateRoute = ({ children, ...rest }: Props) => {
-    const { getUser } = useAuth()
+    const { userData } = useAuth()
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                getUser?.isEmailVerified ? (
+                userData ? (
                     children
                 ) : (
                     <Redirect

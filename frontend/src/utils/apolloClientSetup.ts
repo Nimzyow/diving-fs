@@ -17,6 +17,7 @@ const authLink = setContext((_, { headers }) => {
     // get the authentication token from local storage if it exists
     const token = localStorage.getItem("token")
     // return the headers to the context so httpLink can read them
+    console.log(token)
     return {
         headers: {
             ...headers,
@@ -27,6 +28,7 @@ const authLink = setContext((_, { headers }) => {
 
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     link: ApolloLink.from([
+        authLink.concat(httpLink),
         onError(({ graphQLErrors, networkError }) => {
             if (graphQLErrors) {
                 graphQLErrors.forEach(({ message, locations, path }) => {
@@ -49,7 +51,6 @@ export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
             uri: "http://localhost:4000/",
             // credentials: "include",
         }) as unknown as ApolloLink,
-        authLink.concat(httpLink),
     ]),
     cache: new InMemoryCache(),
 })
