@@ -8,7 +8,7 @@ import { useForm } from "../../../hooks/useForm"
 
 export const Register = () => {
     const history = useHistory()
-    const [createUser, { data, loading, error }] = useCreateUserMutation()
+    const [createUser] = useCreateUserMutation()
     const { inputs, onSubmit, onChange } = useForm({
         initialInputs: {
             firstName: "hello",
