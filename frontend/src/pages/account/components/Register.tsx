@@ -44,7 +44,6 @@ export const Register = () => {
             return {}
         },
         complete: () => {
-            console.log("Does this thing complete?")
             history.push("/")
         },
     })
