@@ -28,7 +28,6 @@ export const Register = () => {
                         password: inputs.password,
                     },
                 })
-                console.log(result)
                 if (result.data?.createUser?.errors && result.data?.createUser?.errors.length > 0) {
                     return { nonFieldError: "Somthing went wrong" }
                 }
