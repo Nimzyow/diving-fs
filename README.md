@@ -12,7 +12,7 @@
 12. wire up pagination in get all users list DONE
 13. dockerize admin ON HOLd
 14. dockerize frontend DONE
-15. login stores token and redirects to main page
+15. login stores token and redirects to main page DONE
 16. all unrecognised pathnames should show a not recognised url path.
 17. introduce unit testing for frontend
 18. introduce cypress testing for frontend

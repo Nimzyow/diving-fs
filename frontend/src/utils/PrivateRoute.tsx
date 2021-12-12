@@ -7,6 +7,7 @@ import { useAuth } from "../hooks/useAuth"
 type Props = {
     children: JSX.Element
     path: string
+    exact?: boolean
 }
 
 const PrivateRoute = ({ children, ...rest }: Props) => {
