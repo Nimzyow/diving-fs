@@ -2,6 +2,7 @@ import React from "react"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
+import Footer from "./components/footer/Footer"
 import Navigation from "./components/navbar/Navigation"
 import { useAuth } from "./hooks/useAuth"
 import AccountContainer from "./pages/account/AccountContainer"
@@ -38,6 +39,7 @@ export const App = (): JSX.Element => {
                             <NotRecognised />
                         </Route>
                     </Switch>
+                    <Footer />
                 </RootStyling>
             </Router>
         </div>
