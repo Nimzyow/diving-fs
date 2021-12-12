@@ -224,26 +224,10 @@ export const Mutation = extendType({
                 args: {
                     email: nonNull(stringArg()),
                     password: nonNull(stringArg()),
-                    passwordConfirm: nonNull(stringArg()),
                 },
                 resolve: async (parent, args, context) => {
                     const errors: { code: string; message: string }[] = []
-                    const { email, password, passwordConfirm } = args
-                    if (!password || !passwordConfirm || !email) {
-                        errors.push({
-                            code: "INVALID_INPUTS",
-                            message: "Please check for appropriate inputs",
-                        })
-                        return { token: null, errors }
-                    }
-
-                    if (password !== passwordConfirm) {
-                        errors.push({
-                            code: "INVALID_INPUTS",
-                            message: "Please check for password and password confirm mismatch",
-                        })
-                        return { token: null, errors }
-                    }
+                    const { email, password } = args
 
                     try {
                         const user = await context.prisma.user.findUnique({

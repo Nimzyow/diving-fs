@@ -274,7 +274,6 @@ export interface NexusGenArgTypes {
     login: { // args
       email: string; // String!
       password: string; // String!
-      passwordConfirm: string; // String!
     }
     updateUserAddressForAdminUI: { // args
       id: string; // String!

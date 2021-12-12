@@ -36,7 +36,7 @@ type Mutation {
   deleteManyUsersForAdminUI(ids: [String!]!): [String]
   deleteUserAddressForAdminUI(id: String!): Address
   deleteUserForAdminUI(id: String!): User
-  login(email: String!, password: String!, passwordConfirm: String!): Token!
+  login(email: String!, password: String!): Token!
   updateUserAddressForAdminUI(id: String!, inputs: UpdateUserAddressInputs!): Address
   updateUserForAdminUI(id: String!, inputs: UpdateUserInputs!): User
 }

@@ -1,11 +1,12 @@
 import { useMeQuery } from "../../generated/graphql"
 
 export const useAuth = () => {
-    const { data: userData, loading: userLoading, error: userError } = useMeQuery()
+    const { data: userData, loading: userLoading, error: userError, refetch: userRefetch } = useMeQuery()
 
     return {
         userData: userData?.me,
         userError,
         userLoading,
+        userRefetch,
     }
 }

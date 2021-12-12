@@ -52,6 +52,7 @@ describe("User", () => {
             password: "asdasdasdas",
             isSuperUser: false,
             role: "USER",
+            status: "ACTIVE",
             createdAt: dateNow,
             updatedAt: dateNow,
         }
@@ -127,6 +128,7 @@ describe("User", () => {
             password: "asdasdasdas",
             isSuperUser: false,
             role: "USER",
+            status: "ACTIVE",
             createdAt: dateNow,
             updatedAt: dateNow,
         }
@@ -170,6 +172,7 @@ describe("User", () => {
             password: "asdasdasdas",
             isSuperUser: false,
             role: "USER",
+            status: "ACTIVE",
             createdAt: dateNow,
             updatedAt: dateNow,
         }

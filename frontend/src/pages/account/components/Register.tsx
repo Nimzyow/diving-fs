@@ -18,7 +18,6 @@ export const Register = () => {
             passwordConfirm: "ENOshima12?",
         },
         submit: async () => {
-            console.log(inputs)
             try {
                 const result = await createUser({
                     variables: {
@@ -29,7 +28,7 @@ export const Register = () => {
                     },
                 })
                 if (result.data?.createUser?.errors && result.data?.createUser?.errors.length > 0) {
-                    return { nonFieldError: "Somthing went wrong" }
+                    return { nonFieldError: "Something went wrong" }
                 }
 
                 if (result.data?.createUser?.token) {

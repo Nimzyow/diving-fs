@@ -100,7 +100,6 @@ export type MutationDeleteUserForAdminUiArgs = {
 export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
-  passwordConfirm: Scalars['String'];
 };
 
 
@@ -230,7 +229,6 @@ export type CreateUserMutation = { __typename?: 'Mutation', createUser?: Maybe<{
 export type LoginMutationVariables = Exact<{
   loginEmail: Scalars['String'];
   loginPassword: Scalars['String'];
-  loginPasswordConfirm: Scalars['String'];
 }>;
 
 
@@ -320,12 +318,8 @@ export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutati
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const LoginDocument = gql`
-    mutation login($loginEmail: String!, $loginPassword: String!, $loginPasswordConfirm: String!) {
-  login(
-    email: $loginEmail
-    password: $loginPassword
-    passwordConfirm: $loginPasswordConfirm
-  ) {
+    mutation login($loginEmail: String!, $loginPassword: String!) {
+  login(email: $loginEmail, password: $loginPassword) {
     token
     errors {
       code
@@ -351,7 +345,6 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  *   variables: {
  *      loginEmail: // value for 'loginEmail'
  *      loginPassword: // value for 'loginPassword'
- *      loginPasswordConfirm: // value for 'loginPasswordConfirm'
  *   },
  * });
  */

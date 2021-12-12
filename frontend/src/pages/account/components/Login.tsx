@@ -1,18 +1,49 @@
 import React from "react"
 
 import { Form, Button } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 
+import { useLoginMutation } from "../../../generated/graphql"
+import { useAuth } from "../../../hooks/useAuth"
 import { useForm } from "../../../hooks/useForm"
 
 export const Login = () => {
+    const { userRefetch } = useAuth()
+    const [loginUser] = useLoginMutation()
+    const history = useHistory()
     const { inputs, onSubmit, onChange } = useForm({
         initialInputs: {
             email: "",
             password: "",
         },
         submit: async () => {
-            console.log(inputs)
+            try {
+                const result = await loginUser({
+                    variables: {
+                        loginEmail: inputs.email,
+                        loginPassword: inputs.password,
+                    },
+                })
+                if (result.data?.login.errors && result.data.login.errors.length > 0) {
+                    return {
+                        nonFieldError: "Something went wrong",
+                    }
+                }
+                if (result.data?.login.token) {
+                    localStorage.setItem("token", result.data.login.token)
+                    userRefetch()
+                } else {
+                    return {
+                        nonFieldError: "Token was not found in data",
+                    }
+                }
+            } catch (error) {
+                return { nonFieldError: "Something went wrong" }
+            }
             return {}
+        },
+        complete: () => {
+            history.push("/")
         },
     })
     return (
