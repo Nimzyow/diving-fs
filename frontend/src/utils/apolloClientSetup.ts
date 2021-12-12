@@ -27,6 +27,13 @@ const authLink = setContext((_, { headers }) => {
 
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     link: ApolloLink.from([
+        new ApolloLink((operation, forward) => {
+            console.log(operation)
+            operation.setContext(() => ({
+                uri: `http://localhost:4000${"/graphql"}?${operation.operationName}`,
+            }))
+            return forward ? forward(operation) : null
+        }),
         authLink.concat(httpLink),
         onError(({ graphQLErrors, networkError }) => {
             if (graphQLErrors) {
@@ -39,12 +46,6 @@ export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
                 })
             }
             if (networkError) console.log(`[Network error]: ${networkError}`)
-        }),
-        new ApolloLink((operation, forward) => {
-            operation.setContext(() => ({
-                uri: `http://localhost:4000/`,
-            }))
-            return forward ? forward(operation) : null
         }),
         createUploadLink({
             uri: "http://localhost:4000/",
