@@ -2,6 +2,7 @@ import React from "react"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
+import Navigation from "./components/navbar/Navigation"
 import { useAuth } from "./hooks/useAuth"
 import AccountContainer from "./pages/account/AccountContainer"
 import Home from "./pages/home/Home"
@@ -25,15 +26,11 @@ export const App = (): JSX.Element => {
             <Router>
                 <GlobalStyles />
                 <RootStyling>
+                    <Navigation />
                     <Switch>
-                        {!userData && (
-                            <>
-                                <Route exact path="/account">
-                                    <AccountContainer />
-                                </Route>
-                                <Route component={NotRecognised} />
-                            </>
-                        )}
+                        <Route exact path="/account">
+                            <AccountContainer />
+                        </Route>
                         <PrivateRoute exact={true} path="/">
                             <Home />
                         </PrivateRoute>

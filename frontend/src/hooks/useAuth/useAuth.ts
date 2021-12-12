@@ -6,9 +6,13 @@ export const useAuth = () => {
     const client = useApolloClient()
     const { data: userData, loading: userLoading, error: userError, refetch: userRefetch } = useMeQuery()
 
-    const logout = () => {
-        localStorage.removeItem("token")
-        client.resetStore()
+    const logout = async () => {
+        try {
+            localStorage.removeItem("token")
+            client.resetStore()
+        } catch (error) {
+            return { error }
+        }
     }
 
     return {

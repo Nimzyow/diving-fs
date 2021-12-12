@@ -13,10 +13,12 @@
 13. dockerize admin ON HOLd
 14. dockerize frontend DONE
 15. login stores token and redirects to main page DONE
-16. all unrecognised pathnames should show a not recognised url path.
+16. all unrecognised pathnames should show a not recognised url path. DONE
 17. introduce unit testing for frontend
 18. introduce cypress testing for frontend
 19. create backend tests for queries and mutations that you're using for the frontend
+20. Create Navbar with logout
+21. Create footer
 
 NOTES:
 

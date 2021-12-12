@@ -1,10 +1,18 @@
 import React, { useState } from "react"
 
+import { Redirect } from "react-router-dom"
+
+import { useAuth } from "../../hooks/useAuth"
 import { Login } from "./components/Login"
 import { Register } from "./components/Register"
 
 const AccountContainer = () => {
     const [registered, setRegistered] = useState(true)
+    const { userData } = useAuth()
+
+    if (userData) {
+        return <Redirect to="/" />
+    }
 
     return (
         <div
