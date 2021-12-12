@@ -137,6 +137,7 @@ sketch
 
 generated
 
+cypress/
 cypress
 
 # End of https://www.toptal.com/developers/gitignore/api/node,react
