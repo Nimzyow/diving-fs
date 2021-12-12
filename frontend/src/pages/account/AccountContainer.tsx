@@ -26,6 +26,7 @@ const AccountContainer = () => {
                     minWidth: 300,
                     maxWidth: 300,
                     minHeight: 300,
+                    boxShadow: "0px 0px 10px",
                 }}
                 className="p-3"
             >
