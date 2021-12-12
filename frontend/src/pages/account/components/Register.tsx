@@ -4,9 +4,11 @@ import { Form, Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 
 import { useCreateUserMutation } from "../../../generated/graphql"
+import { useAuth } from "../../../hooks/useAuth"
 import { useForm } from "../../../hooks/useForm"
 
 export const Register = () => {
+    const { userRefetch } = useAuth()
     const history = useHistory()
     const [createUser] = useCreateUserMutation()
     const { inputs, onSubmit, onChange } = useForm({
@@ -42,6 +44,7 @@ export const Register = () => {
             return {}
         },
         complete: () => {
+            userRefetch()
             history.push("/")
         },
     })
