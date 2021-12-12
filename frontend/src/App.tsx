@@ -11,7 +11,7 @@ import { RootStyling, GlobalStyles } from "./styles/RootStyling"
 import PrivateRoute from "./utils/PrivateRoute"
 
 export const App = (): JSX.Element => {
-    const { userData, userLoading } = useAuth()
+    const { userLoading } = useAuth()
 
     if (userLoading) {
         return <div />

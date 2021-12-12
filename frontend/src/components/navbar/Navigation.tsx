@@ -1,18 +1,11 @@
 import React from "react"
 
 import { Navbar, Nav } from "react-bootstrap"
-import { useHistory } from "react-router-dom"
 
 import { useAuth } from "../../hooks/useAuth"
 
 const Navigation = () => {
     const { logout } = useAuth()
-    const history = useHistory()
-
-    const onClick = async () => {
-        await logout()
-        history.push("/account")
-    }
 
     return (
         <Navbar bg="primary" variant="dark">
