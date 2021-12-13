@@ -7,8 +7,8 @@ import { prismaMock } from "./singleton"
 import { User } from ".prisma/client"
 
 const LOGIN_USER = gql`
-    mutation loginUser($email: String!, $password: String!, $passwordConfirm: String!) {
-        login(email: $email, password: $password, passwordConfirm: $passwordConfirm) {
+    mutation loginUser($email: String!, $password: String!) {
+        login(email: $email, password: $password) {
             token
             errors {
                 code
@@ -140,7 +140,6 @@ describe("User", () => {
             variables: {
                 email: "test@example.com",
                 password: "ABCdefgh",
-                passwordConfirm: "ABCdefgh",
             },
         })
 
