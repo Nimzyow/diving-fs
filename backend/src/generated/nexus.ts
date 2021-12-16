@@ -25,23 +25,6 @@ export interface NexusGenInputs {
     lastName: string; // String!
     password: string; // String!
   }
-  UpdateUserAddressInputs: { // input type
-    country: string; // String!
-    county: string; // String!
-    createdAt: string; // String!
-    id: string; // String!
-    line1: string; // String!
-    line2: string; // String!
-    postcode: string; // String!
-    updatedAt: string; // String!
-    userId: string; // String!
-  }
-  UpdateUserInputs: { // input type
-    email: string; // String!
-    firstName: string; // String!
-    id: string; // String!
-    lastName: string; // String!
-  }
 }
 
 export interface NexusGenEnums {
@@ -217,10 +200,7 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Mutation: {
     createUser: { // args
-      email: string; // String!
-      firstName: string; // String!
-      lastName: string; // String!
-      password: string; // String!
+      inputs: NexusGenInputs['CreateUserInputs']; // CreateUserInputs!
     }
     login: { // args
       email: string; // String!

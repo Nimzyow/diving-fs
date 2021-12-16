@@ -23,10 +23,12 @@ export const Register = () => {
             try {
                 const result = await createUser({
                     variables: {
-                        firstName: inputs.firstName,
-                        lastName: inputs.lastName,
-                        email: inputs.email,
-                        password: inputs.password,
+                        inputs: {
+                            firstName: inputs.firstName,
+                            lastName: inputs.lastName,
+                            email: inputs.email,
+                            password: inputs.password,
+                        },
                     },
                 })
                 if (result.data?.createUser?.errors && result.data?.createUser?.errors.length > 0) {

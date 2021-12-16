@@ -43,75 +43,19 @@ export type Error = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createAddress?: Maybe<Success>;
   createUser?: Maybe<Token>;
-  createUserForAdminUI?: Maybe<User>;
-  deleteManyUserAddressesForAdminUI?: Maybe<Array<Maybe<Scalars['String']>>>;
-  deleteManyUsersForAdminUI?: Maybe<Array<Maybe<Scalars['String']>>>;
-  deleteUserAddressForAdminUI?: Maybe<Address>;
-  deleteUserForAdminUI?: Maybe<User>;
   login: Token;
-  updateUserAddressForAdminUI?: Maybe<Address>;
-  updateUserForAdminUI?: Maybe<User>;
-};
-
-
-export type MutationCreateAddressArgs = {
-  county?: Maybe<Scalars['String']>;
-  line1: Scalars['String'];
-  line2?: Maybe<Scalars['String']>;
-  postcode: Scalars['String'];
 };
 
 
 export type MutationCreateUserArgs = {
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  password: Scalars['String'];
-};
-
-
-export type MutationCreateUserForAdminUiArgs = {
   inputs: CreateUserInputs;
-};
-
-
-export type MutationDeleteManyUserAddressesForAdminUiArgs = {
-  ids: Array<Scalars['String']>;
-};
-
-
-export type MutationDeleteManyUsersForAdminUiArgs = {
-  ids: Array<Scalars['String']>;
-};
-
-
-export type MutationDeleteUserAddressForAdminUiArgs = {
-  id: Scalars['String'];
-};
-
-
-export type MutationDeleteUserForAdminUiArgs = {
-  id: Scalars['String'];
 };
 
 
 export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
-};
-
-
-export type MutationUpdateUserAddressForAdminUiArgs = {
-  id: Scalars['String'];
-  inputs: UpdateUserAddressInputs;
-};
-
-
-export type MutationUpdateUserForAdminUiArgs = {
-  id: Scalars['String'];
-  inputs: UpdateUserInputs;
 };
 
 export type Note = {
@@ -126,39 +70,7 @@ export type Note = {
 
 export type Query = {
   __typename?: 'Query';
-  allUsersAddressesForAdminUI?: Maybe<Array<Maybe<Address>>>;
-  allUsersForAdminUI?: Maybe<Array<Maybe<User>>>;
-  allUsersForAdminUICount?: Maybe<Scalars['Int']>;
-  getUserAddressForAdminUI?: Maybe<Address>;
-  getUserForAdminUI?: Maybe<User>;
   me?: Maybe<User>;
-  users?: Maybe<Array<User>>;
-};
-
-
-export type QueryAllUsersAddressesForAdminUiArgs = {
-  page: Scalars['Int'];
-  perPage: Scalars['Int'];
-  sortField: Scalars['String'];
-  sortOrder: Scalars['String'];
-};
-
-
-export type QueryAllUsersForAdminUiArgs = {
-  page: Scalars['Int'];
-  perPage: Scalars['Int'];
-  sortField: Scalars['String'];
-  sortOrder: Scalars['String'];
-};
-
-
-export type QueryGetUserAddressForAdminUiArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryGetUserForAdminUiArgs = {
-  id: Scalars['String'];
 };
 
 export enum Role {
@@ -177,25 +89,6 @@ export type Token = {
   __typename?: 'Token';
   errors: Array<Error>;
   token?: Maybe<Scalars['String']>;
-};
-
-export type UpdateUserAddressInputs = {
-  country: Scalars['String'];
-  county: Scalars['String'];
-  createdAt: Scalars['String'];
-  id: Scalars['String'];
-  line1: Scalars['String'];
-  line2: Scalars['String'];
-  postcode: Scalars['String'];
-  updatedAt: Scalars['String'];
-  userId: Scalars['String'];
-};
-
-export type UpdateUserInputs = {
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  id: Scalars['String'];
-  lastName: Scalars['String'];
 };
 
 export type User = {
@@ -217,10 +110,7 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, firstName: string, lastName: string, email: string }> };
 
 export type CreateUserMutationVariables = Exact<{
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  password: Scalars['String'];
+  inputs: CreateUserInputs;
 }>;
 
 
@@ -273,13 +163,8 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const CreateUserDocument = gql`
-    mutation CreateUser($email: String!, $firstName: String!, $lastName: String!, $password: String!) {
-  createUser(
-    email: $email
-    firstName: $firstName
-    lastName: $lastName
-    password: $password
-  ) {
+    mutation CreateUser($inputs: CreateUserInputs!) {
+  createUser(inputs: $inputs) {
     errors {
       code
       message
@@ -303,10 +188,7 @@ export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, C
  * @example
  * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
  *   variables: {
- *      email: // value for 'email'
- *      firstName: // value for 'firstName'
- *      lastName: // value for 'lastName'
- *      password: // value for 'password'
+ *      inputs: // value for 'inputs'
  *   },
  * });
  */

@@ -29,7 +29,7 @@ type Error {
 }
 
 type Mutation {
-  createUser(email: String!, firstName: String!, lastName: String!, password: String!): Token
+  createUser(inputs: CreateUserInputs!): Token
   login(email: String!, password: String!): Token!
 }
 
@@ -60,25 +60,6 @@ type Success {
 type Token {
   errors: [Error!]!
   token: String
-}
-
-input UpdateUserAddressInputs {
-  country: String!
-  county: String!
-  createdAt: String!
-  id: String!
-  line1: String!
-  line2: String!
-  postcode: String!
-  updatedAt: String!
-  userId: String!
-}
-
-input UpdateUserInputs {
-  email: String!
-  firstName: String!
-  id: String!
-  lastName: String!
 }
 
 type User {

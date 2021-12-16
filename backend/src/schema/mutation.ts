@@ -12,45 +12,21 @@ export const CreateUserInputs = inputObjectType({
     },
 })
 
-export const UpdateUserInputs = inputObjectType({
-    name: "UpdateUserInputs",
-    definition(t) {
-        t.nonNull.string("id"),
-            t.nonNull.string("firstName"),
-            t.nonNull.string("lastName"),
-            t.nonNull.string("email")
-    },
-})
-
-export const UpdateUserAddressInputs = inputObjectType({
-    name: "UpdateUserAddressInputs",
-    definition(t) {
-        t.nonNull.string("id"),
-            t.nonNull.string("line1"),
-            t.nonNull.string("line2"),
-            t.nonNull.string("county"),
-            t.nonNull.string("postcode"),
-            t.nonNull.string("country"),
-            t.nonNull.string("userId"),
-            t.nonNull.string("createdAt"),
-            t.nonNull.string("updatedAt")
-    },
-})
-
 export const Mutation = extendType({
     type: "Mutation",
     definition(t) {
         t.field("createUser", {
             type: "Token",
             args: {
-                firstName: nonNull(stringArg()),
-                lastName: nonNull(stringArg()),
-                email: nonNull(stringArg()),
-                password: nonNull(stringArg()),
+                inputs: nonNull(
+                    arg({
+                        type: "CreateUserInputs",
+                    })
+                ),
             },
             resolve: async (parent, args, context) => {
                 const errors: { code: string; message: string }[] = []
-                const { email, lastName, firstName, password } = args
+                const { email, lastName, firstName, password } = args.inputs
 
                 if ((email || lastName || firstName || password) === "") {
                     errors.push({
