@@ -75,7 +75,7 @@ describe("User", () => {
         })
     })
 
-    it("will throw error with no email, firstName, lastName or password", async () => {
+    it("will throw error with empty string for email, firstName, lastName or password", async () => {
         const sign = jest.spyOn(jwt, "sign")
         sign.mockImplementation(() => "signed")
 

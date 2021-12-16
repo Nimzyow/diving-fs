@@ -52,6 +52,14 @@ export const Mutation = extendType({
                 const errors: { code: string; message: string }[] = []
                 const { email, lastName, firstName, password } = args
 
+                if ((email || lastName || firstName || password) === "") {
+                    errors.push({
+                        code: "INVALID_INPUTS",
+                        message: "Please enter valid inputs",
+                    })
+                    return { token: null, errors }
+                }
+
                 try {
                     const salt = await bcrypt.genSalt(10)
 
@@ -80,8 +88,8 @@ export const Mutation = extendType({
                     }
                 } catch (error) {
                     errors.push({
-                        code: "INVALID_INPUTS",
-                        message: "Please enter valid inputs",
+                        code: "GENERAL_ERROR",
+                        message: "Please try again later",
                     })
                     return { token: null, errors }
                 }
