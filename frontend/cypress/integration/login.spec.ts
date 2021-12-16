@@ -1,5 +1,5 @@
-describe("This is my first test", () => {
-    it("visits the login page", () => {
+describe("User", () => {
+    it("can login", () => {
         cy.visit("http://localhost:3000/")
         cy.clearCookies()
 
@@ -33,9 +33,9 @@ describe("This is my first test", () => {
         ).as("meQuery")
 
         cy.contains("Log in")
-        cy.contains("Register here").click()
-        cy.contains("Register")
-        cy.contains("Login here").click()
+        // cy.contains("Register here").click()
+        // cy.contains("Register")
+        // cy.contains("Login here").click()
         cy.get("input[type=email]").type("test@example.com")
         cy.get("input[type=password]").type("somethingOrAnother")
         cy.contains("Submit").click()

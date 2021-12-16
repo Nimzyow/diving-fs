@@ -13,11 +13,11 @@ export const Register = () => {
     const [createUser] = useCreateUserMutation()
     const { inputs, onSubmit, onChange } = useForm({
         initialInputs: {
-            firstName: "hello",
-            lastName: "friend",
-            email: "hellofriend1@example.com",
-            password: "ENOshima12?",
-            passwordConfirm: "ENOshima12?",
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            passwordConfirm: "",
         },
         submit: async () => {
             try {
@@ -57,6 +57,7 @@ export const Register = () => {
                 <Form.Group className="mb-3" controlId="formBasicFirstName">
                     <Form.Label>First name</Form.Label>
                     <Form.Control
+                        name="firstName"
                         type="text"
                         placeholder="First name"
                         value={inputs.firstName}
@@ -69,6 +70,7 @@ export const Register = () => {
                     <Form.Label>Last name</Form.Label>
                     <Form.Control
                         type="text"
+                        name="lastName"
                         placeholder="Last name"
                         value={inputs.lastName}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,6 +95,7 @@ export const Register = () => {
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
+                        name="password"
                         type="password"
                         placeholder="Password"
                         value={inputs.password}
@@ -104,6 +107,7 @@ export const Register = () => {
                 <Form.Group className="mb-3" controlId="formBasicPasswordConfirm">
                     <Form.Label>Password confirm</Form.Label>
                     <Form.Control
+                        name="passwordConfirm"
                         type="password"
                         placeholder="Password confirmation"
                         value={inputs.passwordConfirm}

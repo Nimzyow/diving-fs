@@ -4,6 +4,6 @@
     "requestTimeout": 2000,
     "watchForFileChanges": true,
     "chromeWebSecurity": false,
-    "testFiles": ["sample_spec.ts"],
+    "testFiles": ["login.spec.ts", "register.spec.ts"],
     "blockHosts": ["*google-analytics.com", "*maps.googleapis.com", "*bat.bing.com"]
 }
