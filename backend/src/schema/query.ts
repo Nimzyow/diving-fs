@@ -1,6 +1,4 @@
-import { extendType, list, stringArg, intArg, nonNull } from "nexus"
-import bcrypt from "bcryptjs"
-import { prisma } from ".prisma/client"
+import { extendType} from "nexus"
 
 export const Query = extendType({
     type: "Query",
