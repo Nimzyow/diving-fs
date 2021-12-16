@@ -6,7 +6,7 @@ describe("This is my first test", () => {
         cy.intercept(
             {
                 method: "POST",
-                url: "http://localhost:4000/graphql?login",
+                url: "**/graphql?login",
             },
             {
                 body: { data: { login: { token: "superTokenBros", errors: [], __typename: "Token" } } },
@@ -15,7 +15,7 @@ describe("This is my first test", () => {
         cy.intercept(
             {
                 method: "POST",
-                url: "http://localhost:4000/graphql?Me",
+                url: "**/graphql?Me",
             },
             {
                 body: {
