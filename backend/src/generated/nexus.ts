@@ -129,16 +129,8 @@ export interface NexusGenFieldTypes {
     message: string; // String!
   }
   Mutation: { // field return type
-    createAddress: NexusGenRootTypes['Success'] | null; // Success
     createUser: NexusGenRootTypes['Token'] | null; // Token
-    createUserForAdminUI: NexusGenRootTypes['User'] | null; // User
-    deleteManyUserAddressesForAdminUI: Array<string | null> | null; // [String]
-    deleteManyUsersForAdminUI: Array<string | null> | null; // [String]
-    deleteUserAddressForAdminUI: NexusGenRootTypes['Address'] | null; // Address
-    deleteUserForAdminUI: NexusGenRootTypes['User'] | null; // User
     login: NexusGenRootTypes['Token']; // Token!
-    updateUserAddressForAdminUI: NexusGenRootTypes['Address'] | null; // Address
-    updateUserForAdminUI: NexusGenRootTypes['User'] | null; // User
   }
   Note: { // field return type
     body: string; // String!
@@ -149,13 +141,7 @@ export interface NexusGenFieldTypes {
     userId: string | null; // String
   }
   Query: { // field return type
-    allUsersAddressesForAdminUI: Array<NexusGenRootTypes['Address'] | null> | null; // [Address]
-    allUsersForAdminUI: Array<NexusGenRootTypes['User'] | null> | null; // [User]
-    allUsersForAdminUICount: number | null; // Int
-    getUserAddressForAdminUI: NexusGenRootTypes['Address'] | null; // Address
-    getUserForAdminUI: NexusGenRootTypes['User'] | null; // User
     me: NexusGenRootTypes['User'] | null; // User
-    users: NexusGenRootTypes['User'][] | null; // [User!]
   }
   Success: { // field return type
     success: boolean; // Boolean!
@@ -194,16 +180,8 @@ export interface NexusGenFieldTypeNames {
     message: 'String'
   }
   Mutation: { // field return type name
-    createAddress: 'Success'
     createUser: 'Token'
-    createUserForAdminUI: 'User'
-    deleteManyUserAddressesForAdminUI: 'String'
-    deleteManyUsersForAdminUI: 'String'
-    deleteUserAddressForAdminUI: 'Address'
-    deleteUserForAdminUI: 'User'
     login: 'Token'
-    updateUserAddressForAdminUI: 'Address'
-    updateUserForAdminUI: 'User'
   }
   Note: { // field return type name
     body: 'String'
@@ -214,13 +192,7 @@ export interface NexusGenFieldTypeNames {
     userId: 'String'
   }
   Query: { // field return type name
-    allUsersAddressesForAdminUI: 'Address'
-    allUsersForAdminUI: 'User'
-    allUsersForAdminUICount: 'Int'
-    getUserAddressForAdminUI: 'Address'
-    getUserForAdminUI: 'User'
     me: 'User'
-    users: 'User'
   }
   Success: { // field return type name
     success: 'Boolean'
@@ -244,64 +216,15 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    createAddress: { // args
-      county?: string | null; // String
-      line1: string; // String!
-      line2?: string | null; // String
-      postcode: string; // String!
-    }
     createUser: { // args
       email: string; // String!
       firstName: string; // String!
       lastName: string; // String!
       password: string; // String!
     }
-    createUserForAdminUI: { // args
-      inputs: NexusGenInputs['CreateUserInputs']; // CreateUserInputs!
-    }
-    deleteManyUserAddressesForAdminUI: { // args
-      ids: string[]; // [String!]!
-    }
-    deleteManyUsersForAdminUI: { // args
-      ids: string[]; // [String!]!
-    }
-    deleteUserAddressForAdminUI: { // args
-      id: string; // String!
-    }
-    deleteUserForAdminUI: { // args
-      id: string; // String!
-    }
     login: { // args
       email: string; // String!
       password: string; // String!
-    }
-    updateUserAddressForAdminUI: { // args
-      id: string; // String!
-      inputs: NexusGenInputs['UpdateUserAddressInputs']; // UpdateUserAddressInputs!
-    }
-    updateUserForAdminUI: { // args
-      id: string; // String!
-      inputs: NexusGenInputs['UpdateUserInputs']; // UpdateUserInputs!
-    }
-  }
-  Query: {
-    allUsersAddressesForAdminUI: { // args
-      page: number; // Int!
-      perPage: number; // Int!
-      sortField: string; // String!
-      sortOrder: string; // String!
-    }
-    allUsersForAdminUI: { // args
-      page: number; // Int!
-      perPage: number; // Int!
-      sortField: string; // String!
-      sortOrder: string; // String!
-    }
-    getUserAddressForAdminUI: { // args
-      id: string; // String!
-    }
-    getUserForAdminUI: { // args
-      id: string; // String!
     }
   }
 }
