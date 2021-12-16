@@ -20,8 +20,7 @@ export const Login = () => {
             try {
                 const result = await loginUser({
                     variables: {
-                        loginEmail: inputs.email,
-                        loginPassword: inputs.password,
+                        inputs,
                     },
                 })
                 if (result.data?.login.errors && result.data.login.errors.length > 0) {

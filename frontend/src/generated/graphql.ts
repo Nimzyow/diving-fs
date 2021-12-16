@@ -41,6 +41,11 @@ export type Error = {
   message: Scalars['String'];
 };
 
+export type LoginUserInputs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createUser?: Maybe<Token>;
@@ -54,8 +59,7 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationLoginArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  inputs: LoginUserInputs;
 };
 
 export type Note = {
@@ -117,8 +121,7 @@ export type CreateUserMutationVariables = Exact<{
 export type CreateUserMutation = { __typename?: 'Mutation', createUser?: Maybe<{ __typename?: 'Token', token?: Maybe<string>, errors: Array<{ __typename?: 'Error', code: string, message: string }> }> };
 
 export type LoginMutationVariables = Exact<{
-  loginEmail: Scalars['String'];
-  loginPassword: Scalars['String'];
+  inputs: LoginUserInputs;
 }>;
 
 
@@ -200,8 +203,8 @@ export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutati
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const LoginDocument = gql`
-    mutation login($loginEmail: String!, $loginPassword: String!) {
-  login(email: $loginEmail, password: $loginPassword) {
+    mutation login($inputs: LoginUserInputs!) {
+  login(inputs: $inputs) {
     token
     errors {
       code
@@ -225,8 +228,7 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  * @example
  * const [loginMutation, { data, loading, error }] = useLoginMutation({
  *   variables: {
- *      loginEmail: // value for 'loginEmail'
- *      loginPassword: // value for 'loginPassword'
+ *      inputs: // value for 'inputs'
  *   },
  * });
  */

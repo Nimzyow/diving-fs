@@ -25,6 +25,10 @@ export interface NexusGenInputs {
     lastName: string; // String!
     password: string; // String!
   }
+  LoginUserInputs: { // input type
+    email: string; // String!
+    password: string; // String!
+  }
 }
 
 export interface NexusGenEnums {
@@ -203,8 +207,7 @@ export interface NexusGenArgTypes {
       inputs: NexusGenInputs['CreateUserInputs']; // CreateUserInputs!
     }
     login: { // args
-      email: string; // String!
-      password: string; // String!
+      inputs: NexusGenInputs['LoginUserInputs']; // LoginUserInputs!
     }
   }
 }

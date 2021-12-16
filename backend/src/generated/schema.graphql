@@ -28,9 +28,14 @@ type Error {
   message: String!
 }
 
+input LoginUserInputs {
+  email: String!
+  password: String!
+}
+
 type Mutation {
   createUser(inputs: CreateUserInputs!): Token
-  login(email: String!, password: String!): Token!
+  login(inputs: LoginUserInputs!): Token!
 }
 
 type Note {

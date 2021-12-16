@@ -12,6 +12,13 @@ export const CreateUserInputs = inputObjectType({
     },
 })
 
+export const LoginUserInputs = inputObjectType({
+    name: "LoginUserInputs",
+    definition(t) {
+        t.nonNull.string("email"), t.nonNull.string("password")
+    },
+})
+
 export const Mutation = extendType({
     type: "Mutation",
     definition(t) {
@@ -74,12 +81,15 @@ export const Mutation = extendType({
             t.nonNull.field("login", {
                 type: "Token",
                 args: {
-                    email: nonNull(stringArg()),
-                    password: nonNull(stringArg()),
+                    inputs: nonNull(
+                        arg({
+                            type: "LoginUserInputs",
+                        })
+                    ),
                 },
                 resolve: async (parent, args, context) => {
                     const errors: { code: string; message: string }[] = []
-                    const { email, password } = args
+                    const { email, password } = args.inputs
 
                     try {
                         const user = await context.prisma.user.findUnique({
