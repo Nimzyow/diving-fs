@@ -19,7 +19,6 @@
 19. create backend tests for queries and mutations that you're using for the frontend
 20. Create Navbar with logout DONE
 21. Create footer DONE
-22.
 
 NOTES:
 
@@ -38,3 +37,58 @@ npx prisma generate
 - To open prisma studio
 
 npx prisma studio
+
+Untitled
+
+This is an attempt at making a full stack TS boilerplate. The goal is to be able to pull down this boilerplate and just get started on a fullstack application without having to do all of the configuration and setup that is required. Needless to say, it's taken a lot of time to get this all up to scratch but I believe I have developed something I can be proud of.
+
+Tech stack
+
+The following is the tech stack:
+
+Apollo server
+GraphQL
+Prisma
+Postgres
+Nexus
+TypeScript
+jest unit testing
+eslint
+
+React with webpack
+Apollo client
+Apollo tooling
+graphql-codegen
+TypeScript
+eslint
+jest unit testing
+cypress integration and end to end testing
+
+Docker
+docker-compose
+
+Coming up
+
+pre commit hooks to ensure no code breaking code is commited
+
+Backend
+
+Very early on I was presented with numereous choices and directions to take the backend. Would I go the python route and use Django framework to build my backend? I use Django at work and I could always ask questions if I was stuck on a particular point. The documentation is very well established and the framework is great to use. The fact that you can create management commands and custom migration files is fantastic too.
+
+I was pretty adament that I wanted to use GraphQL. At work we use Django with Graphene, which is the GraphQL framework to use for Django. We've been very successful in replacing the Django rest framework with graphene and the resulting dev experience is something that cannot be ignored.
+
+GraphQL provides a wonderful dev experience and if I'm going to build the ultimate fullstack boilerplate, you can bet your life I'm going to be implementing GraphQL and no one is going to persuade me otherwise :P
+
+One of the most commonly used GraphQL servers out there is Apollo server. I have played around and experiemented with Apollo server quite extensively and I enjoy Apollo studio, the GraphQL playground, which nudged me to utilise Apollo server in my ideal full stack boilerplate. The GraphQL playground by the way, is a place in which you can interact with your GraphQL schema.
+
+Can I just take a moment and just say how awesome that feature is? The GraphQL playground is bloody fantastic. The fact that I can look at all the types, queries, mutations and subscriptions, all in one place and for me to create whatever operation I want, very easily with just a few clicks of the mouse (or trackpad, in my case), and get type automatic error highlighting if I make a mistake, just never ceases to amaze me. I won't be going back to REST anytime soon.
+
+If you're wondering what I meant when I used the words queries, mutation and subscriptions:
+
+GraphQL queries: used to fetch or read values.
+
+GraphQL mutations: used to write or alter values.
+
+GraphQL subscriptions: think websocket. its very much like a query but the results can change over time as subscriptions are long running operations.
+
+The dilemma I faced after this is which Database I was going to use. either no SQL or relational database. If I were to go down the no SQL route, I would have gone for MongoDB as that is a no SQL DB that I am very familiar with and I have experiemented with that in the past. Another option would have been to use DynamoDB, by aws. I have used DynamoDB within the aws Amplify framework so I am some what familiar with it but ultimately, if I had to go down the no SQL route, I would have chosen MongoDB just because I am more familiar with it.
