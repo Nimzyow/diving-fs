@@ -10,8 +10,9 @@ const Navigation = () => {
     const history = useHistory()
 
     return (
-        <Navbar bg="primary" variant="dark" className="d-flex justify-content-between">
-            <div className="d-flex flex-row">
+        <Navbar bg="primary" variant="dark" className="d-flex">
+            <div className="w-100" />
+            <div className="d-flex w-100 justify-content-center">
                 <Navbar.Brand style={{ cursor: "pointer" }} onClick={() => history.push("/")}>
                     Navbar
                 </Navbar.Brand>
@@ -21,7 +22,7 @@ const Navigation = () => {
                     <Nav.Link href="#pricing">Pricing</Nav.Link>
                 </Nav> */}
             </div>
-            <Nav className="me-auto">
+            <Nav className="w-100 justify-content-end">
                 <Nav.Link style={{ cursor: "pointer" }} onClick={logout}>
                     Logout
                 </Nav.Link>
