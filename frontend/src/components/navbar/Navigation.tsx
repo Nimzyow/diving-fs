@@ -11,7 +11,11 @@ const Navigation = () => {
 
     return (
         <Navbar bg="primary" variant="dark" className="d-flex">
-            <div className="w-100" />
+            <div className="w-100">
+                <div className="d-block d-md-none text-white" style={{ cursor: "pointer" }}>
+                    MOBILE
+                </div>
+            </div>
             <div className="d-flex w-100 justify-content-center">
                 <Navbar.Brand style={{ cursor: "pointer" }} onClick={() => history.push("/")}>
                     Navbar
@@ -23,7 +27,7 @@ const Navigation = () => {
                 </Nav> */}
             </div>
             <Nav className="w-100 justify-content-end">
-                <Nav.Link style={{ cursor: "pointer" }} onClick={logout}>
+                <Nav.Link className="d-none d-md-block" style={{ cursor: "pointer" }} onClick={logout}>
                     Logout
                 </Nav.Link>
             </Nav>
