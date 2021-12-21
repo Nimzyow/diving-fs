@@ -15,23 +15,10 @@ export type Scalars = {
   DateTime: any;
 };
 
-export type Address = {
-  __typename?: 'Address';
-  country: Scalars['String'];
-  county?: Maybe<Scalars['String']>;
-  createdAt: Scalars['DateTime'];
-  id: Scalars['String'];
-  line1: Scalars['String'];
-  line2?: Maybe<Scalars['String']>;
-  postcode: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
-  userId: Scalars['String'];
-};
-
 export type CreateUserInputs = {
   email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
+  handle: Scalars['String'];
+  name: Scalars['String'];
   password: Scalars['String'];
 };
 
@@ -62,16 +49,6 @@ export type MutationLoginArgs = {
   inputs: LoginUserInputs;
 };
 
-export type Note = {
-  __typename?: 'Note';
-  body: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  id: Scalars['String'];
-  title: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
-  userId?: Maybe<Scalars['String']>;
-};
-
 export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
@@ -97,13 +74,11 @@ export type Token = {
 
 export type User = {
   __typename?: 'User';
-  address?: Maybe<Address>;
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
-  firstName: Scalars['String'];
+  handle: Scalars['String'];
   id: Scalars['String'];
-  isSuperUser: Scalars['Boolean'];
-  lastName: Scalars['String'];
+  name: Scalars['String'];
   role: Role;
   updatedAt: Scalars['DateTime'];
 };
@@ -111,7 +86,7 @@ export type User = {
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, firstName: string, lastName: string, email: string }> };
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, email: string }> };
 
 export type CreateUserMutationVariables = Exact<{
   inputs: CreateUserInputs;
@@ -132,8 +107,6 @@ export const MeDocument = gql`
     query Me {
   me {
     id
-    firstName
-    lastName
     email
   }
 }

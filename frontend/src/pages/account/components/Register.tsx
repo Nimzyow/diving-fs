@@ -13,8 +13,8 @@ export const Register = () => {
     const [createUser] = useCreateUserMutation()
     const { inputs, onSubmit, onChange } = useForm({
         initialInputs: {
-            firstName: "",
-            lastName: "",
+            name: "",
+            handle: "",
             email: "",
             password: "",
             passwordConfirm: "",
@@ -24,8 +24,8 @@ export const Register = () => {
                 const result = await createUser({
                     variables: {
                         inputs: {
-                            firstName: inputs.firstName,
-                            lastName: inputs.lastName,
+                            name: inputs.name,
+                            handle: inputs.handle,
                             email: inputs.email,
                             password: inputs.password,
                         },
@@ -54,27 +54,27 @@ export const Register = () => {
         <div>
             <h2>Register</h2>
             <Form className="mb-3">
-                <Form.Group className="mb-3" controlId="formBasicFirstName">
-                    <Form.Label>First name</Form.Label>
+                <Form.Group className="mb-3" controlId="formBasicName">
+                    <Form.Label>Your name</Form.Label>
                     <Form.Control
-                        name="firstName"
+                        name="name"
                         type="text"
-                        placeholder="First name"
-                        value={inputs.firstName}
+                        placeholder="Your name"
+                        value={inputs.name}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            onChange({ firstName: event.target.value })
+                            onChange({ name: event.target.value })
                         }}
                     />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicLastName">
-                    <Form.Label>Last name</Form.Label>
+                <Form.Group className="mb-3" controlId="formBasicHandle">
+                    <Form.Label>Your handle</Form.Label>
                     <Form.Control
                         type="text"
-                        name="lastName"
-                        placeholder="Last name"
-                        value={inputs.lastName}
+                        name="handle"
+                        placeholder="Handle"
+                        value={inputs.handle}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            onChange({ lastName: event.target.value })
+                            onChange({ handle: event.target.value })
                         }}
                     />
                 </Form.Group>

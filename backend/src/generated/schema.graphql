@@ -49,7 +49,9 @@ type Token {
 type User {
   createdAt: DateTime!
   email: String!
+  handle: String!
   id: String!
+  name: String!
   role: Role!
   updatedAt: DateTime!
 }

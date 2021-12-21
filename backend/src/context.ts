@@ -4,10 +4,8 @@ import { Object } from "ts-toolbelt"
 
 interface User {
     id: string
-    firstName: string
-    lastName: string
+    name: string
     email: string
-    isSuperUser: boolean
 }
 
 export interface Context {
@@ -40,10 +38,8 @@ export const getUser = async (token: string, prisma: PrismaClient): Promise<User
         }
         return {
             id: String(user.id),
-            firstName: user.firstName,
-            lastName: user.lastName,
+            name: user.name,
             email: user.email,
-            isSuperUser: user.isSuperUser,
         }
     } else {
         return null

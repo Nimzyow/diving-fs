@@ -61,7 +61,9 @@ export interface NexusGenObjects {
   User: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
+    handle: string; // String!
     id: string; // String!
+    name: string; // String!
     role: NexusGenEnums['Role']; // Role!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
@@ -99,7 +101,9 @@ export interface NexusGenFieldTypes {
   User: { // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
+    handle: string; // String!
     id: string; // String!
+    name: string; // String!
     role: NexusGenEnums['Role']; // Role!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
@@ -127,7 +131,9 @@ export interface NexusGenFieldTypeNames {
   User: { // field return type name
     createdAt: 'DateTime'
     email: 'String'
+    handle: 'String'
     id: 'String'
+    name: 'String'
     role: 'Role'
     updatedAt: 'DateTime'
   }

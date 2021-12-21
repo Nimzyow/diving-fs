@@ -16,9 +16,8 @@ const main = async () => {
         update: {},
         create: {
             email: "n_soufiani@hotmail.com",
-            firstName: "Nima",
-            lastName: "Soufiani",
-            isSuperUser: true,
+            name: "Nima",
+            handle: "Soufiani",
             password: superUserHashedPassword,
         },
     })
@@ -30,9 +29,8 @@ const main = async () => {
         update: {},
         create: {
             email: "johndoe@example.com",
-            firstName: "John",
-            lastName: "Doe",
-            isSuperUser: false,
+            name: "John",
+            handle: "Doe",
             password: johnHashedPassword,
         },
     })
@@ -44,9 +42,8 @@ const main = async () => {
         update: {},
         create: {
             email: "bobdillion@example.com",
-            firstName: "Bob",
-            lastName: "Dillon",
-            isSuperUser: false,
+            name: "Bob",
+            handle: "Dillon",
             password: bobHashedPassword,
         },
     })

@@ -4,9 +4,11 @@ gql`
     query Me {
         me {
             id
-            firstName
-            lastName
+            name
+            handle
             email
+            createdAt
+            updatedAt
         }
     }
 `

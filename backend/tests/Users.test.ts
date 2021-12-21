@@ -57,13 +57,11 @@ describe("Create user mutation", () => {
 
         const user: User = {
             id: "1",
-            firstName: "Rich",
-            lastName: "asdsads",
+            name: "Rich",
+            handle: "asdsads",
             email: "adasd@asdas.com",
             password: "asdasdasdas",
-            isSuperUser: false,
             role: "USER",
-            status: "ACTIVE",
             createdAt: dateNow,
             updatedAt: dateNow,
         }
@@ -136,13 +134,11 @@ describe("login mutation", () => {
 
         const user: User = {
             id: "1",
-            firstName: "Rich",
-            lastName: "asdsads",
+            name: "Rich",
+            handle: "asdsads1",
             email: "adasd@asdas.com",
             password: "asdasdasdas",
-            isSuperUser: false,
             role: "USER",
-            status: "ACTIVE",
             createdAt: dateNow,
             updatedAt: dateNow,
         }
@@ -179,13 +175,11 @@ describe("login mutation", () => {
 
         const user: User = {
             id: "1",
-            firstName: "Rich",
-            lastName: "asdsads",
+            name: "Rich",
+            handle: "asdsads2",
             email: "adasd@asdas.com",
             password: "asdasdasdas",
-            isSuperUser: false,
             role: "USER",
-            status: "ACTIVE",
             createdAt: dateNow,
             updatedAt: dateNow,
         }
@@ -228,13 +222,11 @@ describe("me query", () => {
 
         const user: User = {
             id: "1",
-            firstName: "Rich",
-            lastName: "asdsads",
+            name: "Rich",
+            handle: "asdsads4",
             email: "adasd@asdas.com",
             password: "asdasdasdas",
-            isSuperUser: false,
             role: "USER",
-            status: "ACTIVE",
             createdAt: dateNow,
             updatedAt: dateNow,
         }
