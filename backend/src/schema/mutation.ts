@@ -5,8 +5,8 @@ import bcrypt from "bcryptjs"
 export const CreateUserInputs = inputObjectType({
     name: "CreateUserInputs",
     definition(t) {
-        t.nonNull.string("firstName"),
-            t.nonNull.string("lastName"),
+        t.nonNull.string("name"),
+            t.nonNull.string("handle"),
             t.nonNull.string("email"),
             t.nonNull.string("password")
     },
@@ -33,9 +33,9 @@ export const Mutation = extendType({
             },
             resolve: async (parent, args, context) => {
                 const errors: { code: string; message: string }[] = []
-                const { email, lastName, firstName, password } = args.inputs
+                const { email, name, handle, password } = args.inputs
 
-                if ((email || lastName || firstName || password) === "") {
+                if ((email || name || handle || password) === "") {
                     errors.push({
                         code: "INVALID_INPUTS",
                         message: "Please enter valid inputs",
@@ -50,9 +50,9 @@ export const Mutation = extendType({
 
                     const user = await context.prisma.user.create({
                         data: {
+                            name,
+                            handle,
                             email,
-                            firstName,
-                            lastName,
                             password: hashedPassword,
                         },
                     })

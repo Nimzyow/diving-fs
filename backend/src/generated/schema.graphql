@@ -2,22 +2,10 @@
 ### Do not make changes to this file directly
 
 
-type Address {
-  country: String!
-  county: String
-  createdAt: DateTime!
-  id: String!
-  line1: String!
-  line2: String
-  postcode: String!
-  updatedAt: DateTime!
-  userId: String!
-}
-
 input CreateUserInputs {
   email: String!
-  firstName: String!
-  lastName: String!
+  handle: String!
+  name: String!
   password: String!
 }
 
@@ -36,15 +24,6 @@ input LoginUserInputs {
 type Mutation {
   createUser(inputs: CreateUserInputs!): Token
   login(inputs: LoginUserInputs!): Token!
-}
-
-type Note {
-  body: String!
-  createdAt: DateTime!
-  id: String!
-  title: String!
-  updatedAt: DateTime!
-  userId: String
 }
 
 type Query {
@@ -68,13 +47,9 @@ type Token {
 }
 
 type User {
-  address: Address
   createdAt: DateTime!
   email: String!
-  firstName: String!
   id: String!
-  isSuperUser: Boolean!
-  lastName: String!
   role: Role!
   updatedAt: DateTime!
 }

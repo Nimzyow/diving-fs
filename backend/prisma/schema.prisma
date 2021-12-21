@@ -12,40 +12,13 @@ generator client {
 
 model User {
   id          String    @id @default(cuid())
-  firstName   String
-  lastName    String
+  name        String
   email       String    @unique
-  isSuperUser Boolean   @default(false)
+  handle      String    @unique
   password    String
   role        Role      @default(USER)
-  address     Address?
-  notes       Note[]
-  status      Status    @default(ACTIVE)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now())
-}
-
-model Address {
-  id          String    @id @default(cuid())
-  line1       String
-  line2       String?
-  county      String?
-  postcode    String
-  country     String    @default("GB")
-  user        User      @relation(fields: [userId], references: [id])
-  userId      String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @default(now())
-}
-
-model Note {
-  id          String     @id @default(cuid())
-  title       String
-  body        String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @default(now())
-  user        User?      @relation(fields: [userId], references: [id])
-  userId      String?
 }
 
 enum Role {
@@ -53,9 +26,4 @@ enum Role {
   STAFF
   ADMIN
   SUPER_USER
-}
-
-enum Status {
-  ACTIVE
-  INACTIVE
 }

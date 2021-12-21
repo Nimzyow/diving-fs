@@ -13,7 +13,7 @@ services:
   backend:
     depends_on:
       - "db"
-    image: apollo-server-nexus:latest
+    image: suba-app-backend:latest
     build: ./backend
     ports:
       - "4000:4000"
@@ -41,7 +41,7 @@ services:
   frontend:
     depends_on:
       - "backend"
-    image: frontend:latest
+    image: suba-app-frontend:latest
     build: ./frontend
     ports:
       - "3000:3000"
