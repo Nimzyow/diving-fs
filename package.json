@@ -4,7 +4,7 @@
   "description": "Full stack scuba app",
   "main": "index.js",
   "scripts": {
-    "test": "cd frontend && npm test"
+    "test-frontend": "cd frontend && npm test"
   },
   "repository": {
     "type": "git",
