@@ -34,6 +34,7 @@ jobs:
       - run:
           name: Run frontend tests
           # working_directory: ~/frontend
+          command: ls
           command: yarn run test
 
 # Invoke jobs via workflows
