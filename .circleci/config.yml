@@ -16,7 +16,6 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore Yarn Package Cache
-          working_directory: ~/frontend
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
@@ -25,7 +24,6 @@ jobs:
           command: yarn install --immutable
       - save_cache:
           name: Save Yarn Package Cache
-          working_directory: ~/frontend
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - .yarn/cache
