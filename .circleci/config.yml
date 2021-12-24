@@ -17,7 +17,8 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           # working_directory: frontend
-          command: ls
+          paths:
+            - .frontend/
           keys:
             - frontend-yarn-packages-{{ checksum "yarn.lock" }}
       - run:
