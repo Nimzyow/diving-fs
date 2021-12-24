@@ -20,7 +20,7 @@ jobs:
       #       - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          working_directory: ~/frontend
+          # working_directory: ~/frontend
           command: ls
       # - save_cache:
       #     name: Save Yarn Package Cache
