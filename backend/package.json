@@ -13,7 +13,7 @@
     "scripts": {
         "type-watch": "tsc --watch --noEmit --project './tsconfig.json'",
         "generate": "npx ts-node --transpile-only src/schema",
-        "test": "npm run generate && jest --detectOpenHandles --forceExit",
+        "test": "jest --detectOpenHandles",
         "dev": "ts-node-dev --transpile-only --no-notify src/server.ts"
     },
     "jest": {
