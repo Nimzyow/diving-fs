@@ -3,3 +3,4 @@
 
 cd frontend && npm run generator-local
 npm run type-check
+cd ../backend && npm run type-check
