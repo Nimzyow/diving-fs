@@ -1,13 +1,15 @@
-import { ApolloServer } from "apollo-server-express"
-import { ApolloServerPluginDrainHttpServer } from "apollo-server-core"
-import express from "express"
 import http from "http"
-import { nexusPrisma } from "nexus-plugin-prisma"
 import * as path from "path"
-import * as types from "./schema/index"
+
+import { ApolloServerPluginDrainHttpServer } from "apollo-server-core"
+import { ApolloServer } from "apollo-server-express"
+import express from "express"
 import { makeSchema } from "nexus"
+// import { nexusPrisma } from "nexus-plugin-prisma"
+
 import { Context, getUser } from "./context"
 import prisma from "./db"
+import * as types from "./schema/index"
 
 export const schema = makeSchema({
     types,
@@ -19,7 +21,7 @@ export const schema = makeSchema({
         module: path.join(__dirname, "./context.ts"),
         export: "Context",
     },
-    plugins: [nexusPrisma()],
+    // plugins: [nexusPrisma()],
     sourceTypes: {
         modules: [
             {

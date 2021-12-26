@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client"
 import jwt from "jsonwebtoken"
-import { Object } from "ts-toolbelt"
 
 interface User {
     id: string

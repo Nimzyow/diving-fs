@@ -12,7 +12,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  DateTime: any;
 };
 
 export type CreateUserInputs = {
@@ -74,19 +73,19 @@ export type Token = {
 
 export type User = {
   __typename?: 'User';
-  createdAt: Scalars['DateTime'];
-  email: Scalars['String'];
-  handle: Scalars['String'];
-  id: Scalars['String'];
-  name: Scalars['String'];
-  role: Role;
-  updatedAt: Scalars['DateTime'];
+  createdAt?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  handle?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  role?: Maybe<Role>;
+  updatedAt?: Maybe<Scalars['String']>;
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, name: string, handle: string, email: string, createdAt: any, updatedAt: any }> };
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id?: Maybe<string>, name?: Maybe<string>, handle?: Maybe<string>, email?: Maybe<string>, createdAt?: Maybe<string>, updatedAt?: Maybe<string> }> };
 
 export type CreateUserMutationVariables = Exact<{
   inputs: CreateUserInputs;

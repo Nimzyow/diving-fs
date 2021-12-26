@@ -3,13 +3,13 @@ import { objectType, enumType } from "nexus"
 export const User = objectType({
     name: "User",
     definition(t) {
-        t.model.id(),
-            t.model.name(),
-            t.model.email(),
-            t.model.handle(),
-            t.model.role(),
-            t.model.createdAt(),
-            t.model.updatedAt()
+        t.string("id"),
+            t.string("name"),
+            t.string("email"),
+            t.string("handle"),
+            t.field("role", { type: "Role" }),
+            t.string("createdAt"),
+            t.string("updatedAt")
     },
 })
 

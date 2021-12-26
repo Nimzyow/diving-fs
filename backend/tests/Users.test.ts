@@ -1,11 +1,12 @@
-import jwt from "jsonwebtoken"
-import bcrypt from "bcryptjs"
 import { ApolloServer, gql } from "apollo-server"
+import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 // import { schema } from "../src/server"
-import * as types from "../src/schema/index"
 import { makeSchema } from "nexus"
 // import prisma from "../src/db"
-import { nexusPrisma } from "nexus-plugin-prisma"
+// import { nexusPrisma } from "nexus-plugin-prisma"
+
+import * as types from "../src/schema/index"
 import { prismaMock } from "./singleton"
 import { User } from ".prisma/client"
 
@@ -47,7 +48,7 @@ describe("Create user mutation", () => {
     let server: ApolloServer
     const schema = makeSchema({
         types,
-        plugins: [nexusPrisma()],
+        // plugins: [nexusPrisma()],
     })
     beforeEach(() => {
         server = new ApolloServer({
@@ -124,7 +125,7 @@ describe("login mutation", () => {
     let server: ApolloServer
     const schema = makeSchema({
         types,
-        plugins: [nexusPrisma()],
+        // plugins: [nexusPrisma()],
     })
     beforeEach(() => {
         server = new ApolloServer({
@@ -215,7 +216,7 @@ describe("me query", () => {
     let server: ApolloServer
     const schema = makeSchema({
         types,
-        plugins: [nexusPrisma()],
+        // plugins: [nexusPrisma()],
     })
     beforeEach(() => {
         server = new ApolloServer({

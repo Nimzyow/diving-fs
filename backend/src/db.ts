@@ -6,7 +6,7 @@ export interface Global {
     prisma: PrismaClient
 }
 
-declare var global: Global
+declare let global: Global
 
 let prisma: PrismaClient
 

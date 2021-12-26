@@ -53,6 +53,12 @@ jobs:
       - run:
           name: Run backend tests
           command: cd backend && yarn run test
+    # What I want to do is create a 'push to dockerhub' job.
+    # This job should depend on backend and frontend test passing.
+  # push-to-docker-hub:
+  #   requires:
+  #     - frontend-test
+  #     - backend-test
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows

@@ -1,6 +1,6 @@
-import { arg, extendType, nonNull, stringArg, inputObjectType, list } from "nexus"
-import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
+import { arg, extendType, nonNull, inputObjectType } from "nexus"
 
 export const CreateUserInputs = inputObjectType({
     name: "CreateUserInputs",
