@@ -1,6 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cd frontend && npm run generator-local
+cd backend && npm run type-check
+cd ../frontend && npm run generator-local
 npm run type-check
-cd ../backend && npm run type-check
