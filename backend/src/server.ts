@@ -5,7 +5,6 @@ import { ApolloServerPluginDrainHttpServer } from "apollo-server-core"
 import { ApolloServer } from "apollo-server-express"
 import express from "express"
 import { makeSchema } from "nexus"
-// import { nexusPrisma } from "nexus-plugin-prisma"
 
 import { Context, getUser } from "./context"
 import prisma from "./db"
@@ -21,7 +20,6 @@ export const schema = makeSchema({
         module: path.join(__dirname, "./context.ts"),
         export: "Context",
     },
-    // plugins: [nexusPrisma()],
     sourceTypes: {
         modules: [
             {
@@ -36,8 +34,6 @@ async function startApolloServer() {
     // Required logic for integrating with Express
     const app = express()
     const httpServer = http.createServer(app)
-    // app.use(cors())
-    // Same ApolloServer initialization as before, plus the drain plugin.
     const server = new ApolloServer({
         schema,
         context: async ({ req }: { req: { headers: { authorization: string } } }): Promise<Context> => {

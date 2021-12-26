@@ -1,10 +1,7 @@
 import { ApolloServer, gql } from "apollo-server"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-// import { schema } from "../src/server"
 import { makeSchema } from "nexus"
-// import prisma from "../src/db"
-// import { nexusPrisma } from "nexus-plugin-prisma"
 
 import * as types from "../src/schema/index"
 import { prismaMock } from "./singleton"
@@ -48,7 +45,6 @@ describe("Create user mutation", () => {
     let server: ApolloServer
     const schema = makeSchema({
         types,
-        // plugins: [nexusPrisma()],
     })
     beforeEach(() => {
         server = new ApolloServer({
@@ -67,9 +63,9 @@ describe("Create user mutation", () => {
         const user: User = {
             id: "1",
             name: "Rich",
-            handle: "asdsads",
-            email: "adasd@asdas.com",
-            password: "asdasdasdas",
+            handle: "richHandle",
+            email: "rich@example.com",
+            password: "richHandle",
             role: "USER",
             createdAt: dateNow,
             updatedAt: dateNow,
@@ -86,7 +82,7 @@ describe("Create user mutation", () => {
                     name: "Nima",
                     handle: "nimzy",
                     email: "nima@example.com",
-                    password: "Randompasswordman",
+                    password: "RandomPasswordMan",
                 },
             },
         })
@@ -125,7 +121,6 @@ describe("login mutation", () => {
     let server: ApolloServer
     const schema = makeSchema({
         types,
-        // plugins: [nexusPrisma()],
     })
     beforeEach(() => {
         server = new ApolloServer({
@@ -147,9 +142,9 @@ describe("login mutation", () => {
         const user: User = {
             id: "1",
             name: "Rich",
-            handle: "asdsads1",
+            handle: "richRich",
             email: "adasd@asdas.com",
-            password: "asdasdasdas",
+            password: "richHandleMan",
             role: "USER",
             createdAt: dateNow,
             updatedAt: dateNow,
@@ -182,9 +177,9 @@ describe("login mutation", () => {
         const user: User = {
             id: "1",
             name: "Rich",
-            handle: "asdsads2",
-            email: "adasd@asdas.com",
-            password: "asdasdasdas",
+            handle: "rich2",
+            email: "rich@example.com",
+            password: "richHandleMan",
             role: "USER",
             createdAt: dateNow,
             updatedAt: dateNow,
@@ -216,7 +211,6 @@ describe("me query", () => {
     let server: ApolloServer
     const schema = makeSchema({
         types,
-        // plugins: [nexusPrisma()],
     })
     beforeEach(() => {
         server = new ApolloServer({
@@ -232,9 +226,9 @@ describe("me query", () => {
         const user: User = {
             id: "1",
             name: "Rich",
-            handle: "asdsads4",
+            handle: "richHandleMate",
             email: "adasd@asdas.com",
-            password: "asdasdasdas",
+            password: "richHandleMan",
             role: "USER",
             createdAt: dateNow,
             updatedAt: dateNow,
