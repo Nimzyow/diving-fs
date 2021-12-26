@@ -14,8 +14,10 @@
     "scripts": {
         "webpack": "webpack",
         "type-watch": "tsc --watch --noEmit --project './tsconfig.json'",
+        "type-check": "tsc --noEmit --project './tsconfig.json'",
         "start": "webpack serve --hot",
         "generator": "graphql-codegen --config codegen.yml",
+        "generator-local": "export SCHEMA_PATH=http://localhost:4000/ && graphql-codegen --config codegen.yml",
         "lint": "npx eslint . --ext .ts,.tsx",
         "lint-fix": "npx eslint . --ext .ts,.tsx --fix",
         "lint-staged": "lint-staged",
