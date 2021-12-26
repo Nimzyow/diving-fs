@@ -86,7 +86,7 @@ export type User = {
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, email: string }> };
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, name: string, handle: string, email: string, createdAt: any, updatedAt: any }> };
 
 export type CreateUserMutationVariables = Exact<{
   inputs: CreateUserInputs;
@@ -107,7 +107,11 @@ export const MeDocument = gql`
     query Me {
   me {
     id
+    name
+    handle
     email
+    createdAt
+    updatedAt
   }
 }
     `;

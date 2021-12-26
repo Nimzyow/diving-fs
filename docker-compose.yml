@@ -45,6 +45,8 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
+    environment:
+      SCHEMA_PATH: ${SCHEMA_PATH}
     volumes:
       - ./frontend:/app/frontend
       - /app/frontend/node_modules

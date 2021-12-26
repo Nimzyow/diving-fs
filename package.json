@@ -4,7 +4,8 @@
   "description": "Full stack scuba app",
   "main": "index.js",
   "scripts": {
-    "test-frontend": "cd frontend && npm test"
+    "test-frontend": "cd frontend && npm test",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/Nimzyow/diving-fs/issues"
   },
-  "homepage": "https://github.com/Nimzyow/diving-fs#readme"
+  "homepage": "https://github.com/Nimzyow/diving-fs#readme",
+  "devDependencies": {
+    "husky": "^7.0.0"
+  }
 }
