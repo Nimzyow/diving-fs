@@ -1,14 +1,17 @@
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import { ApolloServer, gql } from "apollo-server"
-import { schema } from "../src/server"
+// import { schema } from "../src/server"
+import * as types from "../src/schema/index"
+import { makeSchema } from "nexus"
 // import prisma from "../src/db"
+import { nexusPrisma } from "nexus-plugin-prisma"
 import { prismaMock } from "./singleton"
 import { User } from ".prisma/client"
 
 const LOGIN_USER = gql`
-    mutation loginUser($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
+    mutation login($inputs: LoginUserInputs!) {
+        login(inputs: $inputs) {
             token
             errors {
                 code
@@ -19,13 +22,13 @@ const LOGIN_USER = gql`
 `
 
 const CREATE_USER = gql`
-    mutation createUser($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-        createUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
-            token
+    mutation CreateUser($inputs: CreateUserInputs!) {
+        createUser(inputs: $inputs) {
             errors {
-                message
                 code
+                message
             }
+            token
         }
     }
 `
@@ -34,24 +37,29 @@ const ME_QUERY = gql`
     query Me {
         me {
             id
-            firstName
-            lastName
+            name
             email
         }
     }
 `
 
 describe("Create user mutation", () => {
-    it("is successful", async () => {
-        const sign = jest.spyOn(jwt, "sign")
-        sign.mockImplementation(() => () => "signed")
-
-        const server = new ApolloServer({
+    let server: ApolloServer
+    const schema = makeSchema({
+        types,
+        plugins: [nexusPrisma()],
+    })
+    beforeEach(() => {
+        server = new ApolloServer({
             schema,
             context: {
                 prisma: prismaMock,
             },
         })
+    })
+    it("is successful", async () => {
+        const sign = jest.spyOn(jwt, "sign")
+        sign.mockImplementation(() => () => "signed")
 
         const dateNow = new Date()
 
@@ -69,13 +77,16 @@ describe("Create user mutation", () => {
         prismaMock.user.create.mockResolvedValue(user)
 
         // Create a new user
+
         const createUserResult = await server.executeOperation({
             query: CREATE_USER,
             variables: {
-                firstName: "Nima",
-                lastName: "Soufiani",
-                email: "nima@example.com",
-                password: "Randompasswordman",
+                inputs: {
+                    name: "Nima",
+                    handle: "nimzy",
+                    email: "nima@example.com",
+                    password: "Randompasswordman",
+                },
             },
         })
 
@@ -88,24 +99,18 @@ describe("Create user mutation", () => {
         const sign = jest.spyOn(jwt, "sign")
         sign.mockImplementation(() => "signed")
 
-        const server = new ApolloServer({
-            schema,
-            context: {
-                prisma: prismaMock,
-            },
-        })
-
         // Create a new user
         const createUserResult = await server.executeOperation({
             query: CREATE_USER,
             variables: {
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
+                inputs: {
+                    name: "",
+                    handle: "",
+                    email: "",
+                    password: "",
+                },
             },
         })
-
         expect(createUserResult.data).toEqual({
             createUser: {
                 token: null,
@@ -116,19 +121,25 @@ describe("Create user mutation", () => {
 })
 
 describe("login mutation", () => {
+    let server: ApolloServer
+    const schema = makeSchema({
+        types,
+        plugins: [nexusPrisma()],
+    })
+    beforeEach(() => {
+        server = new ApolloServer({
+            schema,
+            context: {
+                prisma: prismaMock,
+            },
+        })
+    })
     it("is successful", async () => {
         const sign = jest.spyOn(jwt, "sign")
         sign.mockImplementation(() => "signed")
 
         const compare = jest.spyOn(bcrypt, "compare")
         compare.mockImplementation(() => true)
-
-        const server = new ApolloServer({
-            schema,
-            context: {
-                prisma: prismaMock,
-            },
-        })
 
         const dateNow = new Date()
 
@@ -144,12 +155,13 @@ describe("login mutation", () => {
         }
 
         prismaMock.user.findUnique.mockResolvedValue(user)
-
         const loginUserResult = await server.executeOperation({
             query: LOGIN_USER,
             variables: {
-                email: "test@example.com",
-                password: "ABCdefgh",
+                inputs: {
+                    email: "test@example.com",
+                    password: "ABCdefgh",
+                },
             },
         })
 
@@ -163,13 +175,6 @@ describe("login mutation", () => {
 
         const compare = jest.spyOn(bcrypt, "compare")
         compare.mockImplementation(() => false)
-
-        const server = new ApolloServer({
-            schema,
-            context: {
-                prisma: prismaMock,
-            },
-        })
 
         const dateNow = new Date()
 
@@ -185,13 +190,13 @@ describe("login mutation", () => {
         }
 
         prismaMock.user.findUnique.mockResolvedValue(user)
-
         const loginUserResult = await server.executeOperation({
             query: LOGIN_USER,
             variables: {
-                email: "test@example.com",
-                password: "ABCdefgh",
-                passwordConfirm: "ABCdefgh",
+                inputs: {
+                    email: "test@example.com",
+                    password: "ABCdefgh",
+                },
             },
         })
 
@@ -207,17 +212,20 @@ describe("login mutation", () => {
 })
 
 describe("me query", () => {
-    it("successfully queries logged in user", async () => {
-        const server = new ApolloServer({
+    let server: ApolloServer
+    const schema = makeSchema({
+        types,
+        plugins: [nexusPrisma()],
+    })
+    beforeEach(() => {
+        server = new ApolloServer({
             schema,
             context: {
                 prisma: prismaMock,
-                user: {
-                    id: "1",
-                },
             },
         })
-
+    })
+    it("successfully queries logged in user", async () => {
         const dateNow = new Date()
 
         const user: User = {
@@ -232,29 +240,26 @@ describe("me query", () => {
         }
 
         prismaMock.user.findUnique.mockResolvedValue(user)
-
-        const loginUserResult = await server.executeOperation({
+        const serverWithUserContext = new ApolloServer({
+            schema,
+            context: {
+                prisma: prismaMock,
+                user: { id: "1", name: "Rich", email: "adasd@asdas.com" },
+            },
+        })
+        const loginUserResult = await serverWithUserContext.executeOperation({
             query: ME_QUERY,
         })
 
         expect(loginUserResult.data).toEqual({
             me: {
                 id: "1",
-                firstName: "Rich",
-                lastName: "asdsads",
+                name: "Rich",
                 email: "adasd@asdas.com",
             },
         })
     })
     it("returns null for user not logged in", async () => {
-        const server = new ApolloServer({
-            schema,
-            context: {
-                prisma: prismaMock,
-                user: null,
-            },
-        })
-
         const loginUserResult = await server.executeOperation({
             query: ME_QUERY,
         })
