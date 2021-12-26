@@ -41,7 +41,6 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
-  DateTime: any
 }
 
 export interface NexusGenObjects {
@@ -59,13 +58,13 @@ export interface NexusGenObjects {
     token?: string | null; // String
   }
   User: { // root type
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
-    email: string; // String!
-    handle: string; // String!
-    id: string; // String!
-    name: string; // String!
-    role: NexusGenEnums['Role']; // Role!
-    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    createdAt?: string | null; // String
+    email?: string | null; // String
+    handle?: string | null; // String
+    id?: string | null; // String
+    name?: string | null; // String
+    role?: NexusGenEnums['Role'] | null; // Role
+    updatedAt?: string | null; // String
   }
 }
 
@@ -99,13 +98,13 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
   }
   User: { // field return type
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
-    email: string; // String!
-    handle: string; // String!
-    id: string; // String!
-    name: string; // String!
-    role: NexusGenEnums['Role']; // Role!
-    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    createdAt: string | null; // String
+    email: string | null; // String
+    handle: string | null; // String
+    id: string | null; // String
+    name: string | null; // String
+    role: NexusGenEnums['Role'] | null; // Role
+    updatedAt: string | null; // String
   }
 }
 
@@ -129,13 +128,13 @@ export interface NexusGenFieldTypeNames {
     token: 'String'
   }
   User: { // field return type name
-    createdAt: 'DateTime'
+    createdAt: 'String'
     email: 'String'
     handle: 'String'
     id: 'String'
     name: 'String'
     role: 'Role'
-    updatedAt: 'DateTime'
+    updatedAt: 'String'
   }
 }
 

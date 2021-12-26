@@ -25,7 +25,7 @@
         "test-coverage": "jest --verbose --coverage"
     },
     "lint-staged": {
-        "*.{ts,tsx,jsx}": "eslint"
+        "*.{ts,tsx}": "eslint"
     },
     "keywords": [],
     "license": "ISC",
