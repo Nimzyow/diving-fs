@@ -22,8 +22,7 @@
         "lint-fix": "npx eslint . --ext .ts,.tsx --fix",
         "lint-staged": "lint-staged",
         "test": "jest --verbose",
-        "test-coverage": "jest --verbose --coverage",
-        "prepare": "husky install"
+        "test-coverage": "jest --verbose --coverage"
     },
     "lint-staged": {
         "*.{ts,tsx,jsx}": "eslint"
