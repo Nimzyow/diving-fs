@@ -23,6 +23,14 @@ export type CreateUserInputs = {
   password: Scalars['String'];
 };
 
+export type DiverCertification = {
+  __typename?: 'DiverCertification';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
 export type Error = {
   __typename?: 'Error';
   code: Scalars['String'];
@@ -76,6 +84,7 @@ export type Token = {
 export type User = {
   __typename?: 'User';
   createdAt?: Maybe<Scalars['DateTime']>;
+  diverCertifications?: Maybe<Array<Maybe<DiverCertification>>>;
   email?: Maybe<Scalars['String']>;
   handle?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
