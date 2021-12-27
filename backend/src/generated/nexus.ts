@@ -5,8 +5,23 @@
 
 
 import type { Context } from "./../context"
-
-
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    date<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    date<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
 
 
 declare global {
@@ -36,6 +51,7 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
@@ -53,13 +69,13 @@ export interface NexusGenObjects {
     token?: string | null; // String
   }
   User: { // root type
-    createdAt?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     email?: string | null; // String
     handle?: string | null; // String
     id?: string | null; // String
     name?: string | null; // String
     role?: NexusGenEnums['Role'] | null; // Role
-    updatedAt?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
 }
 
@@ -93,13 +109,13 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
   }
   User: { // field return type
-    createdAt: string | null; // String
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     email: string | null; // String
     handle: string | null; // String
     id: string | null; // String
     name: string | null; // String
     role: NexusGenEnums['Role'] | null; // Role
-    updatedAt: string | null; // String
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
 }
 
@@ -123,13 +139,13 @@ export interface NexusGenFieldTypeNames {
     token: 'String'
   }
   User: { // field return type name
-    createdAt: 'String'
+    createdAt: 'DateTime'
     email: 'String'
     handle: 'String'
     id: 'String'
     name: 'String'
     role: 'Role'
-    updatedAt: 'String'
+    updatedAt: 'DateTime'
   }
 }
 

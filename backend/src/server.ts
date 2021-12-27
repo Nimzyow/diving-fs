@@ -5,6 +5,7 @@ import { ApolloServerPluginDrainHttpServer } from "apollo-server-core"
 import { ApolloServer } from "apollo-server-express"
 import express from "express"
 import { makeSchema } from "nexus"
+import {} from "nexus-plugin-prisma"
 
 import { Context, getUser } from "./context"
 import prisma from "./db"
