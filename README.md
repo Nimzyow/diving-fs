@@ -1,3 +1,5 @@
+[![Nimzyow](https://circleci.com/gh/Nimzyow/diving-fs.svg?style=svg)](https://app.circleci.com/pipelines/github/Nimzyow)
+
 NOTES:
 
 It seems that nexus automatically generates the GQL schema and nexus types when you spin up the server. currently with `npx nodemon`
