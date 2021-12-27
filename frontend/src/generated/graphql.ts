@@ -12,6 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
+  DateTime: any;
 };
 
 export type CreateUserInputs = {
@@ -73,19 +75,19 @@ export type Token = {
 
 export type User = {
   __typename?: 'User';
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
   handle?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   role?: Maybe<Role>;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id?: Maybe<string>, name?: Maybe<string>, handle?: Maybe<string>, email?: Maybe<string>, createdAt?: Maybe<string>, updatedAt?: Maybe<string> }> };
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id?: Maybe<string>, name?: Maybe<string>, handle?: Maybe<string>, email?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any> }> };
 
 export type CreateUserMutationVariables = Exact<{
   inputs: CreateUserInputs;
