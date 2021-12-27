@@ -55,6 +55,12 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  DiverCertification: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    name?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
   Error: { // root type
     code: string; // String!
     message: string; // String!
@@ -90,6 +96,12 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  DiverCertification: { // field return type
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: string | null; // String
+    name: string | null; // String
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+  }
   Error: { // field return type
     code: string; // String!
     message: string; // String!
@@ -110,6 +122,7 @@ export interface NexusGenFieldTypes {
   }
   User: { // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    diverCertifications: Array<NexusGenRootTypes['DiverCertification'] | null> | null; // [DiverCertification]
     email: string | null; // String
     handle: string | null; // String
     id: string | null; // String
@@ -120,6 +133,12 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  DiverCertification: { // field return type name
+    createdAt: 'DateTime'
+    id: 'String'
+    name: 'String'
+    updatedAt: 'DateTime'
+  }
   Error: { // field return type name
     code: 'String'
     message: 'String'
@@ -140,6 +159,7 @@ export interface NexusGenFieldTypeNames {
   }
   User: { // field return type name
     createdAt: 'DateTime'
+    diverCertifications: 'DiverCertification'
     email: 'String'
     handle: 'String'
     id: 'String'
