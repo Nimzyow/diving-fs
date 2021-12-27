@@ -19,6 +19,15 @@ model User {
   role        Role      @default(USER)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now())
+  diverCertifications   DiverCertification[]
+}
+
+model DiverCertification {
+  id          String    @id @default(cuid())
+  name        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  users      User[]
 }
 
 enum Role {

@@ -8,8 +8,8 @@ export const User = objectType({
             t.string("email"),
             t.string("handle"),
             t.field("role", { type: "Role" }),
-            t.string("createdAt"),
-            t.string("updatedAt")
+            t.date("createdAt"),
+            t.date("updatedAt")
     },
 })
 
