@@ -1,6 +1,5 @@
 import { Prisma } from "@prisma/client"
 import bcrypt from "bcryptjs"
-import e from "express"
 import jwt from "jsonwebtoken"
 import { arg, extendType, nonNull, inputObjectType } from "nexus"
 
