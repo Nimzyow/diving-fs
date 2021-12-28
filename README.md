@@ -1,4 +1,4 @@
-[![Nimzyow](https://circleci.com/gh/Nimzyow/diving-fs.svg?style=svg)](https://app.circleci.com/pipelines/github/Nimzyow)
+[![Nimzyow](https://circleci.com/gh/Nimzyow/diving-fs.svg?style=svg)](https://app.circleci.com/pipelines/github/Nimzyow/diving-fs?filter=all)
 
 NOTES:
 
