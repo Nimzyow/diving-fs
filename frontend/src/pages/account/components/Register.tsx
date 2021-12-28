@@ -53,7 +53,9 @@ export const Register = () => {
                     return { nonFieldError: "Token was not found in data" }
                 }
             } catch (error) {
-                return { nonFieldError: "Something went wrong" }
+                return {
+                    nonFieldError: "Something went wrong. Please try refreshing the page and try again.",
+                }
             }
             return {}
         },
@@ -137,6 +139,9 @@ export const Register = () => {
                 <Button variant="primary" onClick={() => onSubmit()}>
                     Submit
                 </Button>
+                {errors.nonFieldError && (
+                    <p className="text-danger label-text mb-0 mt-2">{errors.nonFieldError}</p>
+                )}
             </Form>
         </div>
     )

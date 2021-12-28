@@ -123,4 +123,49 @@ describe("Register component", () => {
 
         expect(emailTakenMessage).toBeDefined()
     })
+    test("should display general error", async () => {
+        const mocks: MockedResponse[] = [
+            {
+                request: {
+                    query: CreateUser,
+                    variables: {
+                        inputs: {
+                            name: "tester",
+                            email: "email@example.com",
+                            handle: "takenHandle",
+                            password: "testPassword",
+                        },
+                    },
+                },
+                error: new Error("Error occurred"),
+            },
+        ]
+
+        const history = createMemoryHistory()
+
+        const { getByText, getByPlaceholderText } = render(
+            <Router history={history}>
+                <MockedProvider mocks={mocks}>
+                    <Register />
+                </MockedProvider>
+            </Router>
+        )
+
+        fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
+        fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
+        fireEvent.change(getByPlaceholderText("Enter email"), {
+            target: { value: "email@example.com" },
+        })
+        fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
+
+        fireEvent.click(getByText("Submit"))
+
+        await waitFor(() => new Promise((res) => setTimeout(res, 0)))
+
+        const emailTakenMessage = getByText(
+            "Something went wrong. Please try refreshing the page and try again."
+        )
+
+        expect(emailTakenMessage).toBeDefined()
+    })
 })
