@@ -1,4 +1,6 @@
+import { Prisma } from "@prisma/client"
 import bcrypt from "bcryptjs"
+import e from "express"
 import jwt from "jsonwebtoken"
 import { arg, extendType, nonNull, inputObjectType } from "nexus"
 
@@ -43,11 +45,21 @@ export const Mutation = extendType({
                     return { token: null, errors }
                 }
 
+                let hashedPassword: string
+
                 try {
                     const salt = await bcrypt.genSalt(10)
 
-                    const hashedPassword = await bcrypt.hash(password, salt)
+                    hashedPassword = await bcrypt.hash(password, salt)
+                } catch (error) {
+                    errors.push({
+                        code: "GENERAL_ERROR",
+                        message: "Please try again later",
+                    })
+                    return { token: null, errors }
+                }
 
+                try {
                     const user = await context.prisma.user.create({
                         data: {
                             name,
@@ -70,11 +82,24 @@ export const Mutation = extendType({
                         errors: [],
                     }
                 } catch (error) {
-                    errors.push({
-                        code: "GENERAL_ERROR",
-                        message: "Please try again later",
-                    })
-                    return { token: null, errors }
+                    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                        if (error.message.includes("email")) {
+                            errors.push({
+                                code: "EMAIL_TAKEN",
+                                message: "This email has already been taken.",
+                            })
+                            return { token: null, errors }
+                        }
+                        if (error.message.includes("handle")) {
+                            errors.push({
+                                code: "HANDLE_TAKEN",
+                                message: "This handle has already been taken.",
+                            })
+                            return { token: null, errors }
+                        }
+                    }
+                    console.log(error)
+                    return null
                 }
             },
         }),

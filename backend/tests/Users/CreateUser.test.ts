@@ -1,4 +1,6 @@
+import { Prisma } from "@prisma/client"
 import { ApolloServer, gql } from "apollo-server"
+import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { makeSchema } from "nexus"
 
@@ -69,7 +71,7 @@ describe("Create user mutation", () => {
         })
     })
 
-    it("will throw error with empty string for email, firstName, lastName or password", async () => {
+    it("will return error object with empty string for email, firstName, lastName or password", async () => {
         const sign = jest.spyOn(jwt, "sign")
         sign.mockImplementation(() => "signed")
 
@@ -89,6 +91,72 @@ describe("Create user mutation", () => {
             createUser: {
                 token: null,
                 errors: [{ code: "INVALID_INPUTS", message: "Please enter valid inputs" }],
+            },
+        })
+    })
+    it("will return error object if email already taken", async () => {
+        // const sign = jest.spyOn(jwt, "sign")
+        // sign.mockImplementation(() => "signed")
+        const genSalt = jest.spyOn(bcrypt, "genSalt")
+        const hash = jest.spyOn(bcrypt, "hash")
+        genSalt.mockImplementation(() => "generatedSalt")
+        hash.mockImplementation(() => "hashedMate")
+        const error = new Prisma.PrismaClientKnownRequestError(
+            "text containing the word email",
+            "P1001",
+            "123"
+        )
+        prismaMock.user.create.mockRejectedValue(error)
+
+        // Create a new user
+        const createUserResult = await server.executeOperation({
+            query: CREATE_USER,
+            variables: {
+                inputs: {
+                    name: "test",
+                    handle: "testy",
+                    email: "test@testing.com",
+                    password: "testPass",
+                },
+            },
+        })
+        expect(createUserResult.data).toEqual({
+            createUser: {
+                token: null,
+                errors: [{ code: "EMAIL_TAKEN", message: "This email has already been taken." }],
+            },
+        })
+    })
+    it("will return error object if handle already taken", async () => {
+        // const sign = jest.spyOn(jwt, "sign")
+        // sign.mockImplementation(() => "signed")
+        const genSalt = jest.spyOn(bcrypt, "genSalt")
+        const hash = jest.spyOn(bcrypt, "hash")
+        genSalt.mockImplementation(() => "generatedSalt")
+        hash.mockImplementation(() => "hashedMate")
+        const error = new Prisma.PrismaClientKnownRequestError(
+            "text containing the word handle",
+            "P1001",
+            "123"
+        )
+        prismaMock.user.create.mockRejectedValue(error)
+
+        // Create a new user
+        const createUserResult = await server.executeOperation({
+            query: CREATE_USER,
+            variables: {
+                inputs: {
+                    name: "test",
+                    handle: "testy",
+                    email: "test@testing.com",
+                    password: "testPass",
+                },
+            },
+        })
+        expect(createUserResult.data).toEqual({
+            createUser: {
+                token: null,
+                errors: [{ code: "HANDLE_TAKEN", message: "This handle has already been taken." }],
             },
         })
     })

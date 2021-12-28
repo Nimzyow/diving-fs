@@ -14,7 +14,7 @@
         "type-watch": "tsc --watch --noEmit --project './tsconfig.json'",
         "type-check": "npm run generate && tsc --noEmit --project './tsconfig.json'",
         "generate": "npx ts-node --transpile-only src/schema",
-        "test": "jest --detectOpenHandles",
+        "test": "jest --detectOpenHandles --verbose",
         "dev": "ts-node-dev --transpile-only --no-notify src/server.ts",
         "lint": "npx eslint . --ext .ts",
         "lint-fix": "npx eslint . --ext .ts --fix",
