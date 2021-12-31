@@ -11,7 +11,7 @@ export const Register = () => {
     const { userRefetch } = useAuth()
     const history = useHistory()
     const [createUser] = useCreateUserMutation()
-    const { inputs, onSubmit, onChange } = useForm({
+    const { inputs, onSubmit, onChange, setErrors, errors } = useForm({
         initialInputs: {
             name: "",
             handle: "",
@@ -32,7 +32,19 @@ export const Register = () => {
                     },
                 })
                 if (result.data?.createUser?.errors && result.data?.createUser?.errors.length > 0) {
-                    return { nonFieldError: "Something went wrong" }
+                    if (result.data?.createUser.errors[0].code === "EMAIL_TAKEN") {
+                        setErrors({
+                            email: result.data?.createUser.errors[0].message,
+                        })
+                        return {}
+                    } else if (result.data?.createUser.errors[0].code === "HANDLE_TAKEN") {
+                        setErrors({
+                            handle: result.data.createUser.errors[0].message,
+                        })
+                        return {}
+                    } else {
+                        return { nonFieldError: "Something went wrong" }
+                    }
                 }
 
                 if (result.data?.createUser?.token) {
@@ -46,8 +58,10 @@ export const Register = () => {
             return {}
         },
         complete: () => {
-            userRefetch()
-            history.push("/")
+            if (errors === {}) {
+                userRefetch()
+                history.push("/")
+            }
         },
     })
     return (
@@ -77,6 +91,9 @@ export const Register = () => {
                             onChange({ handle: event.target.value })
                         }}
                     />
+                    {errors.handle && (
+                        <p className="text-danger label-text mb-0 mt-2">{errors.handle}</p>
+                    )}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -91,6 +108,7 @@ export const Register = () => {
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text>
+                    {errors.email && <p className="text-danger label-text mb-0 mt-2">{errors.email}</p>}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
