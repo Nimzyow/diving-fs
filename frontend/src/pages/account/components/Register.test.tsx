@@ -10,231 +10,233 @@ import { CreateUser } from "../GQL/RegisterGQL"
 import { Register } from "./Register"
 
 describe("Register component", () => {
-    test("should display email taken error if email is taken", async () => {
-        const mocks: MockedResponse[] = [
-            {
-                request: {
-                    query: CreateUser,
-                    variables: {
-                        inputs: {
-                            name: "tester",
-                            email: "takenEmail@example.com",
-                            handle: "testy",
-                            password: "testPassword",
+    describe("should display error of ", () => {
+        test("'email taken' if email is taken", async () => {
+            const mocks: MockedResponse[] = [
+                {
+                    request: {
+                        query: CreateUser,
+                        variables: {
+                            inputs: {
+                                name: "tester",
+                                email: "takenEmail@example.com",
+                                handle: "testy",
+                                password: "testPassword",
+                            },
+                        },
+                    },
+                    result: {
+                        data: {
+                            createUser: {
+                                errors: [
+                                    {
+                                        code: "EMAIL_TAKEN",
+                                        message: "email has been taken",
+                                        __typename: "Error",
+                                    },
+                                ],
+                                token: null,
+                                __typename: "Token",
+                            },
                         },
                     },
                 },
-                result: {
-                    data: {
-                        createUser: {
-                            errors: [
-                                {
-                                    code: "EMAIL_TAKEN",
-                                    message: "email has been taken",
-                                    __typename: "Error",
-                                },
-                            ],
-                            token: null,
-                            __typename: "Token",
+                {
+                    request: {
+                        query: Me,
+                    },
+                    result: {
+                        data: {
+                            me: null,
+                            __typename: "Query",
                         },
                     },
                 },
-            },
-            {
-                request: {
-                    query: Me,
-                },
-                result: {
-                    data: {
-                        me: null,
-                        __typename: "Query",
+            ]
+
+            const history = createMemoryHistory()
+
+            const { getByText, getByPlaceholderText } = render(
+                <Router history={history}>
+                    <MockedProvider mocks={mocks}>
+                        <Register />
+                    </MockedProvider>
+                </Router>
+            )
+
+            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
+            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "testy" } })
+            fireEvent.change(getByPlaceholderText("Enter email"), {
+                target: { value: "takenEmail@example.com" },
+            })
+            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
+            fireEvent.change(getByPlaceholderText("Password confirmation"), {
+                target: { value: "testPassword" },
+            })
+
+            fireEvent.click(getByText("Submit"))
+
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
+
+            const emailTakenMessage = getByText("email has been taken")
+
+            expect(emailTakenMessage).toBeDefined()
+        })
+        test("handle taken error if handle is taken", async () => {
+            const mocks: MockedResponse[] = [
+                {
+                    request: {
+                        query: CreateUser,
+                        variables: {
+                            inputs: {
+                                name: "tester",
+                                email: "email@example.com",
+                                handle: "takenHandle",
+                                password: "testPassword",
+                            },
+                        },
                     },
-                },
-            },
-        ]
-
-        const history = createMemoryHistory()
-
-        const { getByText, getByPlaceholderText } = render(
-            <Router history={history}>
-                <MockedProvider mocks={mocks}>
-                    <Register />
-                </MockedProvider>
-            </Router>
-        )
-
-        fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
-        fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "testy" } })
-        fireEvent.change(getByPlaceholderText("Enter email"), {
-            target: { value: "takenEmail@example.com" },
-        })
-        fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-        fireEvent.change(getByPlaceholderText("Password confirmation"), {
-            target: { value: "testPassword" },
-        })
-
-        fireEvent.click(getByText("Submit"))
-
-        await waitFor(() => new Promise((res) => setTimeout(res, 0)))
-
-        const emailTakenMessage = getByText("email has been taken")
-
-        expect(emailTakenMessage).toBeDefined()
-    })
-    test("should display handle taken error if handle is taken", async () => {
-        const mocks: MockedResponse[] = [
-            {
-                request: {
-                    query: CreateUser,
-                    variables: {
-                        inputs: {
-                            name: "tester",
-                            email: "email@example.com",
-                            handle: "takenHandle",
-                            password: "testPassword",
+                    result: {
+                        data: {
+                            createUser: {
+                                errors: [
+                                    {
+                                        code: "HANDLE_TAKEN",
+                                        message: "handle has been taken",
+                                        __typename: "Error",
+                                    },
+                                ],
+                                token: null,
+                                __typename: "Token",
+                            },
                         },
                     },
                 },
-                result: {
-                    data: {
-                        createUser: {
-                            errors: [
-                                {
-                                    code: "HANDLE_TAKEN",
-                                    message: "handle has been taken",
-                                    __typename: "Error",
-                                },
-                            ],
-                            token: null,
-                            __typename: "Token",
+                {
+                    request: {
+                        query: Me,
+                    },
+                    result: {
+                        data: {
+                            me: null,
+                            __typename: "Query",
                         },
                     },
                 },
-            },
-            {
-                request: {
-                    query: Me,
-                },
-                result: {
-                    data: {
-                        me: null,
-                        __typename: "Query",
+            ]
+
+            const history = createMemoryHistory()
+
+            const { getByText, getByPlaceholderText } = render(
+                <Router history={history}>
+                    <MockedProvider mocks={mocks}>
+                        <Register />
+                    </MockedProvider>
+                </Router>
+            )
+
+            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
+            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
+            fireEvent.change(getByPlaceholderText("Enter email"), {
+                target: { value: "email@example.com" },
+            })
+            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
+            fireEvent.change(getByPlaceholderText("Password confirmation"), {
+                target: { value: "testPassword" },
+            })
+            fireEvent.click(getByText("Submit"))
+
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
+
+            const handleTakenMessage = getByText("handle has been taken")
+
+            expect(handleTakenMessage).toBeDefined()
+        })
+        test("general error if gql error has occurred", async () => {
+            const mocks: MockedResponse[] = [
+                {
+                    request: {
+                        query: CreateUser,
+                        variables: {
+                            inputs: {
+                                name: "tester",
+                                email: "email@example.com",
+                                handle: "takenHandle",
+                                password: "testPassword",
+                            },
+                        },
                     },
+                    error: new Error("Error occurred"),
                 },
-            },
-        ]
+            ]
 
-        const history = createMemoryHistory()
+            const history = createMemoryHistory()
 
-        const { getByText, getByPlaceholderText } = render(
-            <Router history={history}>
-                <MockedProvider mocks={mocks}>
-                    <Register />
-                </MockedProvider>
-            </Router>
-        )
+            const { getByText, getByPlaceholderText } = render(
+                <Router history={history}>
+                    <MockedProvider mocks={mocks}>
+                        <Register />
+                    </MockedProvider>
+                </Router>
+            )
 
-        fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
-        fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
-        fireEvent.change(getByPlaceholderText("Enter email"), {
-            target: { value: "email@example.com" },
+            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
+            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
+            fireEvent.change(getByPlaceholderText("Enter email"), {
+                target: { value: "email@example.com" },
+            })
+            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
+            fireEvent.change(getByPlaceholderText("Password confirmation"), {
+                target: { value: "testPassword" },
+            })
+            fireEvent.click(getByText("Submit"))
+
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
+
+            const generalErrorMessage = getByText(
+                "Something went wrong. Please try refreshing the page and try again."
+            )
+
+            expect(generalErrorMessage).toBeDefined()
         })
-        fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-        fireEvent.change(getByPlaceholderText("Password confirmation"), {
-            target: { value: "testPassword" },
-        })
-        fireEvent.click(getByText("Submit"))
-
-        await waitFor(() => new Promise((res) => setTimeout(res, 0)))
-
-        const handleTakenMessage = getByText("handle has been taken")
-
-        expect(handleTakenMessage).toBeDefined()
-    })
-    test("should display general error", async () => {
-        const mocks: MockedResponse[] = [
-            {
-                request: {
-                    query: CreateUser,
-                    variables: {
-                        inputs: {
-                            name: "tester",
-                            email: "email@example.com",
-                            handle: "takenHandle",
-                            password: "testPassword",
+        test("should display password mismatch error", async () => {
+            const mocks: MockedResponse[] = [
+                {
+                    request: {
+                        query: Me,
+                    },
+                    result: {
+                        data: {
+                            me: null,
+                            __typename: "Query",
                         },
                     },
                 },
-                error: new Error("Error occurred"),
-            },
-        ]
+            ]
 
-        const history = createMemoryHistory()
+            const history = createMemoryHistory()
+            const { getByText, getByPlaceholderText } = render(
+                <Router history={history}>
+                    <MockedProvider mocks={mocks}>
+                        <Register />
+                    </MockedProvider>
+                </Router>
+            )
 
-        const { getByText, getByPlaceholderText } = render(
-            <Router history={history}>
-                <MockedProvider mocks={mocks}>
-                    <Register />
-                </MockedProvider>
-            </Router>
-        )
+            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
+            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
+            fireEvent.change(getByPlaceholderText("Enter email"), {
+                target: { value: "email@example.com" },
+            })
+            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
+            fireEvent.change(getByPlaceholderText("Password confirmation"), {
+                target: { value: "notMatching" },
+            })
+            fireEvent.click(getByText("Submit"))
 
-        fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
-        fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
-        fireEvent.change(getByPlaceholderText("Enter email"), {
-            target: { value: "email@example.com" },
+            const passwordMismatch = getByText("Password and password confirmation do not match.")
+
+            expect(passwordMismatch).toBeDefined()
         })
-        fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-        fireEvent.change(getByPlaceholderText("Password confirmation"), {
-            target: { value: "testPassword" },
-        })
-        fireEvent.click(getByText("Submit"))
-
-        await waitFor(() => new Promise((res) => setTimeout(res, 0)))
-
-        const generalErrorMessage = getByText(
-            "Something went wrong. Please try refreshing the page and try again."
-        )
-
-        expect(generalErrorMessage).toBeDefined()
-    })
-    test("should display password mismatch error", async () => {
-        const mocks: MockedResponse[] = [
-            {
-                request: {
-                    query: Me,
-                },
-                result: {
-                    data: {
-                        me: null,
-                        __typename: "Query",
-                    },
-                },
-            },
-        ]
-
-        const history = createMemoryHistory()
-        const { getByText, getByPlaceholderText } = render(
-            <Router history={history}>
-                <MockedProvider mocks={mocks}>
-                    <Register />
-                </MockedProvider>
-            </Router>
-        )
-
-        fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
-        fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
-        fireEvent.change(getByPlaceholderText("Enter email"), {
-            target: { value: "email@example.com" },
-        })
-        fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-        fireEvent.change(getByPlaceholderText("Password confirmation"), {
-            target: { value: "notMatching" },
-        })
-        fireEvent.click(getByText("Submit"))
-
-        const passwordMismatch = getByText("Password and password confirmation do not match.")
-
-        expect(passwordMismatch).toBeDefined()
     })
 })
