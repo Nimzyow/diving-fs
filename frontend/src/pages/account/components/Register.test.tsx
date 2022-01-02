@@ -1,34 +1,14 @@
 import React from "react"
 
-import { DocumentNode } from "@apollo/client"
 import { MockedProvider, MockedResponse } from "@apollo/client/testing"
 import { render, waitFor, fireEvent } from "@testing-library/react"
 import { createMemoryHistory, MemoryHistory } from "history"
 import { Router } from "react-router-dom"
 
 import { Me } from "../../../hooks/useAuth/useAuthOperations"
+import { generateMock } from "../../../utils/test/helperFunctions"
 import { CreateUser } from "../GQL/RegisterGQL"
 import { Register } from "./Register"
-
-type Mock = {
-    query: DocumentNode
-    variables?: Record<string, unknown>
-    data?: Record<string, unknown>
-    error?: Error
-}[]
-
-const generateMock = (mocks: Mock): MockedResponse[] => {
-    return mocks.map((mock) => ({
-        request: {
-            query: mock.query,
-            variables: mock.variables,
-        },
-        result: {
-            data: mock.data,
-        },
-        error: mock.error,
-    }))
-}
 
 const renderComponents = (history: MemoryHistory<unknown>, mocks: MockedResponse[]) => {
     return render(
