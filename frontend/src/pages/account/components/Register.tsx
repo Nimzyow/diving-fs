@@ -19,6 +19,14 @@ export const Register = () => {
             password: "",
             passwordConfirm: "",
         },
+        validate: (newInputs) => {
+            const errors: ErrorsObject<typeof newInputs> = {}
+
+            if (newInputs.password !== newInputs.passwordConfirm) {
+                errors.passwordConfirm = "Password and password confirmation do not match."
+            }
+            return errors
+        },
         submit: async () => {
             try {
                 const result = await createUser({
@@ -135,6 +143,9 @@ export const Register = () => {
                             onChange({ passwordConfirm: event.target.value })
                         }}
                     />
+                    {errors.passwordConfirm && (
+                        <p className="text-danger label-text mb-0 mt-2">{errors.passwordConfirm}</p>
+                    )}
                 </Form.Group>
                 <Button variant="primary" onClick={() => onSubmit()}>
                     Submit

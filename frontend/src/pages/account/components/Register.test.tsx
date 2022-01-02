@@ -5,6 +5,7 @@ import { render, waitFor, fireEvent } from "@testing-library/react"
 import { createMemoryHistory } from "history"
 import { Router } from "react-router-dom"
 
+import { Me } from "../../../hooks/useAuth/useAuthOperations"
 import { CreateUser } from "../GQL/RegisterGQL"
 import { Register } from "./Register"
 
@@ -39,6 +40,17 @@ describe("Register component", () => {
                     },
                 },
             },
+            {
+                request: {
+                    query: Me,
+                },
+                result: {
+                    data: {
+                        me: null,
+                        __typename: "Query",
+                    },
+                },
+            },
         ]
 
         const history = createMemoryHistory()
@@ -57,6 +69,9 @@ describe("Register component", () => {
             target: { value: "takenEmail@example.com" },
         })
         fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
+        fireEvent.change(getByPlaceholderText("Password confirmation"), {
+            target: { value: "testPassword" },
+        })
 
         fireEvent.click(getByText("Submit"))
 
@@ -96,6 +111,17 @@ describe("Register component", () => {
                     },
                 },
             },
+            {
+                request: {
+                    query: Me,
+                },
+                result: {
+                    data: {
+                        me: null,
+                        __typename: "Query",
+                    },
+                },
+            },
         ]
 
         const history = createMemoryHistory()
@@ -114,14 +140,16 @@ describe("Register component", () => {
             target: { value: "email@example.com" },
         })
         fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-
+        fireEvent.change(getByPlaceholderText("Password confirmation"), {
+            target: { value: "testPassword" },
+        })
         fireEvent.click(getByText("Submit"))
 
         await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-        const emailTakenMessage = getByText("handle has been taken")
+        const handleTakenMessage = getByText("handle has been taken")
 
-        expect(emailTakenMessage).toBeDefined()
+        expect(handleTakenMessage).toBeDefined()
     })
     test("should display general error", async () => {
         const mocks: MockedResponse[] = [
@@ -157,15 +185,57 @@ describe("Register component", () => {
             target: { value: "email@example.com" },
         })
         fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-
+        fireEvent.change(getByPlaceholderText("Password confirmation"), {
+            target: { value: "testPassword" },
+        })
         fireEvent.click(getByText("Submit"))
 
         await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-        const emailTakenMessage = getByText(
+        const generalErrorMessage = getByText(
             "Something went wrong. Please try refreshing the page and try again."
         )
 
-        expect(emailTakenMessage).toBeDefined()
+        expect(generalErrorMessage).toBeDefined()
+    })
+    test("should display password mismatch error", async () => {
+        const mocks: MockedResponse[] = [
+            {
+                request: {
+                    query: Me,
+                },
+                result: {
+                    data: {
+                        me: null,
+                        __typename: "Query",
+                    },
+                },
+            },
+        ]
+
+        const history = createMemoryHistory()
+        const { getByText, getByPlaceholderText } = render(
+            <Router history={history}>
+                <MockedProvider mocks={mocks}>
+                    <Register />
+                </MockedProvider>
+            </Router>
+        )
+
+        fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
+        fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
+        fireEvent.change(getByPlaceholderText("Enter email"), {
+            target: { value: "email@example.com" },
+        })
+        fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
+        fireEvent.change(getByPlaceholderText("Password confirmation"), {
+            target: { value: "notMatching" },
+        })
+
+        fireEvent.click(getByText("Submit"))
+
+        const passwordMismatch = getByText("Password and password confirmation do not match.")
+
+        expect(passwordMismatch).toBeDefined()
     })
 })
