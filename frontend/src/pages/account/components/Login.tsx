@@ -11,10 +11,18 @@ export const Login = () => {
     const { userRefetch } = useAuth()
     const [loginUser] = useLoginMutation()
     const history = useHistory()
-    const { inputs, onSubmit, onChange } = useForm({
+    const { inputs, onSubmit, onChange, errors } = useForm({
         initialInputs: {
             email: "",
             password: "",
+        },
+        validate: (newInputs) => {
+            const errors: ErrorsObject<typeof newInputs> = {}
+            if (!newInputs.email.match(/.+@.+\..+/)) {
+                errors.email = "Please enter a valid email address."
+            }
+
+            return errors
         },
         submit: async () => {
             try {
@@ -59,6 +67,7 @@ export const Login = () => {
                             onChange({ email: event.target.value })
                         }}
                     />
+                    {errors.email && <p className="text-danger label-text mb-0 mt-2">{errors.email}</p>}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
