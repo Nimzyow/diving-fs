@@ -21,7 +21,9 @@ export const Login = () => {
             if (!newInputs.email.match(/.+@.+\..+/)) {
                 errors.email = "Please enter a valid email address."
             }
-
+            if (newInputs.password.length < 5) {
+                errors.password = "Password must be a minimum of 5 characters long."
+            }
             return errors
         },
         submit: async () => {
@@ -79,6 +81,9 @@ export const Login = () => {
                             onChange({ password: event.target.value })
                         }}
                     />
+                    {errors.password && (
+                        <p className="text-danger label-text mb-0 mt-2">{errors.password}</p>
+                    )}
                 </Form.Group>
                 <Button variant="primary" onClick={() => onSubmit()}>
                     Submit
