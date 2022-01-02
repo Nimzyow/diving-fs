@@ -18,4 +18,5 @@ module.exports = {
         // "^@utils$": "<rootDir>/utils/",
         // "^@core$": "<rootDir>/core/",
     },
+    coveragePathIgnorePatterns: ["<rootDir>/generated/graphql.ts"],
 }

@@ -50,8 +50,6 @@ export const Register = () => {
                             handle: result.data.createUser.errors[0].message,
                         })
                         return {}
-                    } else {
-                        return { nonFieldError: "Something went wrong" }
                     }
                 }
 
