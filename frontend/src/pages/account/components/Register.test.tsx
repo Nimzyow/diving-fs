@@ -163,5 +163,52 @@ describe("Register component", () => {
 
             expect(passwordMismatch).toBeDefined()
         })
+        test("should display password min character error and clear error when password minimum length is met", async () => {
+            const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
+
+            const { getByText, getByPlaceholderText, queryByText } = MockComponent({
+                mocks,
+                children: <Register />,
+            })
+
+            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
+            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
+            fireEvent.change(getByPlaceholderText("Enter email"), {
+                target: { value: "email@example.com" },
+            })
+            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "p" } })
+            fireEvent.change(getByPlaceholderText("Password confirmation"), {
+                target: { value: "p" },
+            })
+            fireEvent.click(getByText("Submit"))
+
+            const passwordMinCharacterError = getByText(
+                "Password must be a minimum of 5 characters long."
+            )
+
+            expect(passwordMinCharacterError).toBeDefined()
+
+            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "pass" } })
+            fireEvent.change(getByPlaceholderText("Password confirmation"), {
+                target: { value: "pass" },
+            })
+
+            const passwordMinCharacterErrorAgain = getByText(
+                "Password must be a minimum of 5 characters long."
+            )
+
+            expect(passwordMinCharacterErrorAgain).toBeDefined()
+
+            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "passw" } })
+            fireEvent.change(getByPlaceholderText("Password confirmation"), {
+                target: { value: "passw" },
+            })
+
+            const passwordMinCharacterMet = queryByText(
+                "Password must be a minimum of 5 characters long."
+            )
+
+            expect(passwordMinCharacterMet).toBeNull()
+        })
     })
 })

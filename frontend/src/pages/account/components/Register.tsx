@@ -25,6 +25,9 @@ export const Register = () => {
             if (newInputs.password !== newInputs.passwordConfirm) {
                 errors.passwordConfirm = "Password and password confirmation do not match."
             }
+            if (newInputs.password.length < 5) {
+                errors.password = "Password must be a minimum of 5 characters long."
+            }
             return errors
         },
         submit: async () => {
@@ -129,6 +132,9 @@ export const Register = () => {
                             onChange({ password: event.target.value })
                         }}
                     />
+                    {errors.password && (
+                        <p className="text-danger label-text mb-0 mt-2">{errors.password}</p>
+                    )}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPasswordConfirm">
                     <Form.Label>Password confirm</Form.Label>

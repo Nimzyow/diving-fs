@@ -11,10 +11,20 @@ export const Login = () => {
     const { userRefetch } = useAuth()
     const [loginUser] = useLoginMutation()
     const history = useHistory()
-    const { inputs, onSubmit, onChange } = useForm({
+    const { inputs, onSubmit, onChange, errors } = useForm({
         initialInputs: {
             email: "",
             password: "",
+        },
+        validate: (newInputs) => {
+            const errors: ErrorsObject<typeof newInputs> = {}
+            if (!newInputs.email.match(/.+@.+\..+/)) {
+                errors.email = "Please enter a valid email address."
+            }
+            if (newInputs.password.length < 5) {
+                errors.password = "Password must be a minimum of 5 characters long."
+            }
+            return errors
         },
         submit: async () => {
             try {
@@ -59,6 +69,7 @@ export const Login = () => {
                             onChange({ email: event.target.value })
                         }}
                     />
+                    {errors.email && <p className="text-danger label-text mb-0 mt-2">{errors.email}</p>}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
@@ -70,6 +81,9 @@ export const Login = () => {
                             onChange({ password: event.target.value })
                         }}
                     />
+                    {errors.password && (
+                        <p className="text-danger label-text mb-0 mt-2">{errors.password}</p>
+                    )}
                 </Form.Group>
                 <Button variant="primary" onClick={() => onSubmit()}>
                     Submit
