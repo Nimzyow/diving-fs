@@ -19,6 +19,14 @@ export const Register = () => {
             password: "",
             passwordConfirm: "",
         },
+        validate: (newInputs) => {
+            const errors: ErrorsObject<typeof newInputs> = {}
+
+            if (newInputs.password !== newInputs.passwordConfirm) {
+                errors.passwordConfirm = "Password and password confirmation do not match."
+            }
+            return errors
+        },
         submit: async () => {
             try {
                 const result = await createUser({
@@ -42,8 +50,6 @@ export const Register = () => {
                             handle: result.data.createUser.errors[0].message,
                         })
                         return {}
-                    } else {
-                        return { nonFieldError: "Something went wrong" }
                     }
                 }
 
@@ -53,7 +59,9 @@ export const Register = () => {
                     return { nonFieldError: "Token was not found in data" }
                 }
             } catch (error) {
-                return { nonFieldError: "Something went wrong" }
+                return {
+                    nonFieldError: "Something went wrong. Please try refreshing the page and try again.",
+                }
             }
             return {}
         },
@@ -133,10 +141,16 @@ export const Register = () => {
                             onChange({ passwordConfirm: event.target.value })
                         }}
                     />
+                    {errors.passwordConfirm && (
+                        <p className="text-danger label-text mb-0 mt-2">{errors.passwordConfirm}</p>
+                    )}
                 </Form.Group>
                 <Button variant="primary" onClick={() => onSubmit()}>
                     Submit
                 </Button>
+                {errors.nonFieldError && (
+                    <p className="text-danger label-text mb-0 mt-2">{errors.nonFieldError}</p>
+                )}
             </Form>
         </div>
     )
