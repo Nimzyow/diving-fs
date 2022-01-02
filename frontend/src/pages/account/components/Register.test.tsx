@@ -231,7 +231,6 @@ describe("Register component", () => {
         fireEvent.change(getByPlaceholderText("Password confirmation"), {
             target: { value: "notMatching" },
         })
-
         fireEvent.click(getByText("Submit"))
 
         const passwordMismatch = getByText("Password and password confirmation do not match.")
