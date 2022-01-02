@@ -10,7 +10,7 @@ import { CreateUser } from "../GQL/RegisterGQL"
 import { Register } from "./Register"
 
 describe("Register component", () => {
-    describe("should display error of ", () => {
+    describe("should display error of", () => {
         test("'email taken' if email is taken", async () => {
             const mocks: MockedResponse[] = [
                 {
