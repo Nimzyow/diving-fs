@@ -1,24 +1,11 @@
 import React from "react"
 
-import { MockedProvider, MockedResponse } from "@apollo/client/testing"
-import { render, waitFor, fireEvent } from "@testing-library/react"
-import { createMemoryHistory, MemoryHistory } from "history"
-import { Router } from "react-router-dom"
+import { waitFor, fireEvent } from "@testing-library/react"
 
 import { Me } from "../../../hooks/useAuth/useAuthOperations"
-import { generateMock } from "../../../utils/test/helperFunctions"
+import { generateMock, MockComponent } from "../../../utils/test/helperFunctions"
 import { CreateUser } from "../GQL/RegisterGQL"
 import { Register } from "./Register"
-
-const renderComponents = (history: MemoryHistory<unknown>, mocks: MockedResponse[]) => {
-    return render(
-        <Router history={history}>
-            <MockedProvider mocks={mocks}>
-                <Register />
-            </MockedProvider>
-        </Router>
-    )
-}
 
 describe("Register component", () => {
     describe("should display error of", () => {
@@ -50,9 +37,10 @@ describe("Register component", () => {
                 },
             ])
 
-            const history = createMemoryHistory()
-
-            const { getByText, getByPlaceholderText } = renderComponents(history, mocks)
+            const { getByText, getByPlaceholderText } = MockComponent({
+                mocks,
+                children: <Register />,
+            })
 
             fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
             fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "testy" } })
@@ -99,9 +87,7 @@ describe("Register component", () => {
                 },
             ])
 
-            const history = createMemoryHistory()
-
-            const { getByText, getByPlaceholderText } = renderComponents(history, mocks)
+            const { getByText, getByPlaceholderText } = MockComponent({ mocks, children: <Register /> })
 
             fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
             fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
@@ -136,9 +122,7 @@ describe("Register component", () => {
                 },
             ])
 
-            const history = createMemoryHistory()
-
-            const { getByText, getByPlaceholderText } = renderComponents(history, mocks)
+            const { getByText, getByPlaceholderText } = MockComponent({ mocks, children: <Register /> })
 
             fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
             fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
@@ -162,8 +146,7 @@ describe("Register component", () => {
         test("should display password mismatch error", async () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
 
-            const history = createMemoryHistory()
-            const { getByText, getByPlaceholderText } = renderComponents(history, mocks)
+            const { getByText, getByPlaceholderText } = MockComponent({ mocks, children: <Register /> })
 
             fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
             fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
