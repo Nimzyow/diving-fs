@@ -41,10 +41,6 @@ export const Login = () => {
                 if (result.data?.login.token) {
                     localStorage.setItem("token", result.data.login.token)
                     userRefetch()
-                } else {
-                    return {
-                        nonFieldError: "Token was not found in data",
-                    }
                 }
             } catch (error) {
                 return { nonFieldError: "Something went wrong" }
