@@ -90,7 +90,7 @@ Just to show how you can get a user through prisma:
 ```
 const user = await prisma.user.findUnique({
     where: {
-        id: context.user.id,
+        id: "someID",
     },
 })
 ```
@@ -105,4 +105,4 @@ Code-first approach: You use the language of your framework to create the schema
 
 Schema Definition Language first approach: You create the schema file, manually, yourself. While this is fine when you are starting to learn, or for very small projects, this can get out of hand very quickly when you need to scale up. You need to get on top of managing relationships between different types manually and you won't get error checkings. If something is wrong with the graph, the whole thing will just fail and not in a graceful manner.
 
-I decided to take a code-first approach to creating the mutation and query types. Why is that? I wanted type checkings on my schema. It's as simple as that. Sure, theres a bit more boilerplate. Sure, I have to dig through documentation to find different examples of how to create types and input types and etc.., but ultimately, this scales far better than if one were to take the SDL approach
+I decided to take a code-first approach to creating the mutation and query types. Why is that? I wanted type checkings on my schema. It's as simple as that. Sure, theres a bit more boilerplate. Sure, I have to dig through documentation to find different examples of how to create types and input types and etc.., but ultimately, this scales far better than if one were to take the SDL approach.
