@@ -1,6 +1,7 @@
 import React from "react"
 
 import { waitFor, fireEvent } from "@testing-library/react"
+import { createMemoryHistory } from "history"
 
 import { Me } from "../../../hooks/useAuth/useAuthOperations"
 import { generateMock, MockComponent } from "../../../utils/test/helperFunctions"
@@ -8,6 +9,70 @@ import { CreateUser } from "../GQL/RegisterGQL"
 import { Register } from "./Register"
 
 describe("Register component", () => {
+    describe("should register user", () => {
+        test("successfully", async () => {
+            const mocks = generateMock([
+                {
+                    query: CreateUser,
+                    variables: {
+                        inputs: {
+                            name: "tester",
+                            email: "takenEmail@example.com",
+                            handle: "testy",
+                            password: "testPassword",
+                        },
+                    },
+                    data: {
+                        createUser: {
+                            errors: [],
+                            token: "token",
+                            __typename: "Token",
+                        },
+                    },
+                },
+                {
+                    query: Me,
+                    data: {
+                        me: {
+                            id: "1",
+                            name: "test",
+                            handle: "testy",
+                            email: "test@example.com",
+                            createdAt: "2021-21-02",
+                            updatedAt: "2021-21-02",
+                            __typename: "Me",
+                        },
+                        __typename: "Query",
+                    },
+                },
+            ])
+
+            const history = createMemoryHistory()
+            history.push("/account")
+
+            const { getByText, getByPlaceholderText } = MockComponent({
+                history,
+                mocks,
+                children: <Register />,
+            })
+
+            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
+            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "testy" } })
+            fireEvent.change(getByPlaceholderText("Enter email"), {
+                target: { value: "takenEmail@example.com" },
+            })
+            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
+            fireEvent.change(getByPlaceholderText("Password confirmation"), {
+                target: { value: "testPassword" },
+            })
+            fireEvent.click(getByText("Submit"))
+
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
+
+            expect(history.location.pathname).toBe("/")
+        })
+    })
+
     describe("should display error of", () => {
         test("'email taken' if email is taken", async () => {
             const mocks = generateMock([

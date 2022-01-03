@@ -58,8 +58,6 @@ export const Register = () => {
 
                 if (result.data?.createUser?.token) {
                     localStorage.setItem("token", result.data.createUser.token)
-                } else {
-                    return { nonFieldError: "Token was not found in data" }
                 }
             } catch (error) {
                 return {
@@ -69,7 +67,7 @@ export const Register = () => {
             return {}
         },
         complete: () => {
-            if (errors === {}) {
+            if (Object.keys(errors).length === 0) {
                 userRefetch()
                 history.push("/")
             }
