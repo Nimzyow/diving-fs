@@ -1,8 +1,22 @@
 [![Nimzyow](https://circleci.com/gh/Nimzyow/diving-fs.svg?style=svg)](https://app.circleci.com/pipelines/github/Nimzyow/diving-fs?filter=all)
 
-NOTES:
+## Installation
 
-It seems that nexus automatically generates the GQL schema and nexus types when you spin up the server. currently with `npx nodemon`
+1. Install Docker desktop
+2. create a .env file at the root of this project and copy paste the \_\_env\_\_example contents into the .env file. Assign your env variables.
+3. Run:
+
+```bash
+docker-compose build
+```
+
+4. Run:
+
+```bash
+docker-compose up -d
+```
+
+NOTES:
 
 - commands to keep in mind when working with prisma
 
@@ -18,13 +32,7 @@ npx prisma generate
 
 npx prisma studio
 
-Untitled
-
-This is an attempt at making a full stack TS boilerplate. The goal is to be able to pull down this boilerplate and just get started on a fullstack application without having to do all of the configuration and setup that is required. Needless to say, it's taken a lot of time to get this all up to scratch but I believe I have developed something I can be proud of.
-
-Tech stack
-
-The following is the tech stack:
+## Tech stack
 
 Apollo server
 GraphQL
@@ -46,10 +54,6 @@ cypress integration and end to end testing
 
 Docker
 docker-compose
-
-Coming up
-
-pre commit hooks to ensure no code breaking code is commited
 
 Backend
 
@@ -78,7 +82,9 @@ But I didn't go down the no SQL route, instead, I wanted to use a relational dat
 Through Django, I got used to the flow of creating migration files and applying migraitons to the database. It just made a lot of sense to me and I found it intuitive. The problem I found with Django though is that there is no type checkings during compile time. If for example I were to get a user using Djangos ORM with:
 
 ```
+
     User.objects.get(random_field="blah")
+
 ```
 
 I would only get a nasty error during runtime, when that particular line is run. Obviously it would be super nice to get errors during compile time, as I'm typing, rather than having to run the application and wait for the line above to run before my backend crashes.
@@ -88,11 +94,13 @@ There are a few ORM's out there which have type safety built in that would preve
 Just to show how you can get a user through prisma:
 
 ```
+
 const user = await prisma.user.findUnique({
-    where: {
-        id: "someID",
-    },
+where: {
+id: "someID",
+},
 })
+
 ```
 
 Fantastic :)
@@ -106,3 +114,7 @@ Code-first approach: You use the language of your framework to create the schema
 Schema Definition Language first approach: You create the schema file, manually, yourself. While this is fine when you are starting to learn, or for very small projects, this can get out of hand very quickly when you need to scale up. You need to get on top of managing relationships between different types manually and you won't get error checkings. If something is wrong with the graph, the whole thing will just fail and not in a graceful manner.
 
 I decided to take a code-first approach to creating the mutation and query types. Why is that? I wanted type checkings on my schema. It's as simple as that. Sure, theres a bit more boilerplate. Sure, I have to dig through documentation to find different examples of how to create types and input types and etc.., but ultimately, this scales far better than if one were to take the SDL approach.
+
+```
+
+```
