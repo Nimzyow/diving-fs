@@ -6,7 +6,7 @@ import { useAuth } from "../../hooks/useAuth"
 import { Login } from "./components/Login"
 import { Register } from "./components/Register"
 
-const AccountContainer = () => {
+export const AccountContainer = () => {
     const [registered, setRegistered] = useState(true)
     const { userData } = useAuth()
 
@@ -47,5 +47,3 @@ const AccountContainer = () => {
         </div>
     )
 }
-
-export default AccountContainer

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom"
 
 import { useAuth } from "../../hooks/useAuth"
 
-const Navigation = () => {
+export const Navigation = () => {
     const { logout } = useAuth()
     const history = useHistory()
 
@@ -34,5 +34,3 @@ const Navigation = () => {
         </Navbar>
     )
 }
-
-export default Navigation

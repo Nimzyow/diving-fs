@@ -2,14 +2,14 @@ import React from "react"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-import Footer from "./components/footer/Footer"
-import Navigation from "./components/navbar/Navigation"
+import { Footer } from "./components/footer/Footer"
+import { Navigation } from "./components/navbar/Navigation"
 import { useAuth } from "./hooks/useAuth"
-import AccountContainer from "./pages/account/AccountContainer"
-import Home from "./pages/home/Home"
-import NotRecognised from "./pages/not-recognised/NotRecognised"
+import { AccountContainer } from "./pages/account/AccountContainer"
+import { Home } from "./pages/home/Home"
+import { NotRecognised } from "./pages/not-recognised/NotRecognised"
 import { RootStyling, GlobalStyles } from "./styles/RootStyling"
-import PrivateRoute from "./utils/PrivateRoute"
+import { PrivateRoute } from "./utils/PrivateRoute"
 
 export const App = (): JSX.Element => {
     const { userLoading } = useAuth()

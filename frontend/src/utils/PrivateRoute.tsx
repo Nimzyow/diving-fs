@@ -10,7 +10,7 @@ type Props = {
     exact?: boolean
 }
 
-const PrivateRoute = ({ children, ...rest }: Props) => {
+export const PrivateRoute = ({ children, ...rest }: Props) => {
     const { userData } = useAuth()
     return (
         <Route
@@ -30,5 +30,3 @@ const PrivateRoute = ({ children, ...rest }: Props) => {
         />
     )
 }
-
-export default PrivateRoute
