@@ -1,6 +1,7 @@
 import React from "react"
 
-import { fireEvent, waitFor } from "@testing-library/react"
+import { fireEvent, waitFor, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { createMemoryHistory } from "history"
 
 import { Me } from "../../../hooks/useAuth/useAuthOperations"
@@ -12,23 +13,25 @@ describe("Login component", () => {
     describe("should display error of", () => {
         test("email validation", () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
-            const { getByPlaceholderText, getByText } = MockComponent({ mocks, children: <Login /> })
+            MockComponent({ mocks, children: <Login /> })
 
-            fireEvent.change(getByPlaceholderText("Enter email"), { target: { value: "test" } })
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
+            userEvent.type(screen.getByPlaceholderText("Enter email"), "test")
+            userEvent.type(screen.getByPlaceholderText("Password"), "testPassword")
 
-            const emailValidationError = getByText("Please enter a valid email address.")
+            const emailValidationError = screen.getByText("Please enter a valid email address.")
 
             expect(emailValidationError).toBeDefined()
         })
         test("minimum password length", () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
-            const { getByPlaceholderText, getByText } = MockComponent({ mocks, children: <Login /> })
+            MockComponent({ mocks, children: <Login /> })
 
-            fireEvent.change(getByPlaceholderText("Enter email"), { target: { value: "test" } })
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "test" } })
+            userEvent.type(screen.getByPlaceholderText("Enter email"), "test")
+            userEvent.type(screen.getByPlaceholderText("Password"), "test")
 
-            const emailValidationError = getByText("Password must be a minimum of 5 characters long.")
+            const emailValidationError = screen.getByText(
+                "Password must be a minimum of 5 characters long."
+            )
 
             expect(emailValidationError).toBeDefined()
         })
@@ -71,17 +74,17 @@ describe("Login component", () => {
 
             const history = createMemoryHistory()
             history.push("/account")
-            const { getByText, getByPlaceholderText } = MockComponent({
+
+            MockComponent({
                 history,
                 mocks,
                 children: <Login />,
             })
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-            fireEvent.change(getByPlaceholderText("Enter email"), {
-                target: { value: "test@example.com" },
-            })
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-            fireEvent.click(getByText("Submit"))
+            userEvent.type(screen.getByPlaceholderText("Enter email"), "test@example.com")
+            userEvent.type(screen.getByPlaceholderText("Password"), "testPassword")
+            fireEvent.click(screen.getByText("Submit"))
 
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 

@@ -2,7 +2,7 @@ import React from "react"
 
 import { DocumentNode } from "@apollo/client"
 import { MockedProvider, MockedResponse } from "@apollo/client/testing"
-import { render } from "@testing-library/react"
+import { render, waitFor } from "@testing-library/react"
 import { MemoryHistory, createMemoryHistory } from "history"
 import { Router } from "react-router-dom"
 
@@ -39,7 +39,7 @@ export const generateMock = (mocks: Mock): MockedResponse[] => {
             })
  * @returns testing library render function
  */
-export const MockComponent = ({
+export const MockComponent = async ({
     history = createMemoryHistory(),
     mocks,
     children,
@@ -48,7 +48,7 @@ export const MockComponent = ({
     mocks: MockedResponse[]
     children: JSX.Element
 }) => {
-    return render(
+    render(
         <Router history={history}>
             <MockedProvider mocks={mocks}>{children}</MockedProvider>
         </Router>

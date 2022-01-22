@@ -1,6 +1,7 @@
 import React from "react"
 
-import { waitFor, fireEvent } from "@testing-library/react"
+import { waitFor, fireEvent, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { createMemoryHistory } from "history"
 
 import { Me } from "../../../hooks/useAuth/useAuthOperations"
@@ -50,22 +51,19 @@ describe("Register component", () => {
             const history = createMemoryHistory()
             history.push("/account")
 
-            const { getByText, getByPlaceholderText } = MockComponent({
+            MockComponent({
                 history,
                 mocks,
                 children: <Register />,
             })
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
-            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "testy" } })
-            fireEvent.change(getByPlaceholderText("Enter email"), {
-                target: { value: "takenEmail@example.com" },
-            })
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-            fireEvent.change(getByPlaceholderText("Password confirmation"), {
-                target: { value: "testPassword" },
-            })
-            fireEvent.click(getByText("Submit"))
+            userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
+            userEvent.type(screen.getByPlaceholderText("Handle"), "testy")
+            userEvent.type(screen.getByPlaceholderText("Enter email"), "takenEmail@example.com")
+            userEvent.type(screen.getByPlaceholderText("Password"), "testPassword")
+            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "testPassword")
+            fireEvent.click(screen.getByText("Submit"))
 
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
@@ -102,25 +100,22 @@ describe("Register component", () => {
                 },
             ])
 
-            const { getByText, getByPlaceholderText } = MockComponent({
+            MockComponent({
                 mocks,
                 children: <Register />,
             })
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
-            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "testy" } })
-            fireEvent.change(getByPlaceholderText("Enter email"), {
-                target: { value: "takenEmail@example.com" },
-            })
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-            fireEvent.change(getByPlaceholderText("Password confirmation"), {
-                target: { value: "testPassword" },
-            })
-            fireEvent.click(getByText("Submit"))
+            userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
+            userEvent.type(screen.getByPlaceholderText("Handle"), "testy")
+            userEvent.type(screen.getByPlaceholderText("Enter email"), "takenEmail@example.com")
+            userEvent.type(screen.getByPlaceholderText("Password"), "testPassword")
+            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "testPassword")
+            fireEvent.click(screen.getByText("Submit"))
 
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-            const emailTakenMessage = getByText("email has been taken")
+            const emailTakenMessage = screen.getByText("email has been taken")
 
             expect(emailTakenMessage).toBeDefined()
         })
@@ -152,22 +147,19 @@ describe("Register component", () => {
                 },
             ])
 
-            const { getByText, getByPlaceholderText } = MockComponent({ mocks, children: <Register /> })
+            MockComponent({ mocks, children: <Register /> })
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
-            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
-            fireEvent.change(getByPlaceholderText("Enter email"), {
-                target: { value: "email@example.com" },
-            })
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-            fireEvent.change(getByPlaceholderText("Password confirmation"), {
-                target: { value: "testPassword" },
-            })
-            fireEvent.click(getByText("Submit"))
+            userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
+            userEvent.type(screen.getByPlaceholderText("Handle"), "takenHandle")
+            userEvent.type(screen.getByPlaceholderText("Enter email"), "email@example.com")
+            userEvent.type(screen.getByPlaceholderText("Password"), "testPassword")
+            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "testPassword")
+            fireEvent.click(screen.getByText("Submit"))
 
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-            const handleTakenMessage = getByText("handle has been taken")
+            const handleTakenMessage = screen.getByText("handle has been taken")
 
             expect(handleTakenMessage).toBeDefined()
         })
@@ -187,22 +179,19 @@ describe("Register component", () => {
                 },
             ])
 
-            const { getByText, getByPlaceholderText } = MockComponent({ mocks, children: <Register /> })
+            MockComponent({ mocks, children: <Register /> })
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
-            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
-            fireEvent.change(getByPlaceholderText("Enter email"), {
-                target: { value: "email@example.com" },
-            })
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-            fireEvent.change(getByPlaceholderText("Password confirmation"), {
-                target: { value: "testPassword" },
-            })
-            fireEvent.click(getByText("Submit"))
+            userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
+            userEvent.type(screen.getByPlaceholderText("Handle"), "takenHandle")
+            userEvent.type(screen.getByPlaceholderText("Enter email"), "email@example.com")
+            userEvent.type(screen.getByPlaceholderText("Password"), "testPassword")
+            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "testPassword")
+            fireEvent.click(screen.getByText("Submit"))
 
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-            const generalErrorMessage = getByText(
+            const generalErrorMessage = screen.getByText(
                 "Something went wrong. Please try refreshing the page and try again."
             )
 
@@ -211,65 +200,57 @@ describe("Register component", () => {
         test("should display password mismatch error", async () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
 
-            const { getByText, getByPlaceholderText } = MockComponent({ mocks, children: <Register /> })
+            MockComponent({ mocks, children: <Register /> })
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
-            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
-            fireEvent.change(getByPlaceholderText("Enter email"), {
-                target: { value: "email@example.com" },
-            })
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "testPassword" } })
-            fireEvent.change(getByPlaceholderText("Password confirmation"), {
-                target: { value: "notMatching" },
-            })
-            fireEvent.click(getByText("Submit"))
+            userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
+            userEvent.type(screen.getByPlaceholderText("Handle"), "takenHandle")
+            userEvent.type(screen.getByPlaceholderText("Enter email"), "email@example.com")
+            userEvent.type(screen.getByPlaceholderText("Password"), "testPassword")
+            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "notMatching")
+            fireEvent.click(screen.getByText("Submit"))
 
-            const passwordMismatch = getByText("Password and password confirmation do not match.")
+            const passwordMismatch = screen.getByText("Password and password confirmation do not match.")
 
             expect(passwordMismatch).toBeDefined()
         })
         test("should display password min character error and clear error when password minimum length is met", async () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
 
-            const { getByText, getByPlaceholderText, queryByText } = MockComponent({
+            MockComponent({
                 mocks,
                 children: <Register />,
             })
+            await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
-            fireEvent.change(getByPlaceholderText("Your name"), { target: { value: "tester" } })
-            fireEvent.change(getByPlaceholderText("Handle"), { target: { value: "takenHandle" } })
-            fireEvent.change(getByPlaceholderText("Enter email"), {
-                target: { value: "email@example.com" },
-            })
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "p" } })
-            fireEvent.change(getByPlaceholderText("Password confirmation"), {
-                target: { value: "p" },
-            })
-            fireEvent.click(getByText("Submit"))
+            userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
+            userEvent.type(screen.getByPlaceholderText("Handle"), "takenHandle")
+            userEvent.type(screen.getByPlaceholderText("Enter email"), "email@example.com")
+            userEvent.type(screen.getByPlaceholderText("Password"), "p")
+            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "p")
+            fireEvent.click(screen.getByText("Submit"))
 
-            const passwordMinCharacterError = getByText(
+            const passwordMinCharacterError = screen.getByText(
                 "Password must be a minimum of 5 characters long."
             )
 
             expect(passwordMinCharacterError).toBeDefined()
 
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "pass" } })
-            fireEvent.change(getByPlaceholderText("Password confirmation"), {
-                target: { value: "pass" },
-            })
+            userEvent.clear(screen.getByPlaceholderText("Password"))
+            userEvent.clear(screen.getByPlaceholderText("Password confirmation"))
+            userEvent.type(screen.getByPlaceholderText("Password"), "pass")
+            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "pass")
 
-            const passwordMinCharacterErrorAgain = getByText(
+            const passwordMinCharacterErrorAgain = screen.getByText(
                 "Password must be a minimum of 5 characters long."
             )
 
             expect(passwordMinCharacterErrorAgain).toBeDefined()
 
-            fireEvent.change(getByPlaceholderText("Password"), { target: { value: "passw" } })
-            fireEvent.change(getByPlaceholderText("Password confirmation"), {
-                target: { value: "passw" },
-            })
+            userEvent.type(screen.getByPlaceholderText("Password"), "passw")
+            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "passw")
 
-            const passwordMinCharacterMet = queryByText(
+            const passwordMinCharacterMet = screen.queryByText(
                 "Password must be a minimum of 5 characters long."
             )
 

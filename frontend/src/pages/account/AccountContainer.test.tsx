@@ -28,7 +28,6 @@ describe("Account container", () => {
         ])
 
         const history = createMemoryHistory()
-
         history.push("/account")
 
         MockComponent({
@@ -36,7 +35,6 @@ describe("Account container", () => {
             mocks,
             children: <AccountContainer />,
         })
-
         await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
         expect(history.location.pathname).toBe("/")
@@ -60,8 +58,6 @@ describe("Account container", () => {
             mocks,
             children: <AccountContainer />,
         })
-
-        await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
         expect(history.location.pathname).toBe("/account")
     })
