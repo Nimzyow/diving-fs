@@ -223,11 +223,14 @@ describe("Register component", () => {
             })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
+            const passwordInput = screen.getByPlaceholderText("Password")
+            const passwordConfirmInput = screen.getByPlaceholderText("Password confirmation")
+
             userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
             userEvent.type(screen.getByPlaceholderText("Handle"), "takenHandle")
             userEvent.type(screen.getByPlaceholderText("Enter email"), "email@example.com")
-            userEvent.type(screen.getByPlaceholderText("Password"), "p")
-            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "p")
+            userEvent.type(passwordInput, "p")
+            userEvent.type(passwordConfirmInput, "p")
             fireEvent.click(screen.getByText("Submit"))
 
             const passwordMinCharacterError = screen.getByText(
@@ -236,10 +239,10 @@ describe("Register component", () => {
 
             expect(passwordMinCharacterError).toBeDefined()
 
-            userEvent.clear(screen.getByPlaceholderText("Password"))
-            userEvent.clear(screen.getByPlaceholderText("Password confirmation"))
-            userEvent.type(screen.getByPlaceholderText("Password"), "pass")
-            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "pass")
+            userEvent.clear(passwordInput)
+            userEvent.clear(passwordConfirmInput)
+            userEvent.type(passwordInput, "pass")
+            userEvent.type(passwordConfirmInput, "pass")
 
             const passwordMinCharacterErrorAgain = screen.getByText(
                 "Password must be a minimum of 5 characters long."
@@ -247,8 +250,8 @@ describe("Register component", () => {
 
             expect(passwordMinCharacterErrorAgain).toBeDefined()
 
-            userEvent.type(screen.getByPlaceholderText("Password"), "passw")
-            userEvent.type(screen.getByPlaceholderText("Password confirmation"), "passw")
+            userEvent.type(passwordInput, "w")
+            userEvent.type(passwordConfirmInput, "w")
 
             const passwordMinCharacterMet = screen.queryByText(
                 "Password must be a minimum of 5 characters long."
