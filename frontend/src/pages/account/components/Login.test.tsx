@@ -13,7 +13,7 @@ describe("Login component", () => {
     describe("should display error of", () => {
         test("email validation", () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
-            MockComponent({ mocks, children: <Login /> })
+            MockComponent({ mocks, component: <Login /> })
 
             userEvent.type(screen.getByPlaceholderText("Enter email"), "test")
             userEvent.type(screen.getByPlaceholderText("Password"), "testPassword")
@@ -24,7 +24,7 @@ describe("Login component", () => {
         })
         test("minimum password length", () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
-            MockComponent({ mocks, children: <Login /> })
+            MockComponent({ mocks, component: <Login /> })
 
             userEvent.type(screen.getByPlaceholderText("Enter email"), "test")
             userEvent.type(screen.getByPlaceholderText("Password"), "test")
@@ -78,7 +78,7 @@ describe("Login component", () => {
             MockComponent({
                 history,
                 mocks,
-                children: <Login />,
+                component: <Login />,
             })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 

@@ -42,15 +42,15 @@ export const generateMock = (mocks: Mock): MockedResponse[] => {
 export const MockComponent = async ({
     history = createMemoryHistory(),
     mocks,
-    children,
+    component,
 }: {
     history?: MemoryHistory<unknown>
     mocks?: MockedResponse[]
-    children: JSX.Element
+    component: JSX.Element
 }) => {
     render(
         <Router history={history}>
-            <MockedProvider mocks={mocks}>{children}</MockedProvider>
+            <MockedProvider mocks={mocks}>{component}</MockedProvider>
         </Router>
     )
 }

@@ -33,7 +33,7 @@ describe("Account container", () => {
         MockComponent({
             history,
             mocks,
-            children: <AccountContainer />,
+            component: <AccountContainer />,
         })
         await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
@@ -56,7 +56,7 @@ describe("Account container", () => {
         MockComponent({
             history,
             mocks,
-            children: <AccountContainer />,
+            component: <AccountContainer />,
         })
 
         expect(history.location.pathname).toBe("/account")

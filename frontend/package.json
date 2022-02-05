@@ -22,6 +22,7 @@
         "lint-fix": "npx eslint . --ext .ts,.tsx --fix",
         "lint-staged": "lint-staged",
         "test": "jest --verbose",
+        "test-watch": "jest --verbose --watchAll",
         "test-coverage": "jest --verbose --coverage"
     },
     "lint-staged": {

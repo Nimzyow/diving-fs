@@ -54,7 +54,7 @@ describe("Register component", () => {
             MockComponent({
                 history,
                 mocks,
-                children: <Register />,
+                component: <Register />,
             })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
@@ -102,7 +102,7 @@ describe("Register component", () => {
 
             MockComponent({
                 mocks,
-                children: <Register />,
+                component: <Register />,
             })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
@@ -147,7 +147,7 @@ describe("Register component", () => {
                 },
             ])
 
-            MockComponent({ mocks, children: <Register /> })
+            MockComponent({ mocks, component: <Register /> })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
             userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
@@ -179,7 +179,7 @@ describe("Register component", () => {
                 },
             ])
 
-            MockComponent({ mocks, children: <Register /> })
+            MockComponent({ mocks, component: <Register /> })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
             userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
@@ -200,7 +200,7 @@ describe("Register component", () => {
         test("should display password mismatch error", async () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
 
-            MockComponent({ mocks, children: <Register /> })
+            MockComponent({ mocks, component: <Register /> })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
             userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
@@ -219,7 +219,7 @@ describe("Register component", () => {
 
             MockComponent({
                 mocks,
-                children: <Register />,
+                component: <Register />,
             })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 

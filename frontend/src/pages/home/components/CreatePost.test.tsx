@@ -10,7 +10,7 @@ import { CreatePost } from "./CreatePost"
 describe("CreatePost", () => {
     test("should first", () => {
         MockComponent({
-            children: <CreatePost />,
+            component: <CreatePost />,
         })
 
         expect(screen.getByText("Post")).toBeInTheDocument()
