@@ -5,7 +5,7 @@ import { Button, Form } from "react-bootstrap"
 import { useForm } from "../../../hooks/useForm"
 
 export const CreatePost = () => {
-    const { inputs, errors, onChange } = useForm({
+    const { inputs, onChange } = useForm({
         initialInputs: { post: "" },
     })
 

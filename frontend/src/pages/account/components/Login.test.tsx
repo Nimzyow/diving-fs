@@ -20,7 +20,7 @@ describe("Login component", () => {
 
             const emailValidationError = screen.getByText("Please enter a valid email address.")
 
-            expect(emailValidationError).toBeDefined()
+            expect(emailValidationError).toBeInTheDocument()
         })
         test("minimum password length", () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
@@ -33,7 +33,7 @@ describe("Login component", () => {
                 "Password must be a minimum of 5 characters long."
             )
 
-            expect(emailValidationError).toBeDefined()
+            expect(emailValidationError).toBeInTheDocument()
         })
     })
     describe("should login", () => {
