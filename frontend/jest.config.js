@@ -8,6 +8,7 @@ module.exports = {
         },
     },
     rootDir: "src",
+    setupFilesAfterEnv: ["./utils/test/setup.ts"],
     // collectCoverageFrom: ["**/*.{ts,tsx}", "!dist/*"],
     moduleNameMapper: {
         // "^@shared$": "<rootDir>/shared/",

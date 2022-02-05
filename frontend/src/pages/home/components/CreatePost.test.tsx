@@ -13,6 +13,6 @@ describe("CreatePost", () => {
             children: <CreatePost />,
         })
 
-        expect(screen.getByText("Post")).toBeDefined()
+        expect(screen.getByText("Post")).toBeInTheDocument()
     })
 })
