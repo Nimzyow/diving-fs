@@ -2,7 +2,7 @@ import React from "react"
 
 import { DocumentNode } from "@apollo/client"
 import { MockedProvider, MockedResponse } from "@apollo/client/testing"
-import { render, waitFor } from "@testing-library/react"
+import { render } from "@testing-library/react"
 import { MemoryHistory, createMemoryHistory } from "history"
 import { Router } from "react-router-dom"
 
