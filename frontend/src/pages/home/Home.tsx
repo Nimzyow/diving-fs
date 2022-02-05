@@ -1,5 +1,7 @@
 import React from "react"
 
+import { CreatePost } from "./components/CreatePost"
+
 export const Home = () => {
-    return <div>Hello page</div>
+    return <CreatePost />
 }

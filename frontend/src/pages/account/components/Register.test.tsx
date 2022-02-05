@@ -54,7 +54,7 @@ describe("Register component", () => {
             MockComponent({
                 history,
                 mocks,
-                children: <Register />,
+                component: <Register />,
             })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
@@ -102,7 +102,7 @@ describe("Register component", () => {
 
             MockComponent({
                 mocks,
-                children: <Register />,
+                component: <Register />,
             })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
@@ -117,7 +117,7 @@ describe("Register component", () => {
 
             const emailTakenMessage = screen.getByText("email has been taken")
 
-            expect(emailTakenMessage).toBeDefined()
+            expect(emailTakenMessage).toBeInTheDocument()
         })
         test("handle taken error if handle is taken", async () => {
             const mocks = generateMock([
@@ -147,7 +147,7 @@ describe("Register component", () => {
                 },
             ])
 
-            MockComponent({ mocks, children: <Register /> })
+            MockComponent({ mocks, component: <Register /> })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
             userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
@@ -161,7 +161,7 @@ describe("Register component", () => {
 
             const handleTakenMessage = screen.getByText("handle has been taken")
 
-            expect(handleTakenMessage).toBeDefined()
+            expect(handleTakenMessage).toBeInTheDocument()
         })
         test("general error if gql error has occurred", async () => {
             const mocks = generateMock([
@@ -179,7 +179,7 @@ describe("Register component", () => {
                 },
             ])
 
-            MockComponent({ mocks, children: <Register /> })
+            MockComponent({ mocks, component: <Register /> })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
             userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
@@ -195,12 +195,12 @@ describe("Register component", () => {
                 "Something went wrong. Please try refreshing the page and try again."
             )
 
-            expect(generalErrorMessage).toBeDefined()
+            expect(generalErrorMessage).toBeInTheDocument()
         })
         test("should display password mismatch error", async () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
 
-            MockComponent({ mocks, children: <Register /> })
+            MockComponent({ mocks, component: <Register /> })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
             userEvent.type(screen.getByPlaceholderText("Your name"), "tester")
@@ -212,14 +212,14 @@ describe("Register component", () => {
 
             const passwordMismatch = screen.getByText("Password and password confirmation do not match.")
 
-            expect(passwordMismatch).toBeDefined()
+            expect(passwordMismatch).toBeInTheDocument()
         })
         test("should display password min character error and clear error when password minimum length is met", async () => {
             const mocks = generateMock([{ query: Me, data: { me: null, __typename: "Query" } }])
 
             MockComponent({
                 mocks,
-                children: <Register />,
+                component: <Register />,
             })
             await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
@@ -237,7 +237,7 @@ describe("Register component", () => {
                 "Password must be a minimum of 5 characters long."
             )
 
-            expect(passwordMinCharacterError).toBeDefined()
+            expect(passwordMinCharacterError).toBeInTheDocument()
 
             userEvent.clear(passwordInput)
             userEvent.clear(passwordConfirmInput)
@@ -248,7 +248,7 @@ describe("Register component", () => {
                 "Password must be a minimum of 5 characters long."
             )
 
-            expect(passwordMinCharacterErrorAgain).toBeDefined()
+            expect(passwordMinCharacterErrorAgain).toBeInTheDocument()
 
             userEvent.type(passwordInput, "w")
             userEvent.type(passwordConfirmInput, "w")
@@ -257,7 +257,7 @@ describe("Register component", () => {
                 "Password must be a minimum of 5 characters long."
             )
 
-            expect(passwordMinCharacterMet).toBeNull()
+            expect(passwordMinCharacterMet).not.toBeInTheDocument()
         })
     })
 })
