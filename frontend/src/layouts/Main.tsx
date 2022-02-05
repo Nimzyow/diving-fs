@@ -18,8 +18,7 @@ export const Main = ({ children }: Props): JSX.Element => {
     return (
         <Layout>
             <SideNav />
-
-            <div style={{ gridColumn: 2, gridRow: 1, border: "1px solid green" }}>{children}</div>
+            <div style={{ gridColumn: 2, gridRow: 1, border: "1px solid black" }}>{children}</div>
         </Layout>
     )
 }

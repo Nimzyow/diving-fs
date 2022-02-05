@@ -1,5 +1,6 @@
 import React from "react"
 
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 const SideNav = () => {
@@ -12,17 +13,17 @@ const SideNav = () => {
             }}
         >
             <div style={{ display: "grid", gridTemplateColumns: "auto auto" }}>
-                <div style={{ gridColumn: 2 }}>
+                <div style={{ gridColumn: 2, display: "flex", flexDirection: "column" }}>
                     <h4>Home</h4>
-                    <p>Following</p>
-                    <p>Suggestions</p>
+                    <Link to="/following">Following</Link>
+                    <Link to="/suggestions">Suggestions</Link>
                     <h4>Divers</h4>
-                    <p>Home</p>
-                    <p>Liked</p>
-                    <p>Suggestions</p>
-                    <p>Visited</p>
+                    <Link to="/divers">Home</Link>
+                    <Link to="divers/liked">Liked</Link>
+                    <Link to="divers/suggestions">Suggestions</Link>
+                    <Link to="divers/visited">Visited</Link>
                     <h4>Messages</h4>
-                    <p>Home</p>
+                    <Link to="/messages">Home</Link>
                 </div>
             </div>
         </div>
