@@ -45,7 +45,7 @@ export const MockComponent = async ({
     children,
 }: {
     history?: MemoryHistory<unknown>
-    mocks: MockedResponse[]
+    mocks?: MockedResponse[]
     children: JSX.Element
 }) => {
     render(
