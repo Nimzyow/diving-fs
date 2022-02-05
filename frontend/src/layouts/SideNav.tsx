@@ -11,7 +11,7 @@ const SideNav = () => {
                 gridRowEnd: 4,
             }}
         >
-            <div style={{ display: "grid", gridTemplateColumns: "auto min-content" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "auto auto" }}>
                 <div style={{ gridColumn: 2 }}>
                     <h4>Home</h4>
                     <p>Following</p>
