@@ -2,8 +2,6 @@ import React from "react"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-import { Footer } from "./components/footer/Footer"
-import { Navigation } from "./components/navbar/Navigation"
 import { useAuth } from "./hooks/useAuth"
 import { Main } from "./layouts/Main"
 import { AccountContainer } from "./pages/account/AccountContainer"
