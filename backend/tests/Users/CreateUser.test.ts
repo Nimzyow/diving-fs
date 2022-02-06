@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client"
 import { ApolloServer, gql } from "apollo-server"
 import bcrypt from "bcryptjs"
+import { GraphQLError } from "graphql"
 import jwt from "jsonwebtoken"
 import { makeSchema } from "nexus"
 
@@ -11,10 +12,6 @@ import { User } from ".prisma/client"
 const CREATE_USER = gql`
     mutation CreateUser($inputs: CreateUserInputs!) {
         createUser(inputs: $inputs) {
-            errors {
-                code
-                message
-            }
             token
         }
     }
@@ -67,7 +64,7 @@ describe("Create user mutation", () => {
         })
 
         expect(createUserResult.data).toEqual({
-            createUser: { token: "signed", errors: [] },
+            createUser: { token: "signed" },
         })
     })
 
@@ -87,16 +84,9 @@ describe("Create user mutation", () => {
                 },
             },
         })
-        expect(createUserResult.data).toEqual({
-            createUser: {
-                token: null,
-                errors: [{ code: "INVALID_INPUTS", message: "Please enter valid inputs" }],
-            },
-        })
+        expect(createUserResult.errors).toEqual([new GraphQLError("Please enter valid inputs")])
     })
     it("will return error object if email already taken", async () => {
-        // const sign = jest.spyOn(jwt, "sign")
-        // sign.mockImplementation(() => "signed")
         const genSalt = jest.spyOn(bcrypt, "genSalt")
         const hash = jest.spyOn(bcrypt, "hash")
         genSalt.mockImplementation(() => "generatedSalt")
@@ -108,7 +98,6 @@ describe("Create user mutation", () => {
         )
         prismaMock.user.create.mockRejectedValue(error)
 
-        // Create a new user
         const createUserResult = await server.executeOperation({
             query: CREATE_USER,
             variables: {
@@ -120,16 +109,10 @@ describe("Create user mutation", () => {
                 },
             },
         })
-        expect(createUserResult.data).toEqual({
-            createUser: {
-                token: null,
-                errors: [{ code: "EMAIL_TAKEN", message: "This email has already been taken." }],
-            },
-        })
+
+        expect(createUserResult.errors).toEqual([new GraphQLError("This email has already been taken.")])
     })
     it("will return error object if handle already taken", async () => {
-        // const sign = jest.spyOn(jwt, "sign")
-        // sign.mockImplementation(() => "signed")
         const genSalt = jest.spyOn(bcrypt, "genSalt")
         const hash = jest.spyOn(bcrypt, "hash")
         genSalt.mockImplementation(() => "generatedSalt")
@@ -141,7 +124,6 @@ describe("Create user mutation", () => {
         )
         prismaMock.user.create.mockRejectedValue(error)
 
-        // Create a new user
         const createUserResult = await server.executeOperation({
             query: CREATE_USER,
             variables: {
@@ -153,11 +135,9 @@ describe("Create user mutation", () => {
                 },
             },
         })
-        expect(createUserResult.data).toEqual({
-            createUser: {
-                token: null,
-                errors: [{ code: "HANDLE_TAKEN", message: "This handle has already been taken." }],
-            },
-        })
+
+        expect(createUserResult.errors).toEqual([
+            new GraphQLError("This handle has already been taken."),
+        ])
     })
 })

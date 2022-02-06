@@ -77,7 +77,6 @@ export type Success = {
 
 export type Token = {
   __typename?: 'Token';
-  errors: Array<Error>;
   token?: Maybe<Scalars['String']>;
 };
 
@@ -103,14 +102,14 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUser?: Maybe<{ __typename?: 'Token', token?: Maybe<string>, errors: Array<{ __typename?: 'Error', code: string, message: string }> }> };
+export type CreateUserMutation = { __typename?: 'Mutation', createUser?: Maybe<{ __typename?: 'Token', token?: Maybe<string> }> };
 
 export type LoginMutationVariables = Exact<{
   inputs: LoginUserInputs;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Token', token?: Maybe<string>, errors: Array<{ __typename?: 'Error', code: string, message: string }> } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Token', token?: Maybe<string> } };
 
 
 export const MeDocument = gql`
@@ -155,10 +154,6 @@ export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const CreateUserDocument = gql`
     mutation CreateUser($inputs: CreateUserInputs!) {
   createUser(inputs: $inputs) {
-    errors {
-      code
-      message
-    }
     token
   }
 }
@@ -193,10 +188,6 @@ export const LoginDocument = gql`
     mutation login($inputs: LoginUserInputs!) {
   login(inputs: $inputs) {
     token
-    errors {
-      code
-      message
-    }
   }
 }
     `;

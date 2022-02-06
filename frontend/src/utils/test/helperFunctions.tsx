@@ -1,8 +1,9 @@
 import React from "react"
 
-import { DocumentNode } from "@apollo/client"
+import { ApolloError, DocumentNode } from "@apollo/client"
 import { MockedProvider, MockedResponse } from "@apollo/client/testing"
 import { render } from "@testing-library/react"
+import { GraphQLError } from "graphql"
 import { MemoryHistory, createMemoryHistory } from "history"
 import { Router } from "react-router-dom"
 
@@ -10,7 +11,8 @@ type Mock = {
     query: DocumentNode
     variables?: Record<string, unknown>
     data?: Record<string, unknown>
-    error?: Error
+    errors?: GraphQLError[]
+    // networkError?: ApolloError
 }[]
 
 export const generateMock = (mocks: Mock): MockedResponse[] => {
@@ -21,8 +23,9 @@ export const generateMock = (mocks: Mock): MockedResponse[] => {
         },
         result: {
             data: mock.data,
+            errors: mock.errors,
         },
-        error: mock.error,
+        // errors: mock.networkError,
     }))
 }
 

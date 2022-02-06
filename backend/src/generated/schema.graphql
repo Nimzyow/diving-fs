@@ -52,7 +52,6 @@ type Success {
 }
 
 type Token {
-  errors: [Error!]!
   token: String
 }
 
