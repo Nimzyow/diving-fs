@@ -2,7 +2,7 @@ import React from "react"
 
 import { Link } from "react-router-dom"
 
-const SideNav = () => {
+export const SideNav = () => {
     return (
         <div
             style={{
@@ -16,11 +16,12 @@ const SideNav = () => {
                     <h4>Home</h4>
                     <Link to="/following">Following</Link>
                     <Link to="/suggestions">Suggestions</Link>
-                    <h4>Divers</h4>
-                    <Link to="/divers">Home</Link>
-                    <Link to="divers/liked">Liked</Link>
-                    <Link to="divers/suggestions">Suggestions</Link>
-                    <Link to="divers/visited">Visited</Link>
+                    <h4>
+                        <Link to="/locations">Locations</Link>
+                    </h4>
+                    <Link to="locations/liked">Liked locations</Link>
+                    <Link to="locations/places-to-go">Places to go</Link>
+                    <Link to="locations/visited">Visited</Link>
                     <h4>Messages</h4>
                     <Link to="/messages">Home</Link>
                 </div>
@@ -28,5 +29,3 @@ const SideNav = () => {
         </div>
     )
 }
-
-export default SideNav
