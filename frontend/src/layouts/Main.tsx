@@ -2,7 +2,7 @@ import React from "react"
 
 import styled from "styled-components"
 
-import SideNav from "./SideNav"
+import { SideNav } from "./SideNav"
 
 const Layout = styled.div`
     display: grid;

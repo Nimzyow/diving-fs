@@ -28,18 +28,18 @@ export const Login = () => {
         },
         submit: async () => {
             try {
-                const result = await loginUser({
+                const { data, errors } = await loginUser({
                     variables: {
                         inputs,
                     },
                 })
-                if (result.data?.login.errors && result.data.login.errors.length > 0) {
+                if (errors && errors.length > 0) {
                     return {
                         nonFieldError: "Something went wrong",
                     }
                 }
-                if (result.data?.login.token) {
-                    localStorage.setItem("token", result.data.login.token)
+                if (data?.login.token) {
+                    localStorage.setItem("token", data.login.token)
                     userRefetch()
                 }
             } catch (error) {
