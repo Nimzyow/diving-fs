@@ -12,7 +12,7 @@ export const Register = () => {
     const { userRefetch } = useAuth()
     const history = useHistory()
     const [createUser] = useCreateUserMutation()
-    const { inputs, onSubmit, onChange, setErrors, errors } = useForm({
+    const { inputs, onSubmit, onChange, errors, touched } = useForm({
         initialInputs: {
             name: "",
             handle: "",
@@ -53,13 +53,7 @@ export const Register = () => {
                         return { email: error.graphQLErrors[0].message }
                     } else if (error.graphQLErrors[0].message.includes("handle")) {
                         return { handle: error.graphQLErrors[0].message }
-                    } else if (error.networkError) {
-                        return {
-                            nonFieldError:
-                                "Something went wrong. Please try refreshing the page and try again.",
-                        }
                     }
-                    return {}
                 }
                 return {
                     nonFieldError: "Something went wrong. Please try refreshing the page and try again.",
@@ -130,7 +124,7 @@ export const Register = () => {
                             onChange({ password: event.target.value })
                         }}
                     />
-                    {errors.password && (
+                    {touched.password && errors.password && (
                         <p className="text-danger label-text mb-0 mt-2">{errors.password}</p>
                     )}
                 </Form.Group>
@@ -145,7 +139,7 @@ export const Register = () => {
                             onChange({ passwordConfirm: event.target.value })
                         }}
                     />
-                    {errors.passwordConfirm && (
+                    {touched.passwordConfirm && errors.passwordConfirm && (
                         <p className="text-danger label-text mb-0 mt-2">{errors.passwordConfirm}</p>
                     )}
                 </Form.Group>
