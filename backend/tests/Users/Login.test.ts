@@ -1,5 +1,6 @@
 import { ApolloServer, gql } from "apollo-server"
 import bcrypt from "bcryptjs"
+import { GraphQLError } from "graphql"
 import jwt from "jsonwebtoken"
 import { makeSchema } from "nexus"
 
@@ -11,10 +12,6 @@ const LOGIN_USER = gql`
     mutation login($inputs: LoginUserInputs!) {
         login(inputs: $inputs) {
             token
-            errors {
-                code
-                message
-            }
         }
     }
 `
@@ -64,7 +61,7 @@ describe("login mutation", () => {
         })
 
         expect(loginUserResult.data).toEqual({
-            login: { token: "signed", errors: [] },
+            login: { token: "signed" },
         })
     })
     it("fails login on wrong password", async () => {
@@ -98,13 +95,8 @@ describe("login mutation", () => {
             },
         })
 
-        expect(loginUserResult.data).toEqual({
-            login: {
-                token: null,
-                errors: [
-                    { code: "INVALID_CREDENTIALS", message: "Please check your email and password" },
-                ],
-            },
-        })
+        expect(loginUserResult.errors).toEqual([
+            new GraphQLError("Please check your email and password"),
+        ])
     })
 })

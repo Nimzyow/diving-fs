@@ -71,7 +71,6 @@ export interface NexusGenObjects {
     success: boolean; // Boolean!
   }
   Token: { // root type
-    errors: NexusGenRootTypes['Error'][]; // [Error!]!
     token?: string | null; // String
   }
   User: { // root type
@@ -117,7 +116,6 @@ export interface NexusGenFieldTypes {
     success: boolean; // Boolean!
   }
   Token: { // field return type
-    errors: NexusGenRootTypes['Error'][]; // [Error!]!
     token: string | null; // String
   }
   User: { // field return type
@@ -154,7 +152,6 @@ export interface NexusGenFieldTypeNames {
     success: 'Boolean'
   }
   Token: { // field return type name
-    errors: 'Error'
     token: 'String'
   }
   User: { // field return type name

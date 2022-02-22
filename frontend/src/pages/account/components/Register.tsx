@@ -1,5 +1,6 @@
 import React from "react"
 
+import { ApolloError } from "@apollo/client"
 import { Form, Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 
@@ -11,7 +12,7 @@ export const Register = () => {
     const { userRefetch } = useAuth()
     const history = useHistory()
     const [createUser] = useCreateUserMutation()
-    const { inputs, onSubmit, onChange, setErrors, errors } = useForm({
+    const { inputs, onSubmit, onChange, errors, touched } = useForm({
         initialInputs: {
             name: "",
             handle: "",
@@ -32,7 +33,7 @@ export const Register = () => {
         },
         submit: async () => {
             try {
-                const result = await createUser({
+                const { data } = await createUser({
                     variables: {
                         inputs: {
                             name: inputs.name,
@@ -42,29 +43,22 @@ export const Register = () => {
                         },
                     },
                 })
-                if (result.data?.createUser?.errors && result.data?.createUser?.errors.length > 0) {
-                    if (result.data?.createUser.errors[0].code === "EMAIL_TAKEN") {
-                        setErrors({
-                            email: result.data?.createUser.errors[0].message,
-                        })
-                        return {}
-                    } else if (result.data?.createUser.errors[0].code === "HANDLE_TAKEN") {
-                        setErrors({
-                            handle: result.data.createUser.errors[0].message,
-                        })
-                        return {}
+                if (data?.createUser?.token) {
+                    localStorage.setItem("token", data.createUser.token)
+                }
+                return {}
+            } catch (error: unknown) {
+                if (error instanceof ApolloError) {
+                    if (error.graphQLErrors[0].message.includes("email")) {
+                        return { email: error.graphQLErrors[0].message }
+                    } else if (error.graphQLErrors[0].message.includes("handle")) {
+                        return { handle: error.graphQLErrors[0].message }
                     }
                 }
-
-                if (result.data?.createUser?.token) {
-                    localStorage.setItem("token", result.data.createUser.token)
-                }
-            } catch (error) {
                 return {
                     nonFieldError: "Something went wrong. Please try refreshing the page and try again.",
                 }
             }
-            return {}
         },
         complete: () => {
             if (Object.keys(errors).length === 0) {
@@ -130,7 +124,7 @@ export const Register = () => {
                             onChange({ password: event.target.value })
                         }}
                     />
-                    {errors.password && (
+                    {touched.password && errors.password && (
                         <p className="text-danger label-text mb-0 mt-2">{errors.password}</p>
                     )}
                 </Form.Group>
@@ -145,7 +139,7 @@ export const Register = () => {
                             onChange({ passwordConfirm: event.target.value })
                         }}
                     />
-                    {errors.passwordConfirm && (
+                    {touched.passwordConfirm && errors.passwordConfirm && (
                         <p className="text-danger label-text mb-0 mt-2">{errors.passwordConfirm}</p>
                     )}
                 </Form.Group>

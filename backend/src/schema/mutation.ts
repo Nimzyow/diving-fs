@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client"
+import { UserInputError, ApolloError } from "apollo-server"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { arg, extendType, nonNull, inputObjectType } from "nexus"
@@ -33,15 +34,10 @@ export const Mutation = extendType({
                 ),
             },
             resolve: async (parent, args, context) => {
-                const errors: { code: string; message: string }[] = []
                 const { email, name, handle, password } = args.inputs
 
                 if ((email || name || handle || password) === "") {
-                    errors.push({
-                        code: "INVALID_INPUTS",
-                        message: "Please enter valid inputs",
-                    })
-                    return { token: null, errors }
+                    throw new UserInputError("Please enter valid inputs")
                 }
 
                 let hashedPassword: string
@@ -51,11 +47,7 @@ export const Mutation = extendType({
 
                     hashedPassword = await bcrypt.hash(password, salt)
                 } catch (error) {
-                    errors.push({
-                        code: "GENERAL_ERROR",
-                        message: "Please try again later",
-                    })
-                    return { token: null, errors }
+                    throw new ApolloError("Please try again later")
                 }
 
                 try {
@@ -78,26 +70,16 @@ export const Mutation = extendType({
                         token: jwt.sign(payload, process.env.JWTSECRET || "", {
                             expiresIn: 360000,
                         }),
-                        errors: [],
                     }
                 } catch (error) {
                     if (error instanceof Prisma.PrismaClientKnownRequestError) {
                         if (error.message.includes("email")) {
-                            errors.push({
-                                code: "EMAIL_TAKEN",
-                                message: "This email has already been taken.",
-                            })
-                            return { token: null, errors }
+                            throw new UserInputError("This email has already been taken.")
                         }
                         if (error.message.includes("handle")) {
-                            errors.push({
-                                code: "HANDLE_TAKEN",
-                                message: "This handle has already been taken.",
-                            })
-                            return { token: null, errors }
+                            throw new UserInputError("This handle has already been taken.")
                         }
                     }
-                    console.log(error)
                     return null
                 }
             },
@@ -112,48 +94,30 @@ export const Mutation = extendType({
                     ),
                 },
                 resolve: async (parent, args, context) => {
-                    const errors: { code: string; message: string }[] = []
                     const { email, password } = args.inputs
 
-                    try {
-                        const user = await context.prisma.user.findUnique({
-                            where: { email },
-                        })
-                        if (!user) {
-                            errors.push({
-                                code: "INVALID_CREDENTIALS",
-                                message: "Please check your email and password",
-                            })
-                            return { token: null, errors }
-                        }
-                        const match = await bcrypt.compare(password, user.password)
+                    const user = await context.prisma.user.findUnique({
+                        where: { email },
+                    })
+                    if (!user) {
+                        throw new UserInputError("Please check your email and password")
+                    }
+                    const match = await bcrypt.compare(password, user.password)
 
-                        if (match) {
-                            const payload = {
-                                user: {
-                                    id: user.id,
-                                },
-                            }
-
-                            return {
-                                token: jwt.sign(payload, process.env.JWTSECRET || "", {
-                                    expiresIn: 360000,
-                                }),
-                                errors: [],
-                            }
-                        } else {
-                            errors.push({
-                                code: "INVALID_CREDENTIALS",
-                                message: "Please check your email and password",
-                            })
-                            return { token: null, errors }
+                    if (match) {
+                        const payload = {
+                            user: {
+                                id: user.id,
+                            },
                         }
-                    } catch (error) {
-                        errors.push({
-                            code: "GENERAL_ERROR",
-                            message: "Something went wrong, please refresh the page and try again",
-                        })
-                        return { token: null, errors }
+
+                        return {
+                            token: jwt.sign(payload, process.env.JWTSECRET || "", {
+                                expiresIn: 360000,
+                            }),
+                        }
+                    } else {
+                        throw new UserInputError("Please check your email and password")
                     }
                 },
             })
