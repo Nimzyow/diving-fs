@@ -2,11 +2,30 @@ import React from "react"
 
 import { Button, Form } from "react-bootstrap"
 
+import { useCreatePostMutation } from "../../../generated/graphql"
 import { useForm } from "../../../hooks/useForm"
 
 export const CreatePost = () => {
-    const { inputs, onChange } = useForm({
-        initialInputs: { post: "" },
+    const [createPost, { data, loading, error, called }] = useCreatePostMutation()
+
+    const { inputs, onChange, onSubmit } = useForm({
+        initialInputs: { body: "" },
+        submit: async () => {
+            try {
+                await createPost({
+                    variables: {
+                        CreatePostInputs: {
+                            body: inputs.body,
+                        },
+                    },
+                })
+                return {}
+            } catch (error) {
+                return {
+                    nonFieldError: "Something went wrong. Please try refreshing the page and try again.",
+                }
+            }
+        },
     })
 
     return (
@@ -16,19 +35,15 @@ export const CreatePost = () => {
                     name="post"
                     type="text"
                     placeholder="Anything on your mind?"
-                    value={inputs.post}
+                    value={inputs.body}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange({ post: event.target.value })
+                        onChange({ body: event.target.value })
                     }}
                 />
-                <Button
-                    variant="primary"
-                    onClick={() => {
-                        // do nothing
-                    }}
-                >
+                <Button variant="primary" onClick={() => onSubmit()}>
                     Post
                 </Button>
+                {called && !error && <p>Posted!</p>}
             </Form.Group>
         </Form>
     )

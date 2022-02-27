@@ -29,6 +29,9 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CreatePostInputs: { // input type
+    body: string; // String!
+  }
   CreateUserInputs: { // input type
     email: string; // String!
     handle: string; // String!
@@ -66,6 +69,13 @@ export interface NexusGenObjects {
     message: string; // String!
   }
   Mutation: {};
+  Post: { // root type
+    authorId: string; // String!
+    body?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
   Query: {};
   Success: { // root type
     success: boolean; // Boolean!
@@ -77,7 +87,7 @@ export interface NexusGenObjects {
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     email?: string | null; // String
     handle?: string | null; // String
-    id?: string | null; // String
+    id: string; // String!
     name?: string | null; // String
     role?: NexusGenEnums['Role'] | null; // Role
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -106,8 +116,17 @@ export interface NexusGenFieldTypes {
     message: string; // String!
   }
   Mutation: { // field return type
+    createPost: NexusGenRootTypes['Post'] | null; // Post
     createUser: NexusGenRootTypes['Token'] | null; // Token
     login: NexusGenRootTypes['Token']; // Token!
+  }
+  Post: { // field return type
+    author: NexusGenRootTypes['User'] | null; // User
+    authorId: string; // String!
+    body: string | null; // String
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: string | null; // String
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Query: { // field return type
     me: NexusGenRootTypes['User'] | null; // User
@@ -123,8 +142,9 @@ export interface NexusGenFieldTypes {
     diverCertifications: Array<NexusGenRootTypes['DiverCertification'] | null> | null; // [DiverCertification]
     email: string | null; // String
     handle: string | null; // String
-    id: string | null; // String
+    id: string; // String!
     name: string | null; // String
+    posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     role: NexusGenEnums['Role'] | null; // Role
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
@@ -142,8 +162,17 @@ export interface NexusGenFieldTypeNames {
     message: 'String'
   }
   Mutation: { // field return type name
+    createPost: 'Post'
     createUser: 'Token'
     login: 'Token'
+  }
+  Post: { // field return type name
+    author: 'User'
+    authorId: 'String'
+    body: 'String'
+    createdAt: 'DateTime'
+    id: 'String'
+    updatedAt: 'DateTime'
   }
   Query: { // field return type name
     me: 'User'
@@ -161,6 +190,7 @@ export interface NexusGenFieldTypeNames {
     handle: 'String'
     id: 'String'
     name: 'String'
+    posts: 'Post'
     role: 'Role'
     updatedAt: 'DateTime'
   }
@@ -168,6 +198,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createPost: { // args
+      inputs: NexusGenInputs['CreatePostInputs']; // CreatePostInputs!
+    }
     createUser: { // args
       inputs: NexusGenInputs['CreateUserInputs']; // CreateUserInputs!
     }

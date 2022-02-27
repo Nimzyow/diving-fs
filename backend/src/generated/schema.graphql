@@ -2,6 +2,10 @@
 ### Do not make changes to this file directly
 
 
+input CreatePostInputs {
+  body: String!
+}
+
 input CreateUserInputs {
   email: String!
   handle: String!
@@ -32,8 +36,18 @@ input LoginUserInputs {
 }
 
 type Mutation {
+  createPost(inputs: CreatePostInputs!): Post
   createUser(inputs: CreateUserInputs!): Token
   login(inputs: LoginUserInputs!): Token!
+}
+
+type Post {
+  author: User
+  authorId: String!
+  body: String
+  createdAt: DateTime
+  id: String
+  updatedAt: DateTime
 }
 
 type Query {
@@ -60,8 +74,9 @@ type User {
   diverCertifications: [DiverCertification]
   email: String
   handle: String
-  id: String
+  id: String!
   name: String
+  posts: [Post]
   role: Role
   updatedAt: DateTime
 }

@@ -14,6 +14,13 @@ export const CreateUserInputs = inputObjectType({
     },
 })
 
+export const CreatePostInputs = inputObjectType({
+    name: "CreatePostInputs",
+    definition(t) {
+        t.nonNull.string("body")
+    },
+})
+
 export const LoginUserInputs = inputObjectType({
     name: "LoginUserInputs",
     definition(t) {
@@ -24,6 +31,32 @@ export const LoginUserInputs = inputObjectType({
 export const Mutation = extendType({
     type: "Mutation",
     definition(t) {
+        t.field("createPost", {
+            type: "Post",
+            args: {
+                inputs: nonNull(
+                    arg({
+                        type: "CreatePostInputs",
+                    })
+                ),
+            },
+            resolve: async (parent, args, context) => {
+                const { body } = args.inputs
+                if (!context.user?.id) return null
+
+                try {
+                    const post = await context.prisma.post.create({
+                        data: {
+                            body,
+                            authorId: context.user.id,
+                        },
+                    })
+                    return post
+                } catch (error) {
+                    return null
+                }
+            },
+        })
         t.field("createUser", {
             type: "Token",
             args: {

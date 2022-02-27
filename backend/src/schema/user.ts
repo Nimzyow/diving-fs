@@ -3,12 +3,26 @@ import { objectType, enumType } from "nexus"
 export const User = objectType({
     name: "User",
     definition(t) {
-        t.string("id"),
+        t.nonNull.string("id"),
             t.string("name"),
             t.string("email"),
             t.string("handle"),
             t.field("role", { type: "Role" }),
-            t.date("createdAt"),
+            t.list.field("posts", {
+                type: "Post",
+                resolve: async (parent, args, context) => {
+                    try {
+                        return context.prisma.post.findMany({
+                            where: {
+                                authorId: parent.id,
+                            },
+                        })
+                    } catch (error) {
+                        return []
+                    }
+                },
+            })
+        t.date("createdAt"),
             t.date("updatedAt"),
             t.list.field("diverCertifications", {
                 type: "DiverCertification",
