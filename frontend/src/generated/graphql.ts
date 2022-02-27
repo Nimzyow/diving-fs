@@ -16,6 +16,10 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type CreatePostInputs = {
+  body: Scalars['String'];
+};
+
 export type CreateUserInputs = {
   email: Scalars['String'];
   handle: Scalars['String'];
@@ -44,8 +48,14 @@ export type LoginUserInputs = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createPost?: Maybe<Post>;
   createUser?: Maybe<Token>;
   login: Token;
+};
+
+
+export type MutationCreatePostArgs = {
+  inputs: CreatePostInputs;
 };
 
 
@@ -56,6 +66,16 @@ export type MutationCreateUserArgs = {
 
 export type MutationLoginArgs = {
   inputs: LoginUserInputs;
+};
+
+export type Post = {
+  __typename?: 'Post';
+  author?: Maybe<User>;
+  authorId: Scalars['String'];
+  body?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type Query = {
@@ -86,8 +106,9 @@ export type User = {
   diverCertifications?: Maybe<Array<Maybe<DiverCertification>>>;
   email?: Maybe<Scalars['String']>;
   handle?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
+  posts?: Maybe<Array<Maybe<Post>>>;
   role?: Maybe<Role>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -95,7 +116,7 @@ export type User = {
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id?: Maybe<string>, name?: Maybe<string>, handle?: Maybe<string>, email?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any> }> };
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, name?: Maybe<string>, handle?: Maybe<string>, email?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any> }> };
 
 export type CreateUserMutationVariables = Exact<{
   inputs: CreateUserInputs;
