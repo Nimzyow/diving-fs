@@ -29,6 +29,9 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CreatePostInputs: { // input type
+    body: string; // String!
+  }
   CreateUserInputs: { // input type
     email: string; // String!
     handle: string; // String!
@@ -113,6 +116,7 @@ export interface NexusGenFieldTypes {
     message: string; // String!
   }
   Mutation: { // field return type
+    createPost: NexusGenRootTypes['Post'] | null; // Post
     createUser: NexusGenRootTypes['Token'] | null; // Token
     login: NexusGenRootTypes['Token']; // Token!
   }
@@ -158,6 +162,7 @@ export interface NexusGenFieldTypeNames {
     message: 'String'
   }
   Mutation: { // field return type name
+    createPost: 'Post'
     createUser: 'Token'
     login: 'Token'
   }
@@ -193,6 +198,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createPost: { // args
+      inputs: NexusGenInputs['CreatePostInputs']; // CreatePostInputs!
+    }
     createUser: { // args
       inputs: NexusGenInputs['CreateUserInputs']; // CreateUserInputs!
     }
