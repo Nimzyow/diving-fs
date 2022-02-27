@@ -38,6 +38,8 @@ npx prisma migrate dev --create-only
 
 To generate your prisma client
 
+Note: Run the below command out of the container. cd into backend and run below command.
+
 ```bash
 npx prisma generate
 ```

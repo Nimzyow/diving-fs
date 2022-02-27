@@ -20,6 +20,16 @@ model User {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now())
   diverCertifications   DiverCertification[]
+  posts Post[]
+}
+
+model Post {
+  id String @id @default(cuid())
+  body String
+  author  User  @relation(fields: [authorId], references: [id])
+  authorId String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
 }
 
 model DiverCertification {

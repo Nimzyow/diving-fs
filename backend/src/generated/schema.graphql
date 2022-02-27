@@ -36,6 +36,15 @@ type Mutation {
   login(inputs: LoginUserInputs!): Token!
 }
 
+type Post {
+  author: User
+  authorId: String!
+  body: String
+  createdAt: DateTime
+  id: String
+  updatedAt: DateTime
+}
+
 type Query {
   me: User
 }
@@ -60,8 +69,9 @@ type User {
   diverCertifications: [DiverCertification]
   email: String
   handle: String
-  id: String
+  id: String!
   name: String
+  posts: [Post]
   role: Role
   updatedAt: DateTime
 }
