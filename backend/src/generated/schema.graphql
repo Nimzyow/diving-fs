@@ -6,11 +6,18 @@ input CreatePostInputs {
   body: String!
 }
 
+union CreateUserError = EmailValidationError | HandleValidationError
+
 input CreateUserInputs {
   email: String!
   handle: String!
   name: String!
   password: String!
+}
+
+type CreateUserOutput {
+  createUserErrors: CreateUserError
+  token: String
 }
 
 """
@@ -25,9 +32,14 @@ type DiverCertification {
   updatedAt: DateTime
 }
 
-type Error {
-  code: String!
-  message: String!
+type EmailValidationError implements UserError {
+  field: String
+  message: String
+}
+
+type HandleValidationError implements UserError {
+  field: String
+  message: String
 }
 
 input LoginUserInputs {
@@ -37,7 +49,7 @@ input LoginUserInputs {
 
 type Mutation {
   createPost(inputs: CreatePostInputs!): Post
-  createUser(inputs: CreateUserInputs!): Token
+  createUser(inputs: CreateUserInputs!): CreateUserOutput
   login(inputs: LoginUserInputs!): Token!
 }
 
@@ -79,4 +91,9 @@ type User {
   posts: [Post]
   role: Role
   updatedAt: DateTime
+}
+
+interface UserError {
+  field: String
+  message: String
 }

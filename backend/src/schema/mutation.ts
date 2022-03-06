@@ -1,8 +1,27 @@
 import { Prisma } from "@prisma/client"
-import { UserInputError, ApolloError } from "apollo-server"
+import { UserInputError } from "apollo-server"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-import { arg, extendType, nonNull, inputObjectType } from "nexus"
+import { arg, extendType, nonNull, inputObjectType, objectType } from "nexus"
+
+// export const CreatePostError = objectType({
+//     name: "CreatePostError",
+//     definition(t) {
+//         t.field("createPostError", {})
+//     }
+// })
+
+export const CreateUserOutput = objectType({
+    name: "CreateUserOutput",
+    definition(t) {
+        t.field("token", {
+            type: "String",
+        }),
+            t.field("createUserErrors", {
+                type: "CreateUserError",
+            })
+    },
+})
 
 export const CreateUserInputs = inputObjectType({
     name: "CreateUserInputs",
@@ -58,7 +77,7 @@ export const Mutation = extendType({
             },
         })
         t.field("createUser", {
-            type: "Token",
+            type: "CreateUserOutput",
             args: {
                 inputs: nonNull(
                     arg({
@@ -70,18 +89,19 @@ export const Mutation = extendType({
                 const { email, name, handle, password } = args.inputs
 
                 if ((email || name || handle || password) === "") {
-                    throw new UserInputError("Please enter valid inputs")
+                    return {
+                        token: null,
+                        createUserErrors: {
+                            field: "invalidInputs",
+                            message: "Please enter valid inputs",
+                        },
+                    }
+                    // throw new UserInputError("Please enter valid inputs")
                 }
 
-                let hashedPassword: string
+                const salt = await bcrypt.genSalt(10)
 
-                try {
-                    const salt = await bcrypt.genSalt(10)
-
-                    hashedPassword = await bcrypt.hash(password, salt)
-                } catch (error) {
-                    throw new ApolloError("Please try again later")
-                }
+                const hashedPassword = await bcrypt.hash(password, salt)
 
                 try {
                     const user = await context.prisma.user.create({
@@ -103,17 +123,36 @@ export const Mutation = extendType({
                         token: jwt.sign(payload, process.env.JWTSECRET || "", {
                             expiresIn: 360000,
                         }),
+                        createUserErrors: null,
                     }
                 } catch (error) {
                     if (error instanceof Prisma.PrismaClientKnownRequestError) {
                         if (error.message.includes("email")) {
-                            throw new UserInputError("This email has already been taken.")
+                            return {
+                                token: null,
+                                createUserErrors: {
+                                    field: "emailTaken",
+                                    message: "This email has already been taken",
+                                },
+                            }
                         }
                         if (error.message.includes("handle")) {
-                            throw new UserInputError("This handle has already been taken.")
+                            return {
+                                token: null,
+                                createUserErrors: {
+                                    field: "handleTaken",
+                                    message: "This handle has already been taken.",
+                                },
+                            }
                         }
                     }
-                    return null
+                    return {
+                        token: null,
+                        createUserErrors: {
+                            field: "unknownError",
+                            message: "An error has occurred",
+                        },
+                    }
                 }
             },
         }),

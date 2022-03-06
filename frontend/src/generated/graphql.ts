@@ -20,11 +20,19 @@ export type CreatePostInputs = {
   body: Scalars['String'];
 };
 
+export type CreateUserError = EmailValidationError | HandleValidationError;
+
 export type CreateUserInputs = {
   email: Scalars['String'];
   handle: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type CreateUserOutput = {
+  __typename?: 'CreateUserOutput';
+  createUserErrors?: Maybe<CreateUserError>;
+  token?: Maybe<Scalars['String']>;
 };
 
 export type DiverCertification = {
@@ -35,10 +43,16 @@ export type DiverCertification = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type Error = {
-  __typename?: 'Error';
-  code: Scalars['String'];
-  message: Scalars['String'];
+export type EmailValidationError = UserError & {
+  __typename?: 'EmailValidationError';
+  field?: Maybe<Scalars['String']>;
+  message?: Maybe<Scalars['String']>;
+};
+
+export type HandleValidationError = UserError & {
+  __typename?: 'HandleValidationError';
+  field?: Maybe<Scalars['String']>;
+  message?: Maybe<Scalars['String']>;
 };
 
 export type LoginUserInputs = {
@@ -49,7 +63,7 @@ export type LoginUserInputs = {
 export type Mutation = {
   __typename?: 'Mutation';
   createPost?: Maybe<Post>;
-  createUser?: Maybe<Token>;
+  createUser?: Maybe<CreateUserOutput>;
   login: Token;
 };
 
@@ -113,6 +127,11 @@ export type User = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
+export type UserError = {
+  field?: Maybe<Scalars['String']>;
+  message?: Maybe<Scalars['String']>;
+};
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -130,7 +149,7 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUser?: Maybe<{ __typename?: 'Token', token?: Maybe<string> }> };
+export type CreateUserMutation = { __typename?: 'Mutation', createUser?: Maybe<{ __typename?: 'CreateUserOutput', token?: Maybe<string>, createUserErrors?: Maybe<{ __typename: 'EmailValidationError', field?: Maybe<string>, message?: Maybe<string> } | { __typename: 'HandleValidationError', field?: Maybe<string>, message?: Maybe<string> }> }> };
 
 export type LoginMutationVariables = Exact<{
   inputs: LoginUserInputs;
@@ -219,6 +238,13 @@ export const CreateUserDocument = gql`
     mutation CreateUser($inputs: CreateUserInputs!) {
   createUser(inputs: $inputs) {
     token
+    createUserErrors {
+      ... on UserError {
+        field
+        message
+        __typename
+      }
+    }
   }
 }
     `;

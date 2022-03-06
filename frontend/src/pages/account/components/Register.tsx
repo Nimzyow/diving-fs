@@ -4,7 +4,7 @@ import { ApolloError } from "@apollo/client"
 import { Form, Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 
-import { useCreateUserMutation } from "../../../generated/graphql"
+import { useCreateUserMutation, EmailValidationError } from "../../../generated/graphql"
 import { useAuth } from "../../../hooks/useAuth"
 import { useForm } from "../../../hooks/useForm"
 
@@ -43,9 +43,19 @@ export const Register = () => {
                         },
                     },
                 })
+
+                if (data?.createUser?.createUserErrors?.__typename === "EmailValidationError") {
+                    const message = data.createUser.createUserErrors.message as string
+                    return { email: message }
+                }
+                if (data?.createUser?.createUserErrors?.__typename === "HandleValidationError") {
+                    const message = data.createUser.createUserErrors.message as string
+                    return { handle: message }
+                }
                 if (data?.createUser?.token) {
                     localStorage.setItem("token", data.createUser.token)
                 }
+
                 return {}
             } catch (error: unknown) {
                 if (error instanceof ApolloError) {

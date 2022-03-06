@@ -1,7 +1,6 @@
 import { Prisma } from "@prisma/client"
 import { ApolloServer, gql } from "apollo-server"
-import bcrypt from "bcryptjs"
-import jwt from "jsonwebtoken"
+import { GraphQLError } from "graphql"
 import { makeSchema } from "nexus"
 
 import * as types from "../../src/schema/index"
@@ -70,4 +69,25 @@ describe("Create post mutation", () => {
             },
         })
     })
+    // it("will return error object if post creation fails", async () => {
+    //     const error = new Prisma.PrismaClientKnownRequestError(
+    //         "text containing the word email",
+    //         "P1001",
+    //         "123"
+    //     )
+
+    //     prismaMock.post.create.mockRejectedValue(error)
+
+    //     const createPostResult = await server.executeOperation({
+    //         query: CREATE_POST,
+    //         variables: {
+    //             inputs: {
+    //                 body: "example post",
+    //             },
+    //         },
+    //     })
+    //     expect(createPostResult.data).toEqual([
+    //         new GraphQLError("Post failed to create. Try again later."),
+    //     ])
+    // })
 })

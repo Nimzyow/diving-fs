@@ -58,15 +58,23 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  CreateUserOutput: { // root type
+    createUserErrors?: NexusGenRootTypes['CreateUserError'] | null; // CreateUserError
+    token?: string | null; // String
+  }
   DiverCertification: { // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     name?: string | null; // String
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
-  Error: { // root type
-    code: string; // String!
-    message: string; // String!
+  EmailValidationError: { // root type
+    field?: string | null; // String
+    message?: string | null; // String
+  }
+  HandleValidationError: { // root type
+    field?: string | null; // String
+    message?: string | null; // String
   }
   Mutation: {};
   Post: { // root type
@@ -95,29 +103,39 @@ export interface NexusGenObjects {
 }
 
 export interface NexusGenInterfaces {
+  UserError: NexusGenRootTypes['EmailValidationError'] | NexusGenRootTypes['HandleValidationError'];
 }
 
 export interface NexusGenUnions {
+  CreateUserError: NexusGenRootTypes['EmailValidationError'] | NexusGenRootTypes['HandleValidationError'];
 }
 
-export type NexusGenRootTypes = NexusGenObjects
+export type NexusGenRootTypes = NexusGenInterfaces & NexusGenObjects & NexusGenUnions
 
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  CreateUserOutput: { // field return type
+    createUserErrors: NexusGenRootTypes['CreateUserError'] | null; // CreateUserError
+    token: string | null; // String
+  }
   DiverCertification: { // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     id: string | null; // String
     name: string | null; // String
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
-  Error: { // field return type
-    code: string; // String!
-    message: string; // String!
+  EmailValidationError: { // field return type
+    field: string | null; // String
+    message: string | null; // String
+  }
+  HandleValidationError: { // field return type
+    field: string | null; // String
+    message: string | null; // String
   }
   Mutation: { // field return type
     createPost: NexusGenRootTypes['Post'] | null; // Post
-    createUser: NexusGenRootTypes['Token'] | null; // Token
+    createUser: NexusGenRootTypes['CreateUserOutput'] | null; // CreateUserOutput
     login: NexusGenRootTypes['Token']; // Token!
   }
   Post: { // field return type
@@ -148,22 +166,34 @@ export interface NexusGenFieldTypes {
     role: NexusGenEnums['Role'] | null; // Role
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
+  UserError: { // field return type
+    field: string | null; // String
+    message: string | null; // String
+  }
 }
 
 export interface NexusGenFieldTypeNames {
+  CreateUserOutput: { // field return type name
+    createUserErrors: 'CreateUserError'
+    token: 'String'
+  }
   DiverCertification: { // field return type name
     createdAt: 'DateTime'
     id: 'String'
     name: 'String'
     updatedAt: 'DateTime'
   }
-  Error: { // field return type name
-    code: 'String'
+  EmailValidationError: { // field return type name
+    field: 'String'
+    message: 'String'
+  }
+  HandleValidationError: { // field return type name
+    field: 'String'
     message: 'String'
   }
   Mutation: { // field return type name
     createPost: 'Post'
-    createUser: 'Token'
+    createUser: 'CreateUserOutput'
     login: 'Token'
   }
   Post: { // field return type name
@@ -194,6 +224,10 @@ export interface NexusGenFieldTypeNames {
     role: 'Role'
     updatedAt: 'DateTime'
   }
+  UserError: { // field return type name
+    field: 'String'
+    message: 'String'
+  }
 }
 
 export interface NexusGenArgTypes {
@@ -211,9 +245,13 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractTypeMembers {
+  CreateUserError: "EmailValidationError" | "HandleValidationError"
+  UserError: "EmailValidationError" | "HandleValidationError"
 }
 
 export interface NexusGenTypeInterfaces {
+  EmailValidationError: "UserError"
+  HandleValidationError: "UserError"
 }
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
@@ -222,15 +260,15 @@ export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = keyof NexusGenEnums;
 
-export type NexusGenInterfaceNames = never;
+export type NexusGenInterfaceNames = keyof NexusGenInterfaces;
 
 export type NexusGenScalarNames = keyof NexusGenScalars;
 
-export type NexusGenUnionNames = never;
+export type NexusGenUnionNames = keyof NexusGenUnions;
 
 export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
 
-export type NexusGenAbstractsUsingStrategyResolveType = never;
+export type NexusGenAbstractsUsingStrategyResolveType = "CreateUserError" | "UserError";
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {
