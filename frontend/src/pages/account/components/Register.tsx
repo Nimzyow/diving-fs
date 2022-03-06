@@ -44,12 +44,12 @@ export const Register = () => {
                     },
                 })
 
-                if (data?.createUser?.createUserErrors?.__typename === "EmailValidationError") {
-                    const message = data.createUser.createUserErrors.message as string
+                if (data?.createUser?.createUserError?.__typename === "EmailValidationError") {
+                    const message = data.createUser.createUserError.message as string
                     return { email: message }
                 }
-                if (data?.createUser?.createUserErrors?.__typename === "HandleValidationError") {
-                    const message = data.createUser.createUserErrors.message as string
+                if (data?.createUser?.createUserError?.__typename === "HandleValidationError") {
+                    const message = data.createUser.createUserError.message as string
                     return { handle: message }
                 }
                 if (data?.createUser?.token) {

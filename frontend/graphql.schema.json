@@ -147,7 +147,7 @@
         "description": null,
         "fields": [
           {
-            "name": "createUserErrors",
+            "name": "createUserError",
             "description": null,
             "args": [],
             "type": {

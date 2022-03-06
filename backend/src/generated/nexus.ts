@@ -59,7 +59,7 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   CreateUserOutput: { // root type
-    createUserErrors?: NexusGenRootTypes['CreateUserError'] | null; // CreateUserError
+    createUserError?: NexusGenRootTypes['CreateUserError'] | null; // CreateUserError
     token?: string | null; // String
   }
   DiverCertification: { // root type
@@ -116,7 +116,7 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 
 export interface NexusGenFieldTypes {
   CreateUserOutput: { // field return type
-    createUserErrors: NexusGenRootTypes['CreateUserError'] | null; // CreateUserError
+    createUserError: NexusGenRootTypes['CreateUserError'] | null; // CreateUserError
     token: string | null; // String
   }
   DiverCertification: { // field return type
@@ -174,7 +174,7 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   CreateUserOutput: { // field return type name
-    createUserErrors: 'CreateUserError'
+    createUserError: 'CreateUserError'
     token: 'String'
   }
   DiverCertification: { // field return type name

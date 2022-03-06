@@ -16,7 +16,7 @@ input CreateUserInputs {
 }
 
 type CreateUserOutput {
-  createUserErrors: CreateUserError
+  createUserError: CreateUserError
   token: String
 }
 

@@ -17,7 +17,7 @@ export const CreateUserOutput = objectType({
         t.field("token", {
             type: "String",
         }),
-            t.field("createUserErrors", {
+            t.field("createUserError", {
                 type: "CreateUserError",
             })
     },
@@ -91,7 +91,7 @@ export const Mutation = extendType({
                 if ((email || name || handle || password) === "") {
                     return {
                         token: null,
-                        createUserErrors: {
+                        createUserError: {
                             field: "invalidInputs",
                             message: "Please enter valid inputs",
                         },
@@ -123,14 +123,14 @@ export const Mutation = extendType({
                         token: jwt.sign(payload, process.env.JWTSECRET || "", {
                             expiresIn: 360000,
                         }),
-                        createUserErrors: null,
+                        createUserError: null,
                     }
                 } catch (error) {
                     if (error instanceof Prisma.PrismaClientKnownRequestError) {
                         if (error.message.includes("email")) {
                             return {
                                 token: null,
-                                createUserErrors: {
+                                createUserError: {
                                     field: "emailTaken",
                                     message: "This email has already been taken",
                                 },
@@ -139,7 +139,7 @@ export const Mutation = extendType({
                         if (error.message.includes("handle")) {
                             return {
                                 token: null,
-                                createUserErrors: {
+                                createUserError: {
                                     field: "handleTaken",
                                     message: "This handle has already been taken.",
                                 },
@@ -148,7 +148,7 @@ export const Mutation = extendType({
                     }
                     return {
                         token: null,
-                        createUserErrors: {
+                        createUserError: {
                             field: "unknownError",
                             message: "An error has occurred",
                         },

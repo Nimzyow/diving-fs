@@ -31,7 +31,7 @@ export type CreateUserInputs = {
 
 export type CreateUserOutput = {
   __typename?: 'CreateUserOutput';
-  createUserErrors?: Maybe<CreateUserError>;
+  createUserError?: Maybe<CreateUserError>;
   token?: Maybe<Scalars['String']>;
 };
 
@@ -149,7 +149,7 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUser?: Maybe<{ __typename?: 'CreateUserOutput', token?: Maybe<string>, createUserErrors?: Maybe<{ __typename: 'EmailValidationError', field?: Maybe<string>, message?: Maybe<string> } | { __typename: 'HandleValidationError', field?: Maybe<string>, message?: Maybe<string> }> }> };
+export type CreateUserMutation = { __typename?: 'Mutation', createUser?: Maybe<{ __typename?: 'CreateUserOutput', token?: Maybe<string>, createUserError?: Maybe<{ __typename: 'EmailValidationError', field?: Maybe<string>, message?: Maybe<string> } | { __typename: 'HandleValidationError', field?: Maybe<string>, message?: Maybe<string> }> }> };
 
 export type LoginMutationVariables = Exact<{
   inputs: LoginUserInputs;
@@ -238,7 +238,7 @@ export const CreateUserDocument = gql`
     mutation CreateUser($inputs: CreateUserInputs!) {
   createUser(inputs: $inputs) {
     token
-    createUserErrors {
+    createUserError {
       ... on UserError {
         field
         message

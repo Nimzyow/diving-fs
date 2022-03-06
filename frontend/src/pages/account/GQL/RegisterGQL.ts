@@ -4,7 +4,7 @@ export const CreateUser = gql`
     mutation CreateUser($inputs: CreateUserInputs!) {
         createUser(inputs: $inputs) {
             token
-            createUserErrors {
+            createUserError {
                 ... on UserError {
                     field
                     message
