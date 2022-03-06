@@ -10,13 +10,13 @@ export const Success = objectType({
 export const EmailValidationError = objectType({
     name: "EmailValidationError",
     definition(t) {
-        t.implements("UserError")
+        t.implements("BaseError")
     },
 })
 export const HandleValidationError = objectType({
     name: "HandleValidationError",
     definition(t) {
-        t.implements("UserError")
+        t.implements("BaseError")
     },
 })
 
@@ -38,8 +38,8 @@ export const CreateUserError = unionType({
     },
 })
 
-export const UserError = interfaceType({
-    name: "UserError",
+export const BaseError = interfaceType({
+    name: "BaseError",
     definition(t) {
         t.string("field"), t.string("message")
     },

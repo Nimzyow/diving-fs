@@ -9,6 +9,52 @@
     "subscriptionType": null,
     "types": [
       {
+        "kind": "INTERFACE",
+        "name": "BaseError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "EmailValidationError",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "HandleValidationError",
+            "ofType": null
+          }
+        ]
+      },
+      {
         "kind": "SCALAR",
         "name": "Boolean",
         "description": "The `Boolean` scalar type represents `true` or `false`.",
@@ -42,6 +88,41 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CreatePostOutput",
+        "description": null,
+        "fields": [
+          {
+            "name": "createPostError",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "INTERFACE",
+              "name": "BaseError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "post",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Post",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -279,7 +360,7 @@
         "interfaces": [
           {
             "kind": "INTERFACE",
-            "name": "UserError",
+            "name": "BaseError",
             "ofType": null
           }
         ],
@@ -320,7 +401,7 @@
         "interfaces": [
           {
             "kind": "INTERFACE",
-            "name": "UserError",
+            "name": "BaseError",
             "ofType": null
           }
         ],
@@ -398,7 +479,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "Post",
+              "name": "CreatePostOutput",
               "ofType": null
             },
             "isDeprecated": false,
@@ -807,52 +888,6 @@
         "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
-      },
-      {
-        "kind": "INTERFACE",
-        "name": "UserError",
-        "description": null,
-        "fields": [
-          {
-            "name": "field",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "message",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": [
-          {
-            "kind": "OBJECT",
-            "name": "EmailValidationError",
-            "ofType": null
-          },
-          {
-            "kind": "OBJECT",
-            "name": "HandleValidationError",
-            "ofType": null
-          }
-        ]
       },
       {
         "kind": "OBJECT",

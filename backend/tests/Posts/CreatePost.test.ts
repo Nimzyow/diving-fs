@@ -10,8 +10,14 @@ import { Post, User } from ".prisma/client"
 const CREATE_POST = gql`
     mutation CreatePost($inputs: CreatePostInputs!) {
         createPost(inputs: $inputs) {
-            id
-            body
+            post {
+                id
+                body
+            }
+            createPostError {
+                field
+                message
+            }
         }
     }
 `
@@ -64,8 +70,11 @@ describe("Create post mutation", () => {
         })
         expect(createPostResult.data).toEqual({
             createPost: {
-                id: "1",
-                body: "example post",
+                post: {
+                    id: "1",
+                    body: "example post",
+                },
+                createPostError: null,
             },
         })
     })

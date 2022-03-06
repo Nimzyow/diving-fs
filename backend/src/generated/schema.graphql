@@ -2,8 +2,18 @@
 ### Do not make changes to this file directly
 
 
+interface BaseError {
+  field: String
+  message: String
+}
+
 input CreatePostInputs {
   body: String!
+}
+
+type CreatePostOutput {
+  createPostError: BaseError
+  post: Post
 }
 
 union CreateUserError = EmailValidationError | HandleValidationError
@@ -32,12 +42,12 @@ type DiverCertification {
   updatedAt: DateTime
 }
 
-type EmailValidationError implements UserError {
+type EmailValidationError implements BaseError {
   field: String
   message: String
 }
 
-type HandleValidationError implements UserError {
+type HandleValidationError implements BaseError {
   field: String
   message: String
 }
@@ -48,7 +58,7 @@ input LoginUserInputs {
 }
 
 type Mutation {
-  createPost(inputs: CreatePostInputs!): Post
+  createPost(inputs: CreatePostInputs!): CreatePostOutput
   createUser(inputs: CreateUserInputs!): CreateUserOutput
   login(inputs: LoginUserInputs!): Token!
 }
@@ -91,9 +101,4 @@ type User {
   posts: [Post]
   role: Role
   updatedAt: DateTime
-}
-
-interface UserError {
-  field: String
-  message: String
 }

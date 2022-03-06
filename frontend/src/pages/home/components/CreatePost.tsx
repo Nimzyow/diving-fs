@@ -8,7 +8,7 @@ import { useForm } from "../../../hooks/useForm"
 export const CreatePost = () => {
     const [createPost, { data, loading, error, called }] = useCreatePostMutation()
 
-    const { inputs, onChange, onSubmit } = useForm({
+    const { inputs, onChange, onSubmit, errors } = useForm({
         initialInputs: { body: "" },
         submit: async () => {
             try {
@@ -19,6 +19,9 @@ export const CreatePost = () => {
                         },
                     },
                 })
+                if (data?.createPost?.createPostError?.message) {
+                    return { body: data.createPost.createPostError.message }
+                }
                 return {}
             } catch (error) {
                 return {
@@ -44,6 +47,7 @@ export const CreatePost = () => {
                     Post
                 </Button>
                 {called && !error && <p>Posted!</p>}
+                {called && errors.body && <p style={{ color: "red" }}>errors.body</p>}
             </Form.Group>
         </Form>
     )

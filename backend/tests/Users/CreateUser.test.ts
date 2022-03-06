@@ -1,7 +1,6 @@
 import { Prisma } from "@prisma/client"
 import { ApolloServer, gql } from "apollo-server"
 import bcrypt from "bcryptjs"
-import { GraphQLError } from "graphql"
 import jwt from "jsonwebtoken"
 import { makeSchema } from "nexus"
 
@@ -14,7 +13,7 @@ const CREATE_USER = gql`
         createUser(inputs: $inputs) {
             token
             createUserError {
-                ... on UserError {
+                ... on BaseError {
                     field
                     message
                 }

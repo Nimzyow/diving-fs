@@ -51,7 +51,7 @@ export const Mutation = extendType({
     type: "Mutation",
     definition(t) {
         t.field("createPost", {
-            type: "Post",
+            type: "CreatePostOutput",
             args: {
                 inputs: nonNull(
                     arg({
@@ -70,7 +70,10 @@ export const Mutation = extendType({
                             authorId: context.user.id,
                         },
                     })
-                    return post
+                    return {
+                        post,
+                        createPostError: null,
+                    }
                 } catch (error) {
                     return null
                 }

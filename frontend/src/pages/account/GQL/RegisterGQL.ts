@@ -5,7 +5,7 @@ export const CreateUser = gql`
         createUser(inputs: $inputs) {
             token
             createUserError {
-                ... on UserError {
+                ... on BaseError {
                     field
                     message
                     __typename

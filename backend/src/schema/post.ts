@@ -1,5 +1,17 @@
 import { objectType } from "nexus"
 
+export const CreatePostOutput = objectType({
+    name: "CreatePostOutput",
+    definition(t) {
+        t.field("post", {
+            type: "Post",
+        }),
+            t.field("createPostError", {
+                type: "BaseError",
+            })
+    },
+})
+
 export const Post = objectType({
     name: "Post",
     definition(t) {
