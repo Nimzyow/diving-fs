@@ -27,11 +27,14 @@ describe("CreatePost", () => {
                 },
                 data: {
                     createPost: {
-                        id: "1",
-                        body: "this is text",
-                        createdAt: "2021-22-22",
-                        updatedAt: "2021-22-22",
-                        __typename: "Post",
+                        post: {
+                            id: "1",
+                            body: "this is text",
+                            createdAt: "2021-22-22",
+                            updatedAt: "2021-22-22",
+                            __typename: "Post",
+                        },
+                        createPostError: null,
                     },
                 },
             },
@@ -49,5 +52,39 @@ describe("CreatePost", () => {
         await waitFor(() => new Promise((res) => setTimeout(res, 0)))
 
         expect(screen.getByText("Posted!")).toBeInTheDocument()
+    })
+    test("Should display createPost error", async () => {
+        const mocks = generateMock([
+            {
+                query: CREATE_POST,
+                variables: {
+                    CreatePostInputs: {
+                        body: "this is text",
+                    },
+                },
+                data: {
+                    createPost: {
+                        post: null,
+                        createPostError: {
+                            field: "createPostFailure",
+                            message: "failed to create post. Please try again later.",
+                        },
+                    },
+                },
+            },
+        ])
+        MockComponent({
+            component: <CreatePost />,
+            mocks,
+        })
+
+        userEvent.type(screen.getByPlaceholderText("Anything on your mind?"), "this is text")
+
+        const button = screen.getByRole("button", { name: "Post" })
+        fireEvent.click(button)
+
+        await waitFor(() => new Promise((res) => setTimeout(res, 0)))
+
+        expect(screen.getByText("failed to create post. Please try again later.")).toBeInTheDocument()
     })
 })

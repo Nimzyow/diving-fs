@@ -6,9 +6,9 @@ import { useCreatePostMutation } from "../../../generated/graphql"
 import { useForm } from "../../../hooks/useForm"
 
 export const CreatePost = () => {
-    const [createPost, { data, loading, error, called }] = useCreatePostMutation()
+    const [createPost, { data, called }] = useCreatePostMutation()
 
-    const { inputs, onChange, onSubmit, errors } = useForm({
+    const { inputs, onChange, onSubmit } = useForm({
         initialInputs: { body: "" },
         submit: async () => {
             try {
@@ -19,9 +19,6 @@ export const CreatePost = () => {
                         },
                     },
                 })
-                if (data?.createPost?.createPostError?.message) {
-                    return { body: data.createPost.createPostError.message }
-                }
                 return {}
             } catch (error) {
                 return {
@@ -46,8 +43,10 @@ export const CreatePost = () => {
                 <Button variant="primary" onClick={() => onSubmit()}>
                     Post
                 </Button>
-                {called && !error && <p>Posted!</p>}
-                {called && errors.body && <p style={{ color: "red" }}>errors.body</p>}
+                {called && !data?.createPost?.createPostError && <p>Posted!</p>}
+                {data?.createPost?.createPostError && (
+                    <p style={{ color: "red" }}>{data.createPost.createPostError.message}</p>
+                )}
             </Form.Group>
         </Form>
     )
