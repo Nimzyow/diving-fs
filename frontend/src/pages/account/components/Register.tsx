@@ -4,7 +4,7 @@ import { ApolloError } from "@apollo/client"
 import { Form, Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 
-import { useCreateUserMutation, EmailValidationError } from "../../../generated/graphql"
+import { useCreateUserMutation } from "../../../generated/graphql"
 import { useAuth } from "../../../hooks/useAuth"
 import { useForm } from "../../../hooks/useForm"
 
