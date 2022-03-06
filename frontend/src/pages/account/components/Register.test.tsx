@@ -28,6 +28,7 @@ describe("Register component", () => {
                     data: {
                         createUser: {
                             token: "token",
+                            createUserError: null,
                             __typename: "Token",
                         },
                     },
@@ -86,9 +87,15 @@ describe("Register component", () => {
                         },
                     },
                     data: {
-                        createUser: null,
+                        createUser: {
+                            token: null,
+                            createUserError: {
+                                field: "emailTaken",
+                                message: "email has been taken",
+                                __typename: "EmailValidationError",
+                            },
+                        },
                     },
-                    errors: [new GraphQLError("email has been taken")],
                 },
             ])
 
@@ -124,9 +131,15 @@ describe("Register component", () => {
                         },
                     },
                     data: {
-                        createUser: null,
+                        createUser: {
+                            token: null,
+                            createUserError: {
+                                field: "handleTaken",
+                                message: "handle has been taken",
+                                __typename: "HandleValidationError",
+                            },
+                        },
                     },
-                    errors: [new GraphQLError("handle has been taken")],
                 },
             ])
 
