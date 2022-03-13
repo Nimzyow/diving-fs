@@ -11,7 +11,7 @@ const Layout = styled.div`
 `
 
 type Props = {
-    children: JSX.Element
+    children: JSX.Element[] | JSX.Element
 }
 
 export const Main = ({ children }: Props): JSX.Element => {
