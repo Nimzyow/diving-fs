@@ -16,3 +16,18 @@ export const CREATE_POST = gql`
         }
     }
 `
+
+export const GET_USER_RELATED_POSTS = gql`
+    query userRelatedPosts {
+        userRelatedPosts {
+            id
+            body
+            createdAt
+            updatedAt
+            author {
+                id
+                name
+            }
+        }
+    }
+`

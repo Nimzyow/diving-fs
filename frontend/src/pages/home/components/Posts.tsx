@@ -1,18 +1,15 @@
 import React from "react"
 
 type Props = {
-    firstName: string
-    lastName: string
+    name: string
     body: string
 }
 
 export const Posts = (props: Props) => {
-    const { firstName, lastName, body } = props
+    const { name, body } = props
     return (
         <div>
-            <p>
-                {firstName} {lastName}
-            </p>
+            <p>{name}</p>
             <p>{body}</p>
         </div>
     )

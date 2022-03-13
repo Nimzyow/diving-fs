@@ -97,10 +97,10 @@ export interface NexusGenObjects {
   }
   User: { // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    email?: string | null; // String
-    handle?: string | null; // String
+    email: string; // String!
+    handle: string; // String!
     id: string; // String!
-    name?: string | null; // String
+    name: string; // String!
     role?: NexusGenEnums['Role'] | null; // Role
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
@@ -156,6 +156,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     me: NexusGenRootTypes['User'] | null; // User
+    userRelatedPosts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
   }
   Success: { // field return type
     success: boolean; // Boolean!
@@ -166,10 +167,10 @@ export interface NexusGenFieldTypes {
   User: { // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     diverCertifications: Array<NexusGenRootTypes['DiverCertification'] | null> | null; // [DiverCertification]
-    email: string | null; // String
-    handle: string | null; // String
+    email: string; // String!
+    handle: string; // String!
     id: string; // String!
-    name: string | null; // String
+    name: string; // String!
     posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     role: NexusGenEnums['Role'] | null; // Role
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
@@ -218,6 +219,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     me: 'User'
+    userRelatedPosts: 'Post'
   }
   Success: { // field return type name
     success: 'Boolean'

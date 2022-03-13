@@ -74,6 +74,7 @@ type Post {
 
 type Query {
   me: User
+  userRelatedPosts: [Post]!
 }
 
 enum Role {
@@ -94,10 +95,10 @@ type Token {
 type User {
   createdAt: DateTime
   diverCertifications: [DiverCertification]
-  email: String
-  handle: String
+  email: String!
+  handle: String!
   id: String!
-  name: String
+  name: String!
   posts: [Post]
   role: Role
   updatedAt: DateTime

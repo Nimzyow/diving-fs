@@ -1,4 +1,4 @@
-import { extendType } from "nexus"
+import { extendType, list, nonNull } from "nexus"
 
 export const Query = extendType({
     type: "Query",
@@ -21,6 +21,28 @@ export const Query = extendType({
                     return null
                 }
             },
-        })
+        }),
+            t.field("userRelatedPosts", {
+                type: nonNull(list("Post")),
+                resolve: async (parent, args, context) => {
+                    if (!context.user) {
+                        return []
+                    }
+                    try {
+                        const post = await context.prisma.post.findMany({
+                            where: {
+                                author: context.user,
+                            },
+                            orderBy: {
+                                createdAt: "desc",
+                            },
+                        })
+                        return post
+                    } catch (error) {
+                        console.log(error)
+                        return []
+                    }
+                },
+            })
     },
 })

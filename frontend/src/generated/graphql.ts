@@ -95,7 +95,7 @@ export type MutationLoginArgs = {
 
 export type Post = {
   __typename?: 'Post';
-  author?: Maybe<User>;
+  author: User;
   authorId: Scalars['String'];
   body?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -106,6 +106,7 @@ export type Post = {
 export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
+  userRelatedPosts: Array<Maybe<Post>>;
 };
 
 export enum Role {
@@ -129,10 +130,10 @@ export type User = {
   __typename?: 'User';
   createdAt?: Maybe<Scalars['DateTime']>;
   diverCertifications?: Maybe<Array<Maybe<DiverCertification>>>;
-  email?: Maybe<Scalars['String']>;
-  handle?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  handle: Scalars['String'];
   id: Scalars['String'];
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   posts?: Maybe<Array<Maybe<Post>>>;
   role?: Maybe<Role>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -141,7 +142,7 @@ export type User = {
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, name?: Maybe<string>, handle?: Maybe<string>, email?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any> }> };
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, name: string, handle: string, email: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any> }> };
 
 export type CreatePostMutationVariables = Exact<{
   CreatePostInputs: CreatePostInputs;
@@ -149,6 +150,11 @@ export type CreatePostMutationVariables = Exact<{
 
 
 export type CreatePostMutation = { __typename?: 'Mutation', createPost?: Maybe<{ __typename?: 'CreatePostOutput', post?: Maybe<{ __typename?: 'Post', id?: Maybe<string>, body?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any> }>, createPostError?: Maybe<{ __typename?: 'EmailValidationError', field?: Maybe<string>, message?: Maybe<string> } | { __typename?: 'HandleValidationError', field?: Maybe<string>, message?: Maybe<string> }> }> };
+
+export type UserRelatedPostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserRelatedPostsQuery = { __typename?: 'Query', userRelatedPosts: Array<Maybe<{ __typename?: 'Post', id?: Maybe<string>, body?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, author: { __typename?: 'User', id: string, name: string } }>> };
 
 export type CreateUserMutationVariables = Exact<{
   inputs: CreateUserInputs;
@@ -246,6 +252,47 @@ export function useCreatePostMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
 export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
 export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
+export const UserRelatedPostsDocument = gql`
+    query userRelatedPosts {
+  userRelatedPosts {
+    id
+    body
+    createdAt
+    updatedAt
+    author {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useUserRelatedPostsQuery__
+ *
+ * To run a query within a React component, call `useUserRelatedPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserRelatedPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserRelatedPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserRelatedPostsQuery(baseOptions?: Apollo.QueryHookOptions<UserRelatedPostsQuery, UserRelatedPostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserRelatedPostsQuery, UserRelatedPostsQueryVariables>(UserRelatedPostsDocument, options);
+      }
+export function useUserRelatedPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserRelatedPostsQuery, UserRelatedPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserRelatedPostsQuery, UserRelatedPostsQueryVariables>(UserRelatedPostsDocument, options);
+        }
+export type UserRelatedPostsQueryHookResult = ReturnType<typeof useUserRelatedPostsQuery>;
+export type UserRelatedPostsLazyQueryHookResult = ReturnType<typeof useUserRelatedPostsLazyQuery>;
+export type UserRelatedPostsQueryResult = Apollo.QueryResult<UserRelatedPostsQuery, UserRelatedPostsQueryVariables>;
 export const CreateUserDocument = gql`
     mutation CreateUser($inputs: CreateUserInputs!) {
   createUser(inputs: $inputs) {

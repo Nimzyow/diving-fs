@@ -7,9 +7,9 @@ import { Posts } from "./Posts"
 
 describe("Posts", () => {
     test("should display first and last name and body ", () => {
-        MockComponent({ component: <Posts firstName="test" lastName="testing" body="random body" /> })
+        MockComponent({ component: <Posts name="test" body="random body" /> })
 
-        expect(screen.getByText("test testing")).toBeInTheDocument()
+        expect(screen.getByText("test")).toBeInTheDocument()
         expect(screen.getByText("random body")).toBeInTheDocument()
     })
 })
