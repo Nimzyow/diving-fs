@@ -95,7 +95,7 @@ export type MutationLoginArgs = {
 
 export type Post = {
   __typename?: 'Post';
-  author: User;
+  author?: Maybe<User>;
   authorId: Scalars['String'];
   body?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -154,7 +154,7 @@ export type CreatePostMutation = { __typename?: 'Mutation', createPost?: Maybe<{
 export type UserRelatedPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserRelatedPostsQuery = { __typename?: 'Query', userRelatedPosts: Array<Maybe<{ __typename?: 'Post', id?: Maybe<string>, body?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, author: { __typename?: 'User', id: string, name: string } }>> };
+export type UserRelatedPostsQuery = { __typename?: 'Query', userRelatedPosts: Array<Maybe<{ __typename?: 'Post', id?: Maybe<string>, body?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, author?: Maybe<{ __typename?: 'User', id: string, name: string }> }>> };
 
 export type CreateUserMutationVariables = Exact<{
   inputs: CreateUserInputs;
