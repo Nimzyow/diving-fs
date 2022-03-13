@@ -76,6 +76,9 @@ export interface NexusGenObjects {
     field?: string | null; // String
     message?: string | null; // String
   }
+  Following: { // root type
+    id: string; // String!
+  }
   HandleValidationError: { // root type
     field?: string | null; // String
     message?: string | null; // String
@@ -137,6 +140,10 @@ export interface NexusGenFieldTypes {
     field: string | null; // String
     message: string | null; // String
   }
+  Following: { // field return type
+    id: string; // String!
+    user: NexusGenRootTypes['User'] | null; // User
+  }
   HandleValidationError: { // field return type
     field: string | null; // String
     message: string | null; // String
@@ -144,6 +151,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createPost: NexusGenRootTypes['CreatePostOutput'] | null; // CreatePostOutput
     createUser: NexusGenRootTypes['CreateUserOutput'] | null; // CreateUserOutput
+    followUser: NexusGenRootTypes['Following'] | null; // Following
     login: NexusGenRootTypes['Token']; // Token!
   }
   Post: { // field return type
@@ -201,6 +209,10 @@ export interface NexusGenFieldTypeNames {
     field: 'String'
     message: 'String'
   }
+  Following: { // field return type name
+    id: 'String'
+    user: 'User'
+  }
   HandleValidationError: { // field return type name
     field: 'String'
     message: 'String'
@@ -208,6 +220,7 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createPost: 'CreatePostOutput'
     createUser: 'CreateUserOutput'
+    followUser: 'Following'
     login: 'Token'
   }
   Post: { // field return type name
@@ -253,6 +266,9 @@ export interface NexusGenArgTypes {
     }
     createUser: { // args
       inputs: NexusGenInputs['CreateUserInputs']; // CreateUserInputs!
+    }
+    followUser: { // args
+      userId: string; // String!
     }
     login: { // args
       inputs: NexusGenInputs['LoginUserInputs']; // LoginUserInputs!

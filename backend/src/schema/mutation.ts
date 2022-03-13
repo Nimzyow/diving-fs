@@ -195,6 +195,29 @@ export const Mutation = extendType({
                         throw new UserInputError("Please check your email and password")
                     }
                 },
+            }),
+            t.field("followUser", {
+                type: "Following",
+                args: {
+                    userId: nonNull(
+                        arg({
+                            type: "String",
+                        })
+                    ),
+                },
+                resolve: async (parent, args, context) => {
+                    try {
+                        const following = await context.prisma.following.create({
+                            data: {
+                                userId: args.userId,
+                            },
+                        })
+                        return following
+                    } catch (error) {
+                        console.log(error)
+                        return null
+                    }
+                },
             })
     },
 })
