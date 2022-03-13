@@ -60,6 +60,12 @@ export type EmailValidationError = BaseError & {
   message?: Maybe<Scalars['String']>;
 };
 
+export type Following = {
+  __typename?: 'Following';
+  id: Scalars['String'];
+  user?: Maybe<User>;
+};
+
 export type HandleValidationError = BaseError & {
   __typename?: 'HandleValidationError';
   field?: Maybe<Scalars['String']>;
@@ -75,6 +81,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createPost?: Maybe<CreatePostOutput>;
   createUser?: Maybe<CreateUserOutput>;
+  followUser?: Maybe<Following>;
   login: Token;
 };
 
@@ -86,6 +93,11 @@ export type MutationCreatePostArgs = {
 
 export type MutationCreateUserArgs = {
   inputs: CreateUserInputs;
+};
+
+
+export type MutationFollowUserArgs = {
+  userId: Scalars['String'];
 };
 
 
