@@ -107,6 +107,7 @@ export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
   userRelatedPosts: Array<Maybe<Post>>;
+  userSuggestions: Array<User>;
 };
 
 export enum Role {

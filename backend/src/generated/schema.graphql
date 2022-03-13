@@ -75,6 +75,7 @@ type Post {
 type Query {
   me: User
   userRelatedPosts: [Post]!
+  userSuggestions: [User!]!
 }
 
 enum Role {

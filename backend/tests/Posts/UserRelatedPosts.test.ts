@@ -62,7 +62,6 @@ describe("View all user related posts query", () => {
         const userRelatedPostsResult = await server.executeOperation({
             query: USER_RELATED_POST,
         })
-        console.log(userRelatedPostsResult)
         expect(userRelatedPostsResult.data).toEqual({
             userRelatedPosts: [
                 {

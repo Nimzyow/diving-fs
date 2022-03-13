@@ -157,6 +157,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     me: NexusGenRootTypes['User'] | null; // User
     userRelatedPosts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
+    userSuggestions: NexusGenRootTypes['User'][]; // [User!]!
   }
   Success: { // field return type
     success: boolean; // Boolean!
@@ -220,6 +221,7 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     me: 'User'
     userRelatedPosts: 'Post'
+    userSuggestions: 'User'
   }
   Success: { // field return type name
     success: 'Boolean'

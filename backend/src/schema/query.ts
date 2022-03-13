@@ -43,6 +43,26 @@ export const Query = extendType({
                         return []
                     }
                 },
+            }),
+            t.field("userSuggestions", {
+                type: nonNull(list(nonNull("User"))),
+                resolve: async (parent, args, context) => {
+                    if (!context.user) {
+                        return []
+                    }
+                    try {
+                        return await context.prisma.user.findMany({
+                            where: {
+                                NOT: {
+                                    id: context.user.id,
+                                },
+                            },
+                        })
+                    } catch (error) {
+                        console.log(error)
+                        return []
+                    }
+                },
             })
     },
 })
