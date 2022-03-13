@@ -171,6 +171,11 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Token', token?: Maybe<string> } };
 
+export type GetUserSuggestionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserSuggestionsQuery = { __typename?: 'Query', userSuggestions: Array<{ __typename?: 'User', id: string, name: string }> };
+
 
 export const MeDocument = gql`
     query Me {
@@ -367,3 +372,38 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const GetUserSuggestionsDocument = gql`
+    query getUserSuggestions {
+  userSuggestions {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetUserSuggestionsQuery__
+ *
+ * To run a query within a React component, call `useGetUserSuggestionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserSuggestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserSuggestionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserSuggestionsQuery(baseOptions?: Apollo.QueryHookOptions<GetUserSuggestionsQuery, GetUserSuggestionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserSuggestionsQuery, GetUserSuggestionsQueryVariables>(GetUserSuggestionsDocument, options);
+      }
+export function useGetUserSuggestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserSuggestionsQuery, GetUserSuggestionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserSuggestionsQuery, GetUserSuggestionsQueryVariables>(GetUserSuggestionsDocument, options);
+        }
+export type GetUserSuggestionsQueryHookResult = ReturnType<typeof useGetUserSuggestionsQuery>;
+export type GetUserSuggestionsLazyQueryHookResult = ReturnType<typeof useGetUserSuggestionsLazyQuery>;
+export type GetUserSuggestionsQueryResult = Apollo.QueryResult<GetUserSuggestionsQuery, GetUserSuggestionsQueryVariables>;
