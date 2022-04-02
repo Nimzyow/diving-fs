@@ -63,6 +63,24 @@ export const Query = extendType({
                         return []
                     }
                 },
+            }),
+            t.field("followerStatus", {
+                type: nonNull(list(nonNull("Follow"))),
+                resolve: async (parent, args, context) => {
+                    if (!context.user) {
+                        return []
+                    }
+                    try {
+                        return await context.prisma.follows.findMany({
+                            where: {
+                                followerId: context.user.id,
+                            },
+                        })
+                    } catch (error) {
+                        console.log(error)
+                        return []
+                    }
+                },
             })
     },
 })

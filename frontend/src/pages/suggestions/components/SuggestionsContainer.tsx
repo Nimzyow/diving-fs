@@ -18,6 +18,19 @@ export const SuggestionsContainer = (): JSX.Element => {
         return <p>...Loading</p>
     }
 
+    const handleClick = async (userId: string) => {
+        try {
+            // await followUser({
+            //     variables: {
+            //         userId,
+            //     },
+            // })
+            console.log("Followed!")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div
             style={{
@@ -35,7 +48,13 @@ export const SuggestionsContainer = (): JSX.Element => {
             {data.userSuggestions.map((el, i) => {
                 return (
                     <div data-testid="follow" key={el.id} style={{ gridColumn: 2, gridRow: i + 1 }}>
-                        <Button>Follow</Button>
+                        <Button
+                            onClick={() => {
+                                handleClick(el.id)
+                            }}
+                        >
+                            Follow
+                        </Button>
                     </div>
                 )
             })}

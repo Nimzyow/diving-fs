@@ -47,9 +47,10 @@ type EmailValidationError implements BaseError {
   message: String
 }
 
-type Following {
-  id: String!
-  user: User
+type Follow {
+  followerId: String!
+  following: [User!]!
+  followingId: String!
 }
 
 type HandleValidationError implements BaseError {
@@ -65,7 +66,7 @@ input LoginUserInputs {
 type Mutation {
   createPost(inputs: CreatePostInputs!): CreatePostOutput
   createUser(inputs: CreateUserInputs!): CreateUserOutput
-  followUser(userId: String!): Following
+  followUser(userId: String!): Boolean
   login(inputs: LoginUserInputs!): Token!
 }
 
@@ -79,6 +80,7 @@ type Post {
 }
 
 type Query {
+  followerStatus: [Follow!]!
   me: User
   userRelatedPosts: [Post]!
   userSuggestions: [User!]!

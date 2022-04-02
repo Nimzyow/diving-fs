@@ -76,8 +76,9 @@ export interface NexusGenObjects {
     field?: string | null; // String
     message?: string | null; // String
   }
-  Following: { // root type
-    id: string; // String!
+  Follow: { // root type
+    followerId: string; // String!
+    followingId: string; // String!
   }
   HandleValidationError: { // root type
     field?: string | null; // String
@@ -140,9 +141,10 @@ export interface NexusGenFieldTypes {
     field: string | null; // String
     message: string | null; // String
   }
-  Following: { // field return type
-    id: string; // String!
-    user: NexusGenRootTypes['User'] | null; // User
+  Follow: { // field return type
+    followerId: string; // String!
+    following: NexusGenRootTypes['User'][]; // [User!]!
+    followingId: string; // String!
   }
   HandleValidationError: { // field return type
     field: string | null; // String
@@ -151,7 +153,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createPost: NexusGenRootTypes['CreatePostOutput'] | null; // CreatePostOutput
     createUser: NexusGenRootTypes['CreateUserOutput'] | null; // CreateUserOutput
-    followUser: NexusGenRootTypes['Following'] | null; // Following
+    followUser: boolean | null; // Boolean
     login: NexusGenRootTypes['Token']; // Token!
   }
   Post: { // field return type
@@ -163,6 +165,7 @@ export interface NexusGenFieldTypes {
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Query: { // field return type
+    followerStatus: NexusGenRootTypes['Follow'][]; // [Follow!]!
     me: NexusGenRootTypes['User'] | null; // User
     userRelatedPosts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
     userSuggestions: NexusGenRootTypes['User'][]; // [User!]!
@@ -209,9 +212,10 @@ export interface NexusGenFieldTypeNames {
     field: 'String'
     message: 'String'
   }
-  Following: { // field return type name
-    id: 'String'
-    user: 'User'
+  Follow: { // field return type name
+    followerId: 'String'
+    following: 'User'
+    followingId: 'String'
   }
   HandleValidationError: { // field return type name
     field: 'String'
@@ -220,7 +224,7 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createPost: 'CreatePostOutput'
     createUser: 'CreateUserOutput'
-    followUser: 'Following'
+    followUser: 'Boolean'
     login: 'Token'
   }
   Post: { // field return type name
@@ -232,6 +236,7 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'DateTime'
   }
   Query: { // field return type name
+    followerStatus: 'Follow'
     me: 'User'
     userRelatedPosts: 'Post'
     userSuggestions: 'User'
