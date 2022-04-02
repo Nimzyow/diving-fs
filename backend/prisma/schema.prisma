@@ -21,6 +21,17 @@ model User {
   updatedAt             DateTime   @default(now())
   diverCertifications   DiverCertification[]
   posts Post[]
+  followers Follows[] @relation("follower")
+  following Follows[] @relation("following")
+}
+
+model Follows {
+  follower  User  @relation("follower", fields: [followerId], references: [id])
+  followerId  String
+  following User  @relation("following", fields: [followingId], references: [id])
+  followingId String
+
+  @@id([followerId, followingId])
 }
 
 model Post {

@@ -1,8 +1,9 @@
-import { Prisma } from "@prisma/client"
+import { prisma, Prisma } from "@prisma/client"
 import { UserInputError } from "apollo-server"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { arg, extendType, nonNull, inputObjectType, objectType } from "nexus"
+import { P } from "ts-toolbelt/out/Object/_api"
 
 // export const CreatePostError = objectType({
 //     name: "CreatePostError",
@@ -194,6 +195,68 @@ export const Mutation = extendType({
                     } else {
                         throw new UserInputError("Please check your email and password")
                     }
+                },
+            }),
+            t.field("followUser", {
+                type: "Boolean",
+                args: {
+                    userId: nonNull(
+                        arg({
+                            type: "String",
+                        })
+                    ),
+                },
+                resolve: async (parent, args, context) => {
+                    if (!context.user) {
+                        return false
+                    }
+
+                    const follow = await context.prisma.follows.findFirst({
+                        where: {
+                            followerId: context.user.id,
+                            AND: {
+                                followingId: args.userId,
+                            },
+                        },
+                    })
+
+                    if (follow) {
+                        return false
+                    }
+
+                    await context.prisma.follows.create({
+                        data: {
+                            followerId: context.user.id,
+                            followingId: args.userId,
+                        },
+                    })
+                    return true
+                    // try {
+
+                    // } catch (error) {
+                    //     console.log(error)
+                    // }
+                    // try {
+                    //     const following = await context.prisma.following.create({
+                    //         data: {
+                    //             userId: args.userId,
+                    //         },
+                    //     })
+                    //     await context.prisma.user.update({
+                    //         where: {
+                    //             id: context.user.id,
+                    //         },
+                    //         data: {
+                    //             following: {
+                    //                 set: [following],
+                    //             },
+                    //         },
+                    //     })
+                    //     return following
+                    // } catch (error) {
+                    //     console.log(error)
+                    //     return null
+                    // }
                 },
             })
     },

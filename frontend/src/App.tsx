@@ -7,6 +7,7 @@ import { Main } from "./layouts/Main"
 import { AccountContainer } from "./pages/account/AccountContainer"
 import { Home } from "./pages/home/Home"
 import { NotRecognised } from "./pages/not-recognised/NotRecognised"
+import Suggestions from "./pages/suggestions/Suggestions"
 import { RootStyling, GlobalStyles } from "./styles/RootStyling"
 import { PrivateRoute } from "./utils/PrivateRoute"
 
@@ -28,6 +29,9 @@ export const App = (): JSX.Element => {
                             <AccountContainer />
                         </Route>
                         <Main>
+                            <PrivateRoute exact={true} path="/suggestions">
+                                <Suggestions />
+                            </PrivateRoute>
                             <PrivateRoute exact={true} path="/">
                                 <Home />
                             </PrivateRoute>

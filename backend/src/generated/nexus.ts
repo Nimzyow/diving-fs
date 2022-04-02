@@ -76,6 +76,10 @@ export interface NexusGenObjects {
     field?: string | null; // String
     message?: string | null; // String
   }
+  Follow: { // root type
+    followerId: string; // String!
+    followingId: string; // String!
+  }
   HandleValidationError: { // root type
     field?: string | null; // String
     message?: string | null; // String
@@ -137,6 +141,11 @@ export interface NexusGenFieldTypes {
     field: string | null; // String
     message: string | null; // String
   }
+  Follow: { // field return type
+    followerId: string; // String!
+    following: NexusGenRootTypes['User'][]; // [User!]!
+    followingId: string; // String!
+  }
   HandleValidationError: { // field return type
     field: string | null; // String
     message: string | null; // String
@@ -144,6 +153,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createPost: NexusGenRootTypes['CreatePostOutput'] | null; // CreatePostOutput
     createUser: NexusGenRootTypes['CreateUserOutput'] | null; // CreateUserOutput
+    followUser: boolean | null; // Boolean
     login: NexusGenRootTypes['Token']; // Token!
   }
   Post: { // field return type
@@ -155,6 +165,7 @@ export interface NexusGenFieldTypes {
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Query: { // field return type
+    followerStatus: NexusGenRootTypes['Follow'][]; // [Follow!]!
     me: NexusGenRootTypes['User'] | null; // User
     userRelatedPosts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
     userSuggestions: NexusGenRootTypes['User'][]; // [User!]!
@@ -201,6 +212,11 @@ export interface NexusGenFieldTypeNames {
     field: 'String'
     message: 'String'
   }
+  Follow: { // field return type name
+    followerId: 'String'
+    following: 'User'
+    followingId: 'String'
+  }
   HandleValidationError: { // field return type name
     field: 'String'
     message: 'String'
@@ -208,6 +224,7 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createPost: 'CreatePostOutput'
     createUser: 'CreateUserOutput'
+    followUser: 'Boolean'
     login: 'Token'
   }
   Post: { // field return type name
@@ -219,6 +236,7 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'DateTime'
   }
   Query: { // field return type name
+    followerStatus: 'Follow'
     me: 'User'
     userRelatedPosts: 'Post'
     userSuggestions: 'User'
@@ -253,6 +271,9 @@ export interface NexusGenArgTypes {
     }
     createUser: { // args
       inputs: NexusGenInputs['CreateUserInputs']; // CreateUserInputs!
+    }
+    followUser: { // args
+      userId: string; // String!
     }
     login: { // args
       inputs: NexusGenInputs['LoginUserInputs']; // LoginUserInputs!
