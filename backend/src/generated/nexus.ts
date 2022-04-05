@@ -67,16 +67,16 @@ export interface NexusGenObjects {
     token?: string | null; // String
   }
   DiverCertification: { // root type
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    id?: string | null; // String
-    name?: string | null; // String
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    name: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   EmailValidationError: { // root type
     field?: string | null; // String
     message?: string | null; // String
   }
-  Follow: { // root type
+  Follows: { // root type
     followerId: string; // String!
     followingId: string; // String!
   }
@@ -87,10 +87,10 @@ export interface NexusGenObjects {
   Mutation: {};
   Post: { // root type
     authorId: string; // String!
-    body?: string | null; // String
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    id?: string | null; // String
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    body: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Query: {};
   Success: { // root type
@@ -100,13 +100,13 @@ export interface NexusGenObjects {
     token?: string | null; // String
   }
   User: { // root type
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     handle: string; // String!
-    id: string; // String!
+    id: string; // ID!
     name: string; // String!
-    role?: NexusGenEnums['Role'] | null; // Role
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    role: NexusGenEnums['Role']; // Role!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
 }
 
@@ -132,18 +132,18 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
   }
   DiverCertification: { // field return type
-    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
-    id: string | null; // String
-    name: string | null; // String
-    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    name: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   EmailValidationError: { // field return type
     field: string | null; // String
     message: string | null; // String
   }
-  Follow: { // field return type
+  Follows: { // field return type
     followerId: string; // String!
-    following: NexusGenRootTypes['User'][]; // [User!]!
+    following: NexusGenRootTypes['User']; // User!
     followingId: string; // String!
   }
   HandleValidationError: { // field return type
@@ -157,15 +157,15 @@ export interface NexusGenFieldTypes {
     login: NexusGenRootTypes['Token']; // Token!
   }
   Post: { // field return type
-    author: NexusGenRootTypes['User'] | null; // User
+    author: NexusGenRootTypes['User']; // User!
     authorId: string; // String!
-    body: string | null; // String
-    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
-    id: string | null; // String
-    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    body: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Query: { // field return type
-    followerStatus: NexusGenRootTypes['Follow'][]; // [Follow!]!
+    followerStatus: NexusGenRootTypes['Follows'][]; // [Follows!]!
     me: NexusGenRootTypes['User'] | null; // User
     userRelatedPosts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
     userSuggestions: NexusGenRootTypes['User'][]; // [User!]!
@@ -177,15 +177,15 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
   }
   User: { // field return type
-    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
-    diverCertifications: Array<NexusGenRootTypes['DiverCertification'] | null> | null; // [DiverCertification]
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    diverCertifications: NexusGenRootTypes['DiverCertification'][]; // [DiverCertification!]!
     email: string; // String!
     handle: string; // String!
-    id: string; // String!
+    id: string; // ID!
     name: string; // String!
-    posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
-    role: NexusGenEnums['Role'] | null; // Role
-    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    posts: NexusGenRootTypes['Post'][]; // [Post!]!
+    role: NexusGenEnums['Role']; // Role!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   BaseError: { // field return type
     field: string | null; // String
@@ -204,7 +204,7 @@ export interface NexusGenFieldTypeNames {
   }
   DiverCertification: { // field return type name
     createdAt: 'DateTime'
-    id: 'String'
+    id: 'ID'
     name: 'String'
     updatedAt: 'DateTime'
   }
@@ -212,7 +212,7 @@ export interface NexusGenFieldTypeNames {
     field: 'String'
     message: 'String'
   }
-  Follow: { // field return type name
+  Follows: { // field return type name
     followerId: 'String'
     following: 'User'
     followingId: 'String'
@@ -232,11 +232,11 @@ export interface NexusGenFieldTypeNames {
     authorId: 'String'
     body: 'String'
     createdAt: 'DateTime'
-    id: 'String'
+    id: 'ID'
     updatedAt: 'DateTime'
   }
   Query: { // field return type name
-    followerStatus: 'Follow'
+    followerStatus: 'Follows'
     me: 'User'
     userRelatedPosts: 'Post'
     userSuggestions: 'User'
@@ -252,7 +252,7 @@ export interface NexusGenFieldTypeNames {
     diverCertifications: 'DiverCertification'
     email: 'String'
     handle: 'String'
-    id: 'String'
+    id: 'ID'
     name: 'String'
     posts: 'Post'
     role: 'Role'

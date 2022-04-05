@@ -36,10 +36,10 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTime
 
 type DiverCertification {
-  createdAt: DateTime
-  id: String
-  name: String
-  updatedAt: DateTime
+  createdAt: DateTime!
+  id: ID!
+  name: String!
+  updatedAt: DateTime!
 }
 
 type EmailValidationError implements BaseError {
@@ -47,9 +47,9 @@ type EmailValidationError implements BaseError {
   message: String
 }
 
-type Follow {
+type Follows {
   followerId: String!
-  following: [User!]!
+  following: User!
   followingId: String!
 }
 
@@ -71,16 +71,16 @@ type Mutation {
 }
 
 type Post {
-  author: User
+  author: User!
   authorId: String!
-  body: String
-  createdAt: DateTime
-  id: String
-  updatedAt: DateTime
+  body: String!
+  createdAt: DateTime!
+  id: ID!
+  updatedAt: DateTime!
 }
 
 type Query {
-  followerStatus: [Follow!]!
+  followerStatus: [Follows!]!
   me: User
   userRelatedPosts: [Post]!
   userSuggestions: [User!]!
@@ -102,13 +102,13 @@ type Token {
 }
 
 type User {
-  createdAt: DateTime
-  diverCertifications: [DiverCertification]
+  createdAt: DateTime!
+  diverCertifications: [DiverCertification!]!
   email: String!
   handle: String!
-  id: String!
+  id: ID!
   name: String!
-  posts: [Post]
-  role: Role
-  updatedAt: DateTime
+  posts: [Post!]!
+  role: Role!
+  updatedAt: DateTime!
 }

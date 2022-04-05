@@ -65,7 +65,7 @@ export const Query = extendType({
                 },
             }),
             t.field("followerStatus", {
-                type: nonNull(list(nonNull("Follow"))),
+                type: nonNull(list(nonNull("Follows"))),
                 resolve: async (parent, args, context) => {
                     if (!context.user) {
                         return []

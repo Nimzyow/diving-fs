@@ -1,19 +1,11 @@
-import { objectType, list, nonNull } from "nexus"
+import { objectType } from "nexus"
+import { Follows } from "nexus-prisma"
 
-export const Follow = objectType({
-    name: "Follow",
+export const follows = objectType({
+    name: Follows.$name,
+    description: Follows.$description,
     definition(t) {
-        t.nonNull.string("followingId"),
-            t.nonNull.string("followerId"),
-            t.field("following", {
-                type: nonNull(list(nonNull("User"))),
-                resolve: async (parent, args, context) => {
-                    return context.prisma.user.findMany({
-                        where: {
-                            id: parent.followingId,
-                        },
-                    })
-                },
-            })
+        t.field(Follows.followingId), t.field(Follows.followerId)
+        t.field(Follows.following)
     },
 })

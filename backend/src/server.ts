@@ -6,6 +6,7 @@ import { ApolloServer } from "apollo-server-express"
 import express from "express"
 import { makeSchema } from "nexus"
 // import { nexusPrisma } from "nexus-plugin-prisma"
+// import { prismaObjectType, makePrismaSchema } from "nexus-prisma"
 
 import { Context, getUser } from "./context"
 import prisma from "./db"
