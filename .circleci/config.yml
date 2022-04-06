@@ -44,7 +44,7 @@ jobs:
             - backend-yarn-package-{{ checksum "./backend/yarn.lock" }}
       - run:
           name: Install Dependencies
-          command: cd backend && yarn install --immutable
+          command: cd backend && yarn install --immutable && npx prisma generate
       - save_cache:
           name: Save Yarn Package Cache
           key: backend-yarn-package-{{ checksum "./backend/yarn.lock" }}
