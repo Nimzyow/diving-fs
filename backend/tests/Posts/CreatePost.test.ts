@@ -1,6 +1,4 @@
-import { Prisma } from "@prisma/client"
 import { ApolloServer, gql } from "apollo-server"
-import { GraphQLError } from "graphql"
 import { makeSchema } from "nexus"
 
 import * as types from "../../src/schema/index"

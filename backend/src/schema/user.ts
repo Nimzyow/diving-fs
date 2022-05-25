@@ -1,51 +1,19 @@
 import { objectType, enumType } from "nexus"
+import { User, DiverCertification, Role } from "nexus-prisma"
 
-export const User = objectType({
-    name: "User",
+export const user = objectType({
+    name: User.$name,
+    description: User.$description,
     definition(t) {
-        t.nonNull.string("id"),
-            t.nonNull.string("name"),
-            t.nonNull.string("email"),
-            t.nonNull.string("handle"),
-            t.field("role", { type: "Role" }),
-            t.list.field("posts", {
-                type: "Post",
-                resolve: async (parent, args, context) => {
-                    try {
-                        return context.prisma.post.findMany({
-                            where: {
-                                authorId: parent.id,
-                            },
-                        })
-                    } catch (error) {
-                        return []
-                    }
-                },
-            })
-        t.date("createdAt"),
-            t.date("updatedAt"),
-            t.list.field("diverCertifications", {
-                type: "DiverCertification",
-                resolve: async (parent, args, context) => {
-                    if (!parent.id) {
-                        return []
-                    }
-                    try {
-                        const diverCertifications = await context.prisma.diverCertification.findMany({
-                            where: {
-                                users: {
-                                    some: {
-                                        id: parent.id,
-                                    },
-                                },
-                            },
-                        })
-                        return diverCertifications
-                    } catch (error) {
-                        return null
-                    }
-                },
-            })
+        t.field(User.id),
+            t.field(User.name),
+            t.field(User.email),
+            t.field(User.handle),
+            t.field(User.role),
+            t.field(User.posts),
+            t.field(User.createdAt),
+            t.field(User.updatedAt),
+            t.field(User.diverCertifications)
     },
 })
 
@@ -56,14 +24,18 @@ export const Token = objectType({
     },
 })
 
-export const DiverCertification = objectType({
-    name: "DiverCertification",
+export const diverCertification = objectType({
+    name: DiverCertification.$name,
+    description: DiverCertification.$description,
     definition(t) {
-        t.string("id"), t.string("name"), t.date("createdAt"), t.date("updatedAt")
+        t.field(DiverCertification.id),
+            t.field(DiverCertification.name),
+            t.field(DiverCertification.createdAt),
+            t.field(DiverCertification.updatedAt)
     },
 })
 
-export const Role = enumType({
-    name: "Role",
-    members: ["USER", "STAFF", "ADMIN", "SUPER_USER"],
+export const role = enumType({
+    name: Role.name,
+    members: Role.members,
 })

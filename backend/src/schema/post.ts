@@ -1,4 +1,5 @@
 import { objectType } from "nexus"
+import { Post } from "nexus-prisma"
 
 export const CreatePostOutput = objectType({
     name: "CreatePostOutput",
@@ -12,28 +13,15 @@ export const CreatePostOutput = objectType({
     },
 })
 
-export const Post = objectType({
-    name: "Post",
+export const post = objectType({
+    name: Post.$name,
+    description: Post.$description,
     definition(t) {
-        t.string("id"),
-            t.string("body"),
-            t.date("createdAt"),
-            t.date("updatedAt"),
-            t.nonNull.string("authorId"),
-            t.field("author", {
-                type: "User",
-                resolve: async (parent, args, context) => {
-                    try {
-                        const user = await context.prisma.user.findFirst({
-                            where: {
-                                id: parent.authorId,
-                            },
-                        })
-                        return user
-                    } catch (error) {
-                        return null
-                    }
-                },
-            })
+        t.field(Post.id),
+            t.field(Post.body),
+            t.field(Post.createdAt),
+            t.field(Post.updatedAt),
+            t.field(Post.authorId),
+            t.field(Post.author)
     },
 })

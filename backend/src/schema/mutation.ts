@@ -1,16 +1,8 @@
-import { prisma, Prisma } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import { UserInputError } from "apollo-server"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { arg, extendType, nonNull, inputObjectType, objectType } from "nexus"
-import { P } from "ts-toolbelt/out/Object/_api"
-
-// export const CreatePostError = objectType({
-//     name: "CreatePostError",
-//     definition(t) {
-//         t.field("createPostError", {})
-//     }
-// })
 
 export const CreateUserOutput = objectType({
     name: "CreateUserOutput",

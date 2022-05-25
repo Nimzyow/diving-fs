@@ -48,10 +48,10 @@ export type CreateUserOutput = {
 
 export type DiverCertification = {
   __typename?: 'DiverCertification';
-  createdAt?: Maybe<Scalars['DateTime']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type EmailValidationError = BaseError & {
@@ -60,10 +60,10 @@ export type EmailValidationError = BaseError & {
   message?: Maybe<Scalars['String']>;
 };
 
-export type Follow = {
-  __typename?: 'Follow';
+export type Follows = {
+  __typename?: 'Follows';
   followerId: Scalars['String'];
-  following: Array<User>;
+  following: User;
   followingId: Scalars['String'];
 };
 
@@ -108,17 +108,17 @@ export type MutationLoginArgs = {
 
 export type Post = {
   __typename?: 'Post';
-  author?: Maybe<User>;
+  author: User;
   authorId: Scalars['String'];
-  body?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  id?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
+  body: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  followerStatus: Array<Follow>;
+  followerStatus: Array<Follows>;
   me?: Maybe<User>;
   userRelatedPosts: Array<Maybe<Post>>;
   userSuggestions: Array<User>;
@@ -143,33 +143,33 @@ export type Token = {
 
 export type User = {
   __typename?: 'User';
-  createdAt?: Maybe<Scalars['DateTime']>;
-  diverCertifications?: Maybe<Array<Maybe<DiverCertification>>>;
+  createdAt: Scalars['DateTime'];
+  diverCertifications: Array<DiverCertification>;
   email: Scalars['String'];
   handle: Scalars['String'];
-  id: Scalars['String'];
+  id: Scalars['ID'];
   name: Scalars['String'];
-  posts?: Maybe<Array<Maybe<Post>>>;
-  role?: Maybe<Role>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
+  posts: Array<Post>;
+  role: Role;
+  updatedAt: Scalars['DateTime'];
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, name: string, handle: string, email: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any> }> };
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, name: string, handle: string, email: string, createdAt: any, updatedAt: any }> };
 
 export type CreatePostMutationVariables = Exact<{
   CreatePostInputs: CreatePostInputs;
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost?: Maybe<{ __typename?: 'CreatePostOutput', post?: Maybe<{ __typename?: 'Post', id?: Maybe<string>, body?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any> }>, createPostError?: Maybe<{ __typename?: 'EmailValidationError', field?: Maybe<string>, message?: Maybe<string> } | { __typename?: 'HandleValidationError', field?: Maybe<string>, message?: Maybe<string> }> }> };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost?: Maybe<{ __typename?: 'CreatePostOutput', post?: Maybe<{ __typename?: 'Post', id: string, body: string, createdAt: any, updatedAt: any }>, createPostError?: Maybe<{ __typename?: 'EmailValidationError', field?: Maybe<string>, message?: Maybe<string> } | { __typename?: 'HandleValidationError', field?: Maybe<string>, message?: Maybe<string> }> }> };
 
 export type UserRelatedPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserRelatedPostsQuery = { __typename?: 'Query', userRelatedPosts: Array<Maybe<{ __typename?: 'Post', id?: Maybe<string>, body?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, author?: Maybe<{ __typename?: 'User', id: string, name: string }> }>> };
+export type UserRelatedPostsQuery = { __typename?: 'Query', userRelatedPosts: Array<Maybe<{ __typename?: 'Post', id: string, body: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, name: string } }>> };
 
 export type CreateUserMutationVariables = Exact<{
   inputs: CreateUserInputs;
